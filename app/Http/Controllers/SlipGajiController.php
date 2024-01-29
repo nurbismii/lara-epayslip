@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KomponenGaji;
-use Alert;
-use Auth;
-use PDF;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SlipGajiController extends Controller
 {
@@ -29,14 +29,12 @@ class SlipGajiController extends Controller
     {
         $periode = $request['month'];
         $cek = KomponenGaji::where('data_karyawan_id', Auth::user()->data_karyawan->id)
-                            ->where('periode', $periode)
-                            ->first();
-        if($cek === null)
-        {
+            ->where('periode', $periode)
+            ->first();
+        if ($cek === null) {
             Alert::error('Tidak Tersedia', 'Slip Gaji Anda Tidak Tersedia di Periode Tersebut');
             return redirect()->route('slip_gaji');
-        } else
-        {
+        } else {
             return view('slip_gaji.slip', compact('cek'));
         }
     }
@@ -46,10 +44,10 @@ class SlipGajiController extends Controller
 
         $periode = $request['month'];
         $cek = KomponenGaji::where('data_karyawan_id', Auth::user()->data_karyawan->id)
-                            ->where('periode', $periode)
-                            ->first();
+            ->where('periode', $periode)
+            ->first();
 
-        $pdf = PDF::loadview('slip_gaji.slip-pdf',['cek'=>$cek]);
-    	return $pdf->download('Slip-Gaji-' .date("F-Y", strtotime($periode)). '.pdf');
+        $pdf = PDF::loadview('slip_gaji.slip-pdf', ['cek' => $cek]);
+        return $pdf->download('Slip-Gaji-' . date("F-Y", strtotime($periode)) . '.pdf');
     }
 }

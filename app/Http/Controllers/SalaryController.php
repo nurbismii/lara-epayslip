@@ -158,7 +158,7 @@ class SalaryController extends Controller
                             ->first();
 
         $pdf = PDF::loadview('slip_gaji.slip-pdf',['cek'=>$cek]);
-    	return $pdf->download('Slip-Gaji-' .date("F-Y", strtotime($periode)). '.pdf');
+    	return $pdf->stream();
     }
 
     public function delete_all(Request $request)
