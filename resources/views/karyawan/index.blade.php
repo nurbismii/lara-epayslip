@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="content">
-
     <!-- Start Content-->
     <div class="container-fluid">
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -23,20 +21,20 @@
 
         <div class="row">
             <div class="col-12">
+                @if(session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+                @endif
+                @if(isset($errors) && $errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    {{ $error }}
+                    @endforeach
+                </div>
+                @endif
                 <div class="card">
                     <div class="card-body">
-                        @if(session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                        @endif
-                        @if(isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            {{ $error }}
-                            @endforeach
-                        </div>
-                        @endif
                         <form action="{{ route('karyawan.upload') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
@@ -71,7 +69,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -83,18 +80,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        @if(session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                        @endif
-                        @if(isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            {{ $error }}
-                            @endforeach
-                        </div>
-                        @endif
                         <form action="{{ route('perubahan') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
@@ -117,7 +102,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-example-int mg-t-15">
                                     <div class="row">
                                         <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
@@ -139,21 +123,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        @if(session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                        @endif
-                        @if(isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            {{ $error }}
-                            @endforeach
-                        </div>
-                        @endif
                         <form action="{{ route('hapus_karyawan') }}" method="post" enctype="multipart/form-data">
                             @csrf
-
                             <div class="form-example-wrap mg-t-30">
                                 <div class="cmp-tb-hd cmp-int-hd">
                                     <h5>Hapus Data Karyawan</h5>
@@ -185,7 +156,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -266,21 +236,15 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-
-                            </tbody>
-
+                            <tbody></tbody>
                         </table>
                         </br>
-
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
         <!-- end row-->
-
     </div> <!-- container -->
-
 </div>
 @if(Auth::user()->level == "Administrator")
 @include('karyawan.form')

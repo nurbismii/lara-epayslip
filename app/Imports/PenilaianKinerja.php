@@ -13,10 +13,6 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Validators\Failure;
-use Throwable;
-use Carbon;
-
 
 class PenilaianKinerja implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
 {

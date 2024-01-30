@@ -81,5 +81,8 @@ return array (
   'simhei' => array(
     'normal' => $fontDir . '/simhei_normal_5906f806a329e01315589d76c62793f7',
   ),
+  'firefly sung' => array(
+    'normal' => $fontDir . '/firefly_sung_normal_1bf217f55e33d2575e9966105a60136e',
+  ),
 );
 }; ?>

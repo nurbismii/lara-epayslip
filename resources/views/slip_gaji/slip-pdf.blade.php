@@ -74,14 +74,14 @@ if ($bulan == "01") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         @font-face {
-            font-family: SimHei;
+            font-family: 'Firefly Sung';
             font-style: normal;
             font-weight: 400;
-            src: url('{{base_path().' /public/'}}fonts/simhei.ttf') format('truetype');
+            src: url('https://eclecticgeek.com/dompdf/fonts/cjk/fireflysung.ttf') format('truetype');
         }
 
         * {
-            font-family: SimHei;
+            font-family: Firefly Sung, DejaVu Sans, sans-serif;
             font-size: 12px;
         }
     </style>
