@@ -21,7 +21,7 @@ class ResendEmailController extends Controller
     public function store(Request $request)
     {
         $data = User::where('email', $request['email'])->first();
-        $data_upd = '';
+        $token = '';
 
         if ($data == NULL) {
             Alert::error('Error', 'Opps, email yang kamu masukkan tidak terdaftar pada sistem kami!!!');
@@ -33,8 +33,9 @@ class ResendEmailController extends Controller
             $data->update([
                 'token' => $token
             ]);
-            $data_upd = User::where('email', $request['email'])->first();
         }
+
+        $data_upd = User::where('email', $request['email'])->first();
 
         if ($data_upd->level == "Pengguna") {
 
@@ -47,7 +48,7 @@ class ResendEmailController extends Controller
                 ]);
                 $param = [
                     'nama' => $data_upd->name,
-                    'token' => $token
+                    'token' => $data->token != '' ? $data->token : $data_upd->token
                 ];
                 Mail::to($request['email'])->send(new RegisterEmail($param));
                 Alert::success('Sukses', 'Email Berhasil Dikirim. Silahkan Cek folder Inbox Email atau Folder Spam Email Anda. Terimakasih');
