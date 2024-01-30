@@ -21,6 +21,7 @@ class ResendEmailController extends Controller
     public function store(Request $request)
     {
         $data = User::where('email', $request['email'])->first();
+        $data_upd = '';
 
         if ($data == NULL) {
             Alert::error('Error', 'Opps, email yang kamu masukkan tidak terdaftar pada sistem kami!!!');
@@ -32,7 +33,6 @@ class ResendEmailController extends Controller
             $data->update([
                 'token' => $token
             ]);
-
             $data_upd = User::where('email', $request['email'])->first();
         }
 
