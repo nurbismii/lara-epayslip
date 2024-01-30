@@ -141,7 +141,7 @@ if ($bulan == "01") {
                             <table class="table mb-0">
                                 <thead class="border-bottom">
                                     <tr class="small text-uppercase text-muted">
-                                        <th scope="col">Detail</th>
+                                        <th class="text-start" scope="col">Detail</th>
                                         <th class="text-end" scope="col">Jumlah</th>
                                         <th class="text-end" scope="col">Deduction</th>
                                         <th class="text-end" scope="col">Jumlah</th>
@@ -235,13 +235,22 @@ if ($bulan == "01") {
                                             <div class="h6 mb-0 fw-700">Rp. {{ number_format($cek->tot_diterima) }} </div>
                                         </td>
                                     </tr>
+                                    <br>
+                                    <tr>
+                                        <td class="pb-0">
+                                            <div class="mt-2 mb-3 text-uppercase small fw-700 text-muted">Mengetahui,</div>
+                                        </td>
+                                    </tr>
+                                    <br>
+                                    <br>
+                                    <tr>
+                                        <td class="pb-0">
+                                            <div class="mt-4 text-uppercase small fw-700 text-muted">Payroll Sistem VDNI</div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="text-left">
-                        <p class="mb-5 mx-4">Mengetahui,</p> <br> <br>
-                        <p class="mt-3 mx-4">Payroll Sistem VDNi</p>
                     </div>
                 </div>
         </main>
