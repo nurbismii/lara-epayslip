@@ -242,6 +242,8 @@ if ($bulan == "01") {
                                 <tr>
                                     <td>
                                         <div class="mt-2 mb-3 text-uppercase small fw-700 text-muted">Mengetahui,</div>
+                                        <br>
+                                        <br>
                                     </td>
                                 </tr>
                                 <tr>
