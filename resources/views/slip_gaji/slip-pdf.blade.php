@@ -84,6 +84,9 @@ if ($bulan == "01") {
             font-family: Firefly Sung, DejaVu Sans, sans-serif;
             font-size: 12px;
         }
+        td {
+            border: 1px;
+        }
     </style>
 </head>
 
