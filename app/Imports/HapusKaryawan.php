@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\DataKaryawan;
-use App\Models\KomponenGaji;
 use App\Models\FailUploadKomponen;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -13,11 +12,6 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Validators\Failure;
-use Throwable;
-use Carbon;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 class HapusKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
 {

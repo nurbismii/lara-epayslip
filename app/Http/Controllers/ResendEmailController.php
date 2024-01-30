@@ -9,6 +9,7 @@ use App\Mail\RegisterEmail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class ResendEmailController extends Controller
 {
@@ -19,25 +20,34 @@ class ResendEmailController extends Controller
 
     public function store(Request $request)
     {
-        $data = User::where('email', $request['email'])->where('token', '!=', '')->first();
+        $data = User::where('email', $request['email'])->first();
 
         if ($data == NULL) {
-            Alert::error('Error', 'Opps, Terjadi Kesalahan. Terimakasih');
+            Alert::error('Error', 'Opps, email yang kamu masukkan tidak terdaftar pada sistem kami!!!');
             return redirect()->route('resend_email');
         }
 
-        if ($data->level == "Pengguna") {
+        if ($data->token == '') {
+            $token = Str::random(32);
+            $data->update([
+                'token' => $token
+            ]);
 
-            $cek = ResendEmail::where('user_id', $data->id)->first();
+            $data_upd = User::where('email', $request['email'])->first();
+        }
+
+        if ($data_upd->level == "Pengguna") {
+
+            $cek = ResendEmail::where('user_id', $data_upd->id)->first();
 
             if ($cek == NULL) {
                 ResendEmail::create([
-                    'user_id' => $data->id,
+                    'user_id' => $data_upd->id,
                     'waktu' => date('Y-m-d H:i:s')
                 ]);
                 $param = [
-                    'nama' => $data->name,
-                    'token' => $data->token
+                    'nama' => $data_upd->name,
+                    'token' => $token
                 ];
                 Mail::to($request['email'])->send(new RegisterEmail($param));
                 Alert::success('Sukses', 'Email Berhasil Dikirim. Silahkan Cek folder Inbox Email atau Folder Spam Email Anda. Terimakasih');
@@ -54,8 +64,8 @@ class ResendEmailController extends Controller
             //dd($menit);
             if (($jam > 0) || ($menit > 45)) {
                 $param = [
-                    'nama' => $data->name,
-                    'token' => $data->token
+                    'nama' => $data_upd->name,
+                    'token' => $data_upd->token
                 ];
                 $cek->waktu = date('Y-m-d H:i:s');
                 $cek->update();

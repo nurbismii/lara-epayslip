@@ -75,11 +75,14 @@ if ($bulan == "01") {
     <style>
         @font-face {
             font-family: SimHei;
+            font-style: normal;
+            font-weight: 400;
             src: url('{{base_path().' /public/'}}fonts/simhei.ttf') format('truetype');
         }
 
         * {
             font-family: SimHei;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -100,36 +103,36 @@ if ($bulan == "01") {
                         <img src="{{ public_path('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
                         @endif
                         <span class="fw-normal">SLIP GAJI </span> <br>
-                        <span class="fw-normal"> Periode (PERIODE 21 {{ $nm_bln1 }} - 20 {{ $nm_bln }})</span>
+                        <span class="fw-normal">(PERIODE 16 {{ $nm_bln1 }} - 15 {{ $nm_bln }})</span>
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <!-- Invoice table-->
                         <div class="table-responsive">
-                            <table class="table table-borderless mb-3">
+                            <table class="table table-borderless">
                                 <tbody>
                                     <tr>
                                         <td scope="row">Nama</td>
                                         <td>{{ $cek->data_karyawan->nama }}</td>
-                                        <td>Jumlah hari kerja</td>
-                                        <td>{{ $cek->jml_hari_kerja }}</td>
+                                        <td class="text-end">Jumlah hari kerja</td>
+                                        <td class="text-end">{{ $cek->jml_hari_kerja }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">NIK</td>
                                         <td>{{ $cek->data_karyawan->nik }}</td>
-                                        <td>Status gaji</td>
-                                        <td>{{ $cek->status_gaji }}</td>
+                                        <td class="text-end">Status gaji</td>
+                                        <td class="text-end">{{ $cek->status_gaji }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Departemen</td>
                                         <td>{{ $cek->departemen }}</td>
-                                        <td>Divisi</td>
-                                        <td>{{ $cek->posisi }}</td>
+                                        <td class="text-end">Divisi</td>
+                                        <td class="text-end">{{ $cek->posisi }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Posisi</td>
                                         <td>{{ $cek->divisi }}</td>
-                                        <td>Jumlah hour machine</td>
-                                        <td>{{ $cek->jml_hour_machine }}</td>
+                                        <td class="text-end">Jumlah hour machine</td>
+                                        <td class="text-end">{{ $cek->jml_hour_machine ?? '-' }} {{ $cek->jml_hour_machine != '' ? 'Jam' : ''}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -178,98 +181,58 @@ if ($bulan == "01") {
                                     </tr>
                                     <!-- Invoice item 3-->
                                     <tr class="">
-                                        @if($cek->tunj_pengawas > 0)
                                         <td>
                                             <div class="">Tunj. Pengawas</div>
                                         </td>
-                                        <td class="text-end ">Rp. {{ number_format($cek->tunj_pengawas) }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($cek->pot_bpjskes > 0)
+                                        <td class="text-end ">Rp. {{ number_format($cek->tunj_pengawas) ?? '-' }}</td>
                                         <td class="text-end ">BPSJ Kesehatan</td>
                                         <td class="text-end ">Rp. {{ number_format($cek->pot_bpjskes) }}</td>
-                                        @endif
                                     </tr>
                                     <!-- Invoice item 4-->
                                     <tr class="">
-                                        @if($cek->tunj_transport > 0)
                                         <td>
                                             <div class="">Tunj. Transportasi</div>
                                         </td>
-                                        <td class="text-end ">Rp. {{ number_format($cek->tunj_transport) }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($cek->unpaid_leave > 0)
+                                        <td class="text-end ">Rp. {{ number_format($cek->tunj_transport) ?? '-' }}</td>
                                         <td class="text-end ">Deduction Unpaid Leave</td>
                                         <td class="text-end ">Rp. {{ number_format($cek->unpaid_leave) }}</td>
-                                        @endif
                                     </tr>
                                     <tr class="">
-                                        @if($cek->tunj_koefisien > 0)
                                         <td>
                                             <div class="">Tunj. Koefisien</div>
                                         </td>
                                         <td class="text-end ">Rp. {{ number_format($cek->tunj_koefisien) }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
+                                        <td class="text-end">Deduction</td>
+                                        <td class="text-end ">Rp. {{ number_format($cek->deduction) }}</td>
                                     </tr>
                                     <tr class="">
-                                        @if($cek->tunj_mk > 0)
                                         <td>
                                             <div class="">Tunj. Masa Kerja</div>
                                         </td>
                                         <td class="text-end ">Rp. {{ number_format($cek->tunj_mk) }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($cek->deduction > 0)
-                                        <td class="text-end ">Deduction</td>
-                                        <td class="text-end ">Rp. {{ number_format($cek->deduction) }}</td>
-                                        @endif
+                                        <td class="text-end ">Deduction PPH 21</td>
+                                        <td class="text-end ">Rp. {{ number_format($cek->deduction_pph21) }}</td>
                                     </tr>
                                     <tr class="">
-                                        @if($cek->ot > 0)
                                         <td>
                                             <div class="">Lembur</div>
                                         </td>
                                         <td class="text-end">Rp. {{ number_format($cek->ot) }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($cek->deduction_pph21 > 0)
-                                        <td class="text-end ">Deduction PPH 21</td>
-                                        <td class="text-end ">Rp. {{ number_format($cek->deduction_pph21) }}</td>
-                                        @endif
+                                        <td class="text-end">Durasi SP</td>
+                                        <td class="text-end">{{ $durasi_sp ?? "-"}}</td>
                                     </tr>
                                     <tr class="">
-                                        @if($cek->jml_hour_machine > 0)
                                         <td>
                                             <div class="">Hour machine</div>
                                         </td>
-                                        <td class="text-end">{{ $cek->jml_hour_machine }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($cek->durasi_sp != "1970-01-01")
-                                        <td class="text-end">Durasi SP</td>
-                                        <td class="text-end">{{ $durasi_sp ?? "-"}}</td>
-                                        @endif
+                                        <td class="text-end">{{ $cek->jml_hour_machine ?? '-' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-end pb-0" colspan="3">
                                             <div class="text-uppercase small fw-700 text-muted">Total Penghasilan:</div>
                                         </td>
                                         <td class="text-end pb-0">
-                                            <div class="h5 mb-0 fw-700">Rp. {{ number_format($cek->tot_diterima) }} </div>
+                                            <div class="h6 mb-0 fw-700">Rp. {{ number_format($cek->tot_diterima) }} </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -280,7 +243,6 @@ if ($bulan == "01") {
                         <p class="mb-5 mx-4">Mengetahui,</p> <br> <br>
                         <p class="mt-3 mx-4">Payroll Sistem VDNi</p>
                     </div>
-
                 </div>
         </main>
     </div>
