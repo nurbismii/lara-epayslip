@@ -239,14 +239,11 @@ if ($bulan == "01") {
                                         <div class="h6 mb-0 fw-700">Rp. {{ number_format($cek->tot_diterima) }} </div>
                                     </td>
                                 </tr>
-                                <br>
                                 <tr>
                                     <td>
                                         <div class="mt-2 mb-3 text-uppercase small fw-700 text-muted">Mengetahui,</div>
                                     </td>
                                 </tr>
-                                <br>
-                                <br>
                                 <tr>
                                     <td>
                                         <div class="mt-4 text-uppercase small fw-700 text-muted">Payroll Sistem VDNI</div>
