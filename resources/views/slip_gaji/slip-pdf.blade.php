@@ -241,14 +241,14 @@ if ($bulan == "01") {
                                 </tr>
                                 <br>
                                 <tr>
-                                    <td class="pb-0">
+                                    <td>
                                         <div class="mt-2 mb-3 text-uppercase small fw-700 text-muted">Mengetahui,</div>
                                     </td>
                                 </tr>
                                 <br>
                                 <br>
                                 <tr>
-                                    <td class="pb-0">
+                                    <td>
                                         <div class="mt-4 text-uppercase small fw-700 text-muted">Payroll Sistem VDNI</div>
                                     </td>
                                 </tr>
