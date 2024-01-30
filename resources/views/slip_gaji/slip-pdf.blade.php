@@ -84,6 +84,7 @@ if ($bulan == "01") {
             font-family: Firefly Sung, DejaVu Sans, sans-serif;
             font-size: 12px;
         }
+
         td {
             border: 1px;
         }
@@ -97,18 +98,20 @@ if ($bulan == "01") {
             <div class="container-xl px-1">
                 <!-- Invoice-->
                 <div class="card invoice">
-                    <div class="text-center">
-                        <h4 class="fw-bold">PT VDNI</h4>
-                        @if($cek->data_karyawan->nm_perusahaan == "VDNI")
-                        <img src="{{ public_path('assets/images/logo-vdni.png') }}" style="height: 40px;" alt=""><br>
-                        @endif
-                        @if($cek->data_karyawan->nm_perusahaan == "VDNI-P")
-                        <img src="{{ public_path('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
-                        @endif
-                        <span class="fw-normal">SLIP GAJI </span> <br>
-                        <span class="fw-normal">(PERIODE 16 {{ $nm_bln1 }} - 15 {{ $nm_bln }})</span>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4 class="fw-bold">PT VDNI</h4>
+                            @if($cek->data_karyawan->nm_perusahaan == "VDNI")
+                            <img src="{{ public_path('assets/images/logo-vdni.png') }}" style="height: 40px;" alt=""><br>
+                            @endif
+                            @if($cek->data_karyawan->nm_perusahaan == "VDNI-P")
+                            <img src="{{ public_path('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
+                            @endif
+                            <span class="fw-normal">SLIP GAJI </span> <br>
+                            <span class="fw-normal">(PERIODE 16 {{ $nm_bln1 }} - 15 {{ $nm_bln }})</span>
+                        </div>
                     </div>
-                    <div class="card-body p-4 p-md-5">
+                    <div class="card-body p-md-5">
                         <!-- Invoice table-->
                         <div class="table-responsive">
                             <table class="table table-borderless">
