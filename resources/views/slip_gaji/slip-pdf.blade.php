@@ -148,7 +148,11 @@ if ($bulan == "01") {
                             <img src="{{ public_path('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
                             @endif
                             <span class="fw-normal">SLIP GAJI </span> <br>
-                            <span class="fw-normal">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode) }}</span>
+                            @if($cek->mulai_periode)
+                            <span class="fw-normal">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</span>
+                            @else
+                            <span class="fw-normal">16 {{ $nm_bln }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</span>
+                            @endif
                         </div>
                     </div>
                     <hr class="new4">

@@ -19,7 +19,7 @@ class IsActive
   public function handle($request, Closure $next)
   {
     if (!empty(auth()->user()->status)) {
-      if (strtolower(auth()->user()->status) == "aktif" && strtolower(auth()->user()->status) == "tidak aktif") {
+      if (strtolower(auth()->user()->status) == "aktif" || strtolower(auth()->user()->status) == "tidak aktif") {
         return $next($request);
       }
     }
