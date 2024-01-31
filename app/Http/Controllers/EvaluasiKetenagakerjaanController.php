@@ -7,9 +7,9 @@ use App\Models\EvaluasiKetenagakerjaan;
 use App\Models\KomponenGaji;
 use Excel;
 use App\Imports\EvaluasiKetenagakerjaanImport;
-use App\Jobs\ImportJob;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EvaluasiKetenagakerjaanController extends Controller
 {
@@ -42,8 +42,8 @@ class EvaluasiKetenagakerjaanController extends Controller
      */
     public function store(Request $request)
     {
-          //VALIDASI
-          $this->validate($request, [
+        //VALIDASI
+        $this->validate($request, [
             'file' => 'required|mimes:xls,xlsx'
         ]);
 
@@ -53,7 +53,7 @@ class EvaluasiKetenagakerjaanController extends Controller
             $import = new EvaluasiKetenagakerjaanImport;
             $import->import($file);
 
-            if($import->failures()->isNotEmpty()){
+            if ($import->failures()->isNotEmpty()) {
                 return redirect()->back()->withFailures($import->failures());
             }
             return redirect()->back()->withStatus('File Excel Berhasil Di Upload');
@@ -71,10 +71,9 @@ class EvaluasiKetenagakerjaanController extends Controller
     {
         $data = EvaluasiKetenagakerjaan::with('user')->findOrFail($id);
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-        ->where('periode','2023-01')
-        ->first();
+            ->where('periode', '2024-01')
+            ->first();
         return view('evaluasi_ketenagakerjaan.detail', compact('data', 'div'));
-
     }
 
     /**
@@ -114,9 +113,13 @@ class EvaluasiKetenagakerjaanController extends Controller
     public function detail_evaluasi()
     {
         $data = EvaluasiKetenagakerjaan::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
+        if (!$data) {
+            Alert::error('Opps', 'Data penilaian kamu belum tersedia');
+            return back();
+        }
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-        ->where('periode','2023-01')
-        ->first();
+            ->where('periode', '2024-01')
+            ->first();
         return view('evaluasi_ketenagakerjaan.detail', compact('data', 'div'));
     }
 }

@@ -164,10 +164,10 @@
                             ?>
                             @if($cek->data_karyawan->nm_perusahaan == "VDNI")
                             <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
-                            <h5 class="m-0 d-print-none">( PERIODE 16 {{ $nm_bln1 }} - 15 {{ $nm_bln }} )</h5>
+                            <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
                             @elseif($cek->data_karyawan->nm_perusahaan == "VDNIP")
                             <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
-                            <h5 class="m-0 d-print-none">( PERIODE 16 {{ $nm_bln1 }} - 17 {{ $nm_bln }} )</h5>
+                            <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
                             @endif
                         </div>
                     </div>
@@ -194,70 +194,84 @@
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->gaji_pokok) }} </td>
                                     </tr>
+                                    @if($cek->tunj_um)
                                     <tr>
                                         <td>TUNJANGAN UANG MAKAN</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->tunj_um) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->tunj_pengawas)
                                     <tr>
                                         <td>TUNJANGAN PENGAWAS</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->tunj_pengawas) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->tunj_koefisien)
                                     <tr>
                                         <td>TUNJANGAN KOEFISIEN JABATAN </td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->tunj_koefisien) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->tunj_mk)
                                     <tr>
                                         <td>TUNJANGAN MASA KERJA</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->tunj_mk) }}</td>
                                     </tr>
-                                    @if(!empty($cek->tunj_transport))
+                                    @endif
+                                    @if($cek->tunj_transport)
                                     <tr>
                                         <td>TUNJANGAN TRANSPORT & PULSA</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->tunj_transport) }}</td>
                                     </tr>
                                     @endif
-                                    @if(!empty($cek->tunj_lap))
+                                    @if($cek->tunj_lap)
                                     <tr>
                                         <td>TUNJANGAN KINERJA DAN LAPANGAN</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->tunj_lap) }}</td>
                                     </tr>
                                     @endif
+                                    @if($cek->ot)
                                     <tr>
                                         <td>OVERTIME</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->ot) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->hm)
                                     <tr>
                                         <td>HOUR MACHINE</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->hm) }}</td>
                                     </tr>
-                                    @if(!empty($cek->insentif))
+                                    @endif
+                                    @if($cek->insentif)
                                     <tr>
                                         <td>INSENTIF</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->insentif) }}</td>
                                     </tr>
                                     @endif
+                                    @if($cek->rapel)
                                     <tr>
                                         <td>RAPEL</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->rapel) }}</td>
                                     </tr>
-                                    @if(!empty($cek->bonus))
+                                    @endif
+                                    @if($cek->bonus)
                                     <tr>
                                         <td>BONUS</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->bonus) }}</td>
                                     </tr>
                                     @endif
-                                    @if(!empty($cek->thr))
+                                    @if($cek->thr)
                                     <tr>
                                         <td>TUNJANGAN HARI RAYA</td>
                                         <td>:</td>
@@ -279,36 +293,48 @@
                                 </table>
                                 <h5>POTONGAN :</h5>
                                 <table>
+                                    @if($cek->jht)
                                     <tr>
                                         <td>BPJS TK JHT</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->jht) }} </td>
                                     </tr>
+                                    @endif
+                                    @if($cek->jp)
                                     <tr>
                                         <td>BPJS TK JP</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->jp) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->pot_bpjskes)
                                     <tr>
                                         <td>BPJS KESEHATAN</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->pot_bpjskes) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->unpaid_leave)
                                     <tr>
                                         <td>DEDUCTION UNPAID LEAVE </td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->unpaid_leave) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->deduction)
                                     <tr>
                                         <td>DEDUCTION </td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->deduction) }}</td>
                                     </tr>
+                                    @endif
+                                    @if($cek->deduction_pph21)
                                     <tr>
                                         <td>DEDUCTION PPH 21</td>
                                         <td>:</td>
                                         <td>Rp. {{ number_format($cek->deduction_pph21) }}</td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         @if($cek->durasi_sp == "1970-01-01")
                                         <?php $durasi_sp = ""; ?>

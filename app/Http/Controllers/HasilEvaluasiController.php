@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PenilaianPencapaianKinerja;
 use App\Models\KomponenGaji;
 use Illuminate\Http\Request;
-use Auth;
-
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HasilEvaluasiController extends Controller
 {
@@ -52,8 +52,8 @@ class HasilEvaluasiController extends Controller
     {
         $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-        ->where('periode','2023-01')
-        ->first();
+            ->where('periode', '2024-01')
+            ->first();
 
         return view('hasil_evaluasi.detail', compact('data', 'div'));
     }
@@ -92,12 +92,16 @@ class HasilEvaluasiController extends Controller
         //
     }
 
-    public function detail_hasil_evaluasi ()
+    public function detail_hasil_evaluasi()
     {
         $data = PenilaianPencapaianKinerja::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
+        if (!$data) {
+            Alert::error('Opps', 'Data penilaian kamu belum tersedia');
+            return back();
+        }
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-        ->where('periode','2023-01')
-        ->first();
+            ->where('periode', '2024-01')
+            ->first();
 
         return view('hasil_evaluasi.detail', compact('data', 'div'));
     }
