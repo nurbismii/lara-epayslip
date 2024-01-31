@@ -92,7 +92,7 @@
                             </br> &nbsp &nbsp &nbsp &nbsp
                             <span class="logo-lg">
                                 @if($cek->data_karyawan->nm_perusahaan == "VDNI")
-                                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22">
+                                <img src="{{ asset('assets/images/logo-vdni.png') }}" alt="" height="40">
                                 @elseif($cek->data_karyawan->nm_perusahaan == "VDNIP")
                                 <img src="{{ asset('assets/images/vdnip-logo.png') }}" alt="" height="35">
                                 @else
