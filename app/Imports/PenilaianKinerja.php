@@ -54,7 +54,7 @@ class PenilaianKinerja implements ToModel, WithHeadingRow, SkipsOnError, withVal
                 'efesiensi_kerja' => $row['efisiensi_kerja'],
                 'keselamatan_dalam_kerja' => $row['kesadaran_keselamatan_dalam_bekerja'],
                 'total_nilai_kinerja' => $row['total_nilai_pencapaian_kinerja'],
-                'pencapaian_kerja' => $row['pencapaian_kerja'],
+                // 'pencapaian_kerja' => $row['pencapaian_kerja'],
                 // 'sangat_baik' => $row['sangat_baik'],
                 // 'baik' => $row['baik'],
                 // 'cukup' => $row['cukup'],

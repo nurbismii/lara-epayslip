@@ -70,7 +70,7 @@ class PenilaianKinerjaController extends Controller
      */
     public function show($id)
     {
-        $data = PenilaianPencapaianKinerja::findOrFail($id);
+        $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
         ->where('periode','2023-01')
         ->first();
@@ -78,7 +78,7 @@ class PenilaianKinerjaController extends Controller
         if($data->pencapaian_kerja)
             $pencapaian_kerja = 0;
 
-            $pencapaian_kerja = $data->pencapaian_kerja;
+            $pencapaian_kerja = $data->total_nilai_pencapaian;
             
             $hasil_evaluasi_a_plus = ($pencapaian_kerja >= 18 && $pencapaian_kerja <= 20) ? $pencapaian_kerja : 0;
             $hasil_evaluasi_a = ($pencapaian_kerja >= 15 && $pencapaian_kerja <= 17) ? $pencapaian_kerja : 0;

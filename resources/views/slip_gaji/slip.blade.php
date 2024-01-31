@@ -164,7 +164,7 @@
                             ?>
                             @if($cek->data_karyawan->nm_perusahaan == "VDNI")
                             <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
-                            <h5 class="m-0 d-print-none">( PERIODE 18 {{ $nm_bln1 }} - 17 {{ $nm_bln }} )</h5>
+                            <h5 class="m-0 d-print-none">( PERIODE 16 {{ $nm_bln1 }} - 15 {{ $nm_bln }} )</h5>
                             @elseif($cek->data_karyawan->nm_perusahaan == "VDNIP")
                             <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
                             <h5 class="m-0 d-print-none">( PERIODE 16 {{ $nm_bln1 }} - 17 {{ $nm_bln }} )</h5>
