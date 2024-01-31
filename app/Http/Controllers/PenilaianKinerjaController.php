@@ -130,7 +130,7 @@ class PenilaianKinerjaController extends Controller
 
     public function detail_penilaian_kinerja()
     {
-        $data = PenilaianPencapaianKinerja::where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
+        $data = PenilaianPencapaianKinerja::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
         ->where('periode','2023-01')
         ->first();

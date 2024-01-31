@@ -19,6 +19,6 @@ class PenilaianPencapaianKinerja extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'data_karyawan_id', 'data_karyawan_id');
     }
 }

@@ -50,7 +50,7 @@ class HasilEvaluasiController extends Controller
      */
     public function show($id)
     {
-        $data = PenilaianPencapaianKinerja::findOrFail($id);
+        $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
         ->where('periode','2023-01')
         ->first();
@@ -94,7 +94,7 @@ class HasilEvaluasiController extends Controller
 
     public function detail_hasil_evaluasi ()
     {
-        $data = PenilaianPencapaianKinerja::where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
+        $data = PenilaianPencapaianKinerja::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
         ->where('periode','2023-01')
         ->first();
