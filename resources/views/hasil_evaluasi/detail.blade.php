@@ -35,8 +35,8 @@
                                     <td>{{ $data->data_karyawan->nama }}</td>
                                     <td>Departemen</td>
                                     <td>@if($div != null) {{ $div->departemen }} @endif</td>
-                                    <td rowspan="2">NPWP</td>
-                                    <td rowspan="2">{{ $data->data_karyawan->npwp }}</td>
+                                    <td rowspan="2">Email</td>
+                                    <td rowspan="2">{{ $data->user->email }}</td>
                                 </tr>
                                 <tr>
                                     <td>NIK</td>
