@@ -70,9 +70,15 @@ class EvaluasiKetenagakerjaanController extends Controller
     public function show($id)
     {
         $data = EvaluasiKetenagakerjaan::with('user')->findOrFail($id);
+
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
             ->where('periode', '2024-01')
             ->first();
+
+        if (!$div) {
+            Alert::error('Opps', 'Data gaji belum tersedia dari hasil evaluasi');
+            return back();
+        }
         return view('evaluasi_ketenagakerjaan.detail', compact('data', 'div'));
     }
 

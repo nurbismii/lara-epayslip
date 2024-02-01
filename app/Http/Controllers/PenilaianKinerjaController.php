@@ -69,9 +69,15 @@ class PenilaianKinerjaController extends Controller
     public function show($id)
     {
         $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
+
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
             ->where('periode', '2024-01')
             ->first();
+
+        if (!$div) {
+            Alert::error('Opps', 'Data gaji belum tersedia dari hasil evaluasi');
+            return back();
+        }
 
         if ($data->pencapaian_kerja)
             $pencapaian_kerja = 0;

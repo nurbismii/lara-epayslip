@@ -51,9 +51,15 @@ class HasilEvaluasiController extends Controller
     public function show($id)
     {
         $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
-        $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
+        
+        $div = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $data->data_karyawan_id)
             ->where('periode', '2024-01')
             ->first();
+
+        if(!$div){
+            Alert::error('Opps', 'Data gaji belum tersedia dari hasil evaluasi');
+            return back();
+        }
 
         return view('hasil_evaluasi.detail', compact('data', 'div'));
     }
@@ -99,7 +105,7 @@ class HasilEvaluasiController extends Controller
             Alert::error('Opps', 'Data penilaian kamu belum tersedia');
             return back();
         }
-        $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
+        $div = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $data->data_karyawan_id)
             ->where('periode', '2024-01')
             ->first();
 
