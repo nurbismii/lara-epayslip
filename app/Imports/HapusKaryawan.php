@@ -39,13 +39,13 @@ class HapusKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withValida
                 'nik' => $row['nik'],
                 'no_ktp' => $row['no_ktp'],
             ]);
+        } else {
+            DataKaryawan::where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->chunkById(1000, function ($karyawan) {
+                foreach ($karyawan as $row) {
+                    $row->delete();
+                }
+            });
         }
-
-        DataKaryawan::where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->chunkById(1000, function ($karyawan) {
-            foreach ($karyawan as $row) {
-                $row->delete();
-            }
-        });
     }
 
     public function rules(): array

@@ -82,7 +82,6 @@ class SalaryKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withVali
                 'tanggal_gajian' => Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_gajian'])),
             ]);
         }
-        $this->row++;
     }
 
     public function chunkSize(): int

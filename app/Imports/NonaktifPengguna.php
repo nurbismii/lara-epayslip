@@ -13,9 +13,6 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Validators\Failure;
-use Throwable;
-use Carbon;
 
 class NonaktifPengguna implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
 {
@@ -48,6 +45,7 @@ class NonaktifPengguna implements ToModel, WithHeadingRow, SkipsOnError, withVal
             $upd->update();
        }
     }
+    
     public function rules(): array
     {
         return [

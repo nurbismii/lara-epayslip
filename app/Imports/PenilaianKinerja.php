@@ -13,8 +13,10 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class PenilaianKinerja implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
+class PenilaianKinerja implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure, WithChunkReading, WithBatchInserts
 {
     use Importable, SkipsErrors, SkipsFailures;
 
@@ -23,25 +25,25 @@ class PenilaianKinerja implements ToModel, WithHeadingRow, SkipsOnError, withVal
 
     public function __construct()
     {
-        $this->niks = DataKaryawan::select('id','nik','no_ktp')->get();
+        $this->niks = DataKaryawan::select('id', 'nik', 'no_ktp')->get();
     }
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
-            $karyawan = $this->niks->where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->first();
-            if($karyawan === null) {
-                FailUploadKomponen::create([
-                    'baris' => $this->row,
-                    'nik' => $row['nik'],
-                    'no_ktp' => $row['no_ktp'],
-                ]);
-            } else {
+        $karyawan = $this->niks->where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->first();
+        if ($karyawan === null) {
+            FailUploadKomponen::create([
+                'baris' => $this->row,
+                'nik' => $row['nik'],
+                'no_ktp' => $row['no_ktp'],
+            ]);
+        } else {
 
-              return new PenilaianPencapaianKinerja([
+            return new PenilaianPencapaianKinerja([
                 'data_karyawan_id' => $karyawan->id ?? null,
                 'rasa_tanggung_jawab' => $row['rasa_tanggung_jawab'],
                 'kedisiplinan' => $row['kedisiplinan'],
@@ -60,8 +62,18 @@ class PenilaianKinerja implements ToModel, WithHeadingRow, SkipsOnError, withVal
                 // 'cukup' => $row['cukup'],
                 // 'kurang' => $row['kurang'],
                 'total_nilai_pencapaian' => $row['total_nilai_pencapaian_kerja'],
-              ]);
-            }
+            ]);
+        }
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
+    }
+
+    public function batchSize(): int
+    {
+        return 1000;
     }
 
     public function rules(): array

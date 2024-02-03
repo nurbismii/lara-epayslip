@@ -56,6 +56,7 @@ class PerubahanKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withVa
             $karyawan->update();
        }
     }
+    
     public function rules(): array
     {
         return [

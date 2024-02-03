@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 use App\Models\DataKaryawan;
-use App\Models\KomponenGaji;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -11,12 +10,11 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Validators\Failure;
-use Throwable;
 use Carbon;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-
-class DataKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
+class DataKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure, WithChunkReading, WithBatchInserts
 {
     use Importable, SkipsErrors, SkipsFailures;
     /**
@@ -38,6 +36,16 @@ class DataKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withValida
             'vaksin_1' => $row['vaksin'],
             'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_join'])),
         ]);
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
+    }
+
+    public function batchSize(): int
+    {
+        return 1000;
     }
 
     public function rules(): array
