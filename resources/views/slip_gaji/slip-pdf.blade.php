@@ -398,7 +398,7 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td></td>
                                         <td></td>
-                                        @if($cek->tanggal_gajian)
+                                        @if($cek->tanggal_gajian != NULL)
                                         <td>
                                             <div class="text-uppercase small fw-700 text-muted">Morosi {{ getTanggalIndo($cek->tanggal_gajian) }}</div>
                                         </td>
