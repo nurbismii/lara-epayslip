@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DataKaryawan;
 use App\Models\KomponenGaji;
-use App\Imports\SalaryKaryawans;
+use App\Jobs\ProsesImportSalary;
 use PDF;
 use Yajra\DataTables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SalaryController extends Controller
@@ -118,24 +119,49 @@ class SalaryController extends Controller
 
     public function upload(Request $request)
     {
+        // //VALIDASI
+        // $this->validate($request, [
+        //     'file' => 'required|mimes:xls,xlsx'
+        // ]);
 
-        //VALIDASI
-        $this->validate($request, [
-            'file' => 'required|mimes:xls,xlsx'
-        ]);
+        // if ($request->hasFile('file')) {
+        //     DB::table('fail_upload_komponens')->delete();
+        //     $file = $request->file('file')->store('import'); //GET FILE
+        //     $import = new SalaryKaryawans;
+        //     $import->import($file);
 
-        if ($request->hasFile('file')) {
-            DB::table('fail_upload_komponens')->delete();
-            $file = $request->file('file')->store('import'); //GET FILE
-            $import = new SalaryKaryawans;
-            $import->import($file);
+        //     if ($import->failures()->isNotEmpty()) {
+        //         return redirect()->back()->withFailures($import->failures());
+        //     }
+        //     return redirect()->back()->withStatus('File Excel Berhasil Di Upload');
+        // }
+        // return redirect()->back()->with(['error' => 'Please choose file before']);
 
-            if ($import->failures()->isNotEmpty()) {
-                return redirect()->back()->withFailures($import->failures());
+        try {
+            //VALIDASI
+            $this->validate($request, [
+                'file' => 'required|mimes:xls,xlsx'
+            ]);
+
+            if ($request->hasFile('file')) {
+
+                DB::beginTransaction();
+
+                DB::table('fail_upload_komponens')->delete();
+                $file = Storage::putFile('public', $request->file('file'));
+
+                ProsesImportSalary::dispatch($file);
+
+                DB::commit();
+                Alert::success('Sukses', 'File berhasil diupload, file sedang diproses dibelakang layar');
+                return back();
             }
-            return redirect()->back()->withStatus('File Excel Berhasil Di Upload');
+            return redirect()->back()->with(['error' => 'Please choose file before']);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Alert::error('Gagal', 'Terjadi kesalahan saat proses upload');
+            return redirect()->back();
         }
-        return redirect()->back()->with(['error' => 'Please choose file before']);
     }
 
     public function search(Request $request)
