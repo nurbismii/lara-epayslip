@@ -163,20 +163,20 @@
                             }
                             ?>
                             @if($cek->data_karyawan->nm_perusahaan == "VDNI")
-                                <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
-                                @if($cek->mulai_periode)
-                                <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
-                                @else
-                                <h5 class="m-0 d-print-none">16 {{ $nm_bln }} {{ $thn }} -  15 {{ $nm_bln }} {{ $thn }}</h5>
-                                @endif
+                            <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
+                            @if($cek->mulai_periode)
+                            <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
+                            @else
+                            <h5 class="m-0 d-print-none">16 {{ $nm_bln }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</h5>
+                            @endif
 
                             @elseif($cek->data_karyawan->nm_perusahaan == "VDNIP")
                             <h5 class="m-0 d-print-none">SLIP GAJI {{ $nm_bln }} {{ $thn }} </h5>
-                                @if($cek->mulai_periode)
-                                <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
-                                @else
-                                <h5 class="m-0 d-print-none">16 {{ $nm_bln }} {{ $thn }} -  15 {{ $nm_bln }} {{ $thn }}</h5>
-                                @endif
+                            @if($cek->mulai_periode)
+                            <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
+                            @else
+                            <h5 class="m-0 d-print-none">16 {{ $nm_bln }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</h5>
+                            @endif
                             @endif
                         </div>
                     </div>
@@ -374,7 +374,15 @@
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td>MOROSI, 31 {{ $nm_bln }} {{ $thn }}</td>
+                                        @if($cek->tanggal_gajian == NULL)
+                                        <td>
+                                            <div class="text-uppercase small fw-700 text-muted">Morosi, 31 {{ $nm_bln }} {{ $thn }}</div>
+                                        </td>
+                                        @else
+                                        <td>
+                                            <div class="text-uppercase small fw-700 text-muted">Morosi, {{ getTanggalIndo($cek->tanggal_gajian) }}</div>
+                                        </td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td>DI TRANSFER KE</td>
