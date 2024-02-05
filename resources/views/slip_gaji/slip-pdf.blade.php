@@ -398,13 +398,13 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td></td>
                                         <td></td>
-                                        @if($cek->tanggal_gajian == NULL)
+                                        @if($cek->tanggal_gajian == '')
                                         <td>
-                                            <div class="text-uppercase small fw-700 text-muted">Morosi , 31 {{ $nm_bln }} {{ $thn }}</div>
+                                            <div class="text-uppercase small fw-700 text-muted">Morosi, 31 {{ $nm_bln }} {{ $thn }}</div>
                                         </td>
                                         @else
                                         <td>
-                                            <div class="text-uppercase small fw-700 text-muted">Morosi {{ getTanggalIndo($cek->tanggal_gajian) }}</div>
+                                            <div class="text-uppercase small fw-700 text-muted">Morosi, {{ getTanggalIndo($cek->tanggal_gajian) }}</div>
                                         </td>
                                         @endif
                                     </tr>
