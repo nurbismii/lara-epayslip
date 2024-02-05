@@ -142,7 +142,7 @@ if ($bulan == "01") {
                         @if($cek->data_karyawan->nm_perusahaan == "VDNI")
                         <img src="{{ public_path('assets/images/logo-vdni.png') }}" style="height: 40px;" alt=""><br>
                         @endif
-                        @if($cek->data_karyawan->nm_perusahaan == "VDNI-P")
+                        @if($cek->data_karyawan->nm_perusahaan == "VDNIP")
                         <img src="{{ public_path('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
                         @endif
                         <span class="fw-normal">SLIP GAJI </span> <br>
@@ -398,9 +398,15 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td></td>
                                         <td></td>
+                                        @if($cek->tanggal_gajian)
                                         <td>
                                             <div class="text-uppercase small fw-700 text-muted">Morosi {{ getTanggalIndo($cek->tanggal_gajian) }}</div>
                                         </td>
+                                        @else
+                                        <td>
+                                            <div class="text-uppercase small fw-700 text-muted">Morosi , 31 {{ $nm_bln }} {{ $thn }}</div>
+                                        </td>
+                                        @endif
                                     </tr>
 
                                     <tr class="">
