@@ -39,7 +39,7 @@ class ProsesImportSalary implements ShouldQueue
     public function handle()
     {
         //
-        $filePath = './storage/app/' . $this->file;
+        $filePath = storage_path('app/' . $this->file);
 
         $reader = ReaderEntityFactory::createXLSXReader();
         // panggil class XLSXReader
@@ -162,6 +162,5 @@ class ProsesImportSalary implements ShouldQueue
 
         Storage::delete($this->file);
         // hapus file yang barusan diimport
-        // agar tidak memenuhi space
     }
 }
