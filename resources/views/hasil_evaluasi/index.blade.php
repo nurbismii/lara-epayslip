@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="content">
-
     <!-- Start Content-->
     <div class="container-fluid">
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -20,15 +18,10 @@
             </div>
         </div>
         <!-- end page title -->
-
-
-
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
                         <table id="state-saving-datatable" class="table dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
@@ -47,20 +40,16 @@
                                     @foreach ($d->data_karyawan->evaluasi_ketenagakerjaan as $evaluasi)
                                     <td>{{ $evaluasi->total_nilai }}</td>
                                     @endforeach
-
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
         <!-- end row-->
-
     </div> <!-- container -->
-
 </div>
 @if(Auth::user()->level == "Administrator")
 @include('salary.form')

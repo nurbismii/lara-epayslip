@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\DataKaryawan;
 use App\Models\FailUploadKomponen;
 use App\Models\KomponenGaji;
+use App\Models\PenilaianPencapaianKinerja;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -90,7 +91,7 @@ class ProsesImportPenilaianKinerja implements ShouldQueue
                                     'no_ktp' => $no_ktp,
                                 ]);
                             } else {
-                                KomponenGaji::insert([
+                                PenilaianPencapaianKinerja::insert([
                                     'data_karyawan_id' => $karyawan->id ?? null,
                                     'rasa_tanggung_jawab' => $rasa_tanggung_jawab,
                                     'kedisiplinan' => $kedisiplinan,
