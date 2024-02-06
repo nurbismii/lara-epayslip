@@ -15,7 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class ProsesImportPenilaianKinerja implements ShouldQueue
+class ProsesImportEvaluasiKetenagakerjaan implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

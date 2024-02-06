@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\PenilaianPencapaianKinerja;
 use App\Models\KomponenGaji;
 use App\Imports\PenilaianKinerja;
+use App\Jobs\ProsesImportPenilaianKinerja;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PenilaianKinerjaController extends Controller
@@ -46,18 +48,23 @@ class PenilaianKinerjaController extends Controller
             'file' => 'required|mimes:xls,xlsx'
         ]);
 
-        if ($request->hasFile('file')) {
-            DB::table('fail_upload_komponens')->delete();
-            $file = $request->file('file')->store('import'); //GET FILE
-            $import = new PenilaianKinerja;
-            $import->import($file);
+        try {
+            if ($request->hasFile('file')) {
+                DB::beginTransaction();
 
-            if ($import->failures()->isNotEmpty()) {
-                return redirect()->back()->withFailures($import->failures());
+                DB::table('fail_upload_komponens')->delete();
+                $file = Storage::putFile('public', $request->file('file'));
+
+                ProsesImportPenilaianKinerja::dispatch($file);
+
+                DB::commit();
+                Alert::success('Sukses', 'File berhasil diupload, file sedang diproses dibelakang layar, silahkan tunggu proses selesai');
+                return back();
             }
-            return redirect()->back()->withStatus('File Excel Berhasil Di Upload');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()->back()->with(['error' => 'Please choose file before']);
         }
-        return redirect()->back()->with(['error' => 'Please choose file before']);
     }
 
     /**
