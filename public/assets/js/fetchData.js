@@ -27,23 +27,68 @@ $(function() {
           },
           {
               data: 'gaji_pokok',
-              name: 'gaji_pokok'
+              name: 'gaji_pokok',
+              render: function(data, type, row) {
+                rupiah = '';
+                if(data > 0) {
+                    rupiah = 'Rp' + data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                }else {
+                    rupiah = '-';
+                }
+                return rupiah;
+              }
           },
           {
               data: 'tunj_um',
-              name: 'tunj_um'
+              name: 'tunj_um',
+              render: function(data, type, row) {
+                rupiah = '';
+                if(data > 0) {
+                    rupiah = 'Rp' + data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                }else {
+                    rupiah = '-';
+                }
+                return rupiah;
+              }
           },
           {
               data: 'tunj_pengawas',
-              name: 'tunj_pengawas'
+              name: 'tunj_pengawas',
+              render: function(data, type, row) {
+                rupiah = '';
+                if(data > 0) {
+                    rupiah = 'Rp' + data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                }else {
+                    rupiah = '-';
+                }
+                return rupiah;
+              }
           },
           {
               data: 'tunj_mk',
-              name: 'tunj_mk'
+              name: 'tunj_mk',
+              render: function(data, type, row) {
+                rupiah = '';
+                if(data > 0) {
+                    rupiah = 'Rp' + data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                }else {
+                    rupiah = '-';
+                }
+                return rupiah;
+              }
           },
           {
             data: 'tot_diterima',
-            name: 'tot_diterima'
+            name: 'tot_diterima',
+            render: function(data, type, row) {
+                rupiah = '';
+                if(data > 0) {
+                    rupiah = 'Rp' + data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                }else {
+                    rupiah = '-';
+                }
+                return rupiah;
+              }
           },
           {
               data: 'aksi',

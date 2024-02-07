@@ -29,7 +29,7 @@ class SalaryController extends Controller
         if ($request->ajax()) {
 
             if ((Auth::user()->level == "Administrator")) {
-                $data = KomponenGaji::join('data_karyawans', 'data_karyawans.id', '=', 'komponen_gajis.data_karyawan_id');
+                $data = KomponenGaji::join('data_karyawans', 'data_karyawans.id', '=', 'komponen_gajis.data_karyawan_id')->select('komponen_gajis.*', 'data_karyawans.nama', 'data_karyawans.nik');
             }
 
             if ($request->filled('periode')) {
