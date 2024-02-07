@@ -25,10 +25,21 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('salary.index') }}">
-                <i class="mdi mdi-clipboard-multiple-outline"></i>
-                <span> Data Gaji </span>
+            <a href="#sidebarFormsPayslip" data-toggle="collapse">
+                <i data-feather="credit-card"></i>
+                <span> Data Slip Gaji </span>
+                <span class="menu-arrow"></span>
             </a>
+            <div class="collapse" id="sidebarFormsPayslip">
+                <ul class="nav-second-level">
+                    <li>
+                        <a href="{{ route('salary.index') }}">Slip Gaji</a>
+                    </li>
+                    <li>
+                        <a href="/upload-salary">Upload Slip Gaji</a>
+                    </li>
+                </ul>
+            </div>
         </li>
         <li>
             <a href="#sidebarForms" data-toggle="collapse">
@@ -105,9 +116,9 @@
             </div>
         </li>
         @endif
-                </ul>
-            </div>
-        </li>
     </ul>
+</div>
+</li>
+</ul>
 
 </div>

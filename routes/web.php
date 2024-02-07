@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+
+Route::group(['middleware' => 'is_active'], function () {
+
+  Route::get('/upload-salary', [App\Http\Controllers\SalaryController::class, 'uploadSalary']);
+  Route::get('/salary/detail/{id}', [App\Http\Controllers\SalaryController::class, 'detailSalary'])->name('detail.salary');
+});
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
 Route::resource('karyawan', '\App\Http\Controllers\KaryawanController')->middleware('is_admin');

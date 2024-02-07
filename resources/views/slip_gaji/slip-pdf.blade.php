@@ -383,7 +383,7 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td class="">Durasi SP</td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ $durasi_sp ?? "-"}}</td>
+                                        <td class="">{{ $cek->durasi_sp <= '2015-01-01' ? '-' : $cek->durasi_sp}}</td>
                                     </tr>
                                     <tr>
                                         <td class="pb-0">

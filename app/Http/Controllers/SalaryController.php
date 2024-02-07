@@ -7,7 +7,7 @@ use App\Models\DataKaryawan;
 use App\Models\KomponenGaji;
 use App\Jobs\ProsesImportSalary;
 use PDF;
-use Yajra\DataTables\Datatables;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,82 +24,47 @@ class SalaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (Auth::user()->level == "Administrator") {
-            $periode = date('Y-m');
-            $data = KomponenGaji::where('periode', $periode)->get();
-            return view('salary.index', compact('data'));
+        if ($request->ajax()) {
+
+            if ((Auth::user()->level == "Administrator")) {
+                $data = KomponenGaji::join('data_karyawans', 'data_karyawans.id', '=', 'komponen_gajis.data_karyawan_id');
+            }
+
+            if ($request->filled('periode')) {
+                $data = $data->where('periode', $request->periode);
+            }
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('aksi', function ($data) {
+                    return view('salary._aksi', [
+                        'data' => $data,
+                        'detail_salary' => route('detail.salary', $data->id),
+                    ]);
+                })
+                ->filter(function ($instance) use ($request) {
+                    if (!empty($request->get('search'))) {
+                        $instance->where(function ($w) use ($request) {
+                            $search = $request->get('search');
+                            $w->where('nama', 'LIKE', "%$search%");
+                            $w->Orwhere('nik', 'LIKE', "%$search%");
+                        });
+                    }
+                })
+                ->rawColumns(['aksi'])
+                ->make(true);
         }
+        return view('salary.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         if (Auth::user()->level == "Administrator") {
             $cek = KomponenGaji::findOrFail($id);
             return view('slip_gaji.slip', compact('cek'));
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function api()
@@ -117,26 +82,13 @@ class SalaryController extends Controller
             ->make(true);
     }
 
+    public function uploadSalary()
+    {
+        return view('salary.upload-salary');
+    }
+
     public function upload(Request $request)
     {
-        // //VALIDASI
-        // $this->validate($request, [
-        //     'file' => 'required|mimes:xls,xlsx'
-        // ]);
-
-        // if ($request->hasFile('file')) {
-        //     DB::table('fail_upload_komponens')->delete();
-        //     $file = $request->file('file')->store('import'); //GET FILE
-        //     $import = new SalaryKaryawans;
-        //     $import->import($file);
-
-        //     if ($import->failures()->isNotEmpty()) {
-        //         return redirect()->back()->withFailures($import->failures());
-        //     }
-        //     return redirect()->back()->withStatus('File Excel Berhasil Di Upload');
-        // }
-        // return redirect()->back()->with(['error' => 'Please choose file before']);
-
         try {
             //VALIDASI
             $this->validate($request, [

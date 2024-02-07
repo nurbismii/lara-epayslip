@@ -345,14 +345,14 @@
                                     </tr>
                                     @endif
                                     <tr>
-                                        @if($cek->durasi_sp == "1970-01-01")
+                                        @if($cek->durasi_sp <= "2015-01-01")
                                         <?php $durasi_sp = ""; ?>
                                         @else
                                         <?php $durasi_sp = $cek->durasi_sp; ?>
                                         @endif
                                         <td>DURASI SURAT PERINGATAN</td>
                                         <td>:</td>
-                                        <td>{{ $durasi_sp }}</td>
+                                        <td>{{ $durasi_sp ?? '-'}}</td>
                                     </tr>
 
                                     <tr>

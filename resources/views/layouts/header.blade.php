@@ -47,4 +47,5 @@
     <script src="{{ asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
     <link href="{{ asset('assets/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
 
+    @stack('css')
 </head>

@@ -1,5 +1,4 @@
-<?php return function ($fontDir, $rootDir) {
-return array (
+<?php return array (
   'sans-serif' => array(
     'normal' => $rootDir . '/lib/fonts/Helvetica',
     'bold' => $rootDir . '/lib/fonts/Helvetica-Bold',
@@ -78,11 +77,7 @@ return array (
     'italic' => $rootDir . '/lib/fonts/DejaVuSerif-Italic',
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
-  'simhei' => array(
-    'normal' => $fontDir . '/simhei_normal_5906f806a329e01315589d76c62793f7',
-  ),
   'firefly sung' => array(
     'normal' => $fontDir . '/firefly_sung_normal_1bf217f55e33d2575e9966105a60136e',
   ),
-);
-}; ?>
+) ?>
