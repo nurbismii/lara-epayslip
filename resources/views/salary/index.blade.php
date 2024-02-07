@@ -2,6 +2,7 @@
 
 @push('css')
 <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="{{ asset('assets/css/style-custom.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
