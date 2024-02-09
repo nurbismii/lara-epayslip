@@ -130,174 +130,21 @@
                                         <td>
                                             @if(($div->data_karyawan->nm_perusahaan == 'VDNIP') && ($div->divisi == 'HUMAS 公共关系-KAPOIALA'))
 
-                                                @if(($hasil >= 1963.28) && ($hasil <= 2024)) 
-                                                
-                                                Sangat baik
+                                            @if(($hasil >= 1963.28) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1963.27)) Baik @elseif(($hasil>= 1416.8) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @elseif($div->data_karyawan->nm_perusahaan == 'VDNIP')
 
-                                                @elseif(($hasil >= 1922.8) && ($hasil <= 1963.27))
+                                                        @if(($hasil >= 1922.8) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1821.6) && ($hasil <= 1922.79)) Baik @elseif(($hasil>= 1416.8) && ($hasil <= 1821.59)) Cukup @else Kurang @endif @elseif($div->data_karyawan->nm_perusahaan == 'VDNI')
 
-                                                Baik
+                                                                    @if(($div->divisi == 'LOADER SMELTER 冶炼装载机') || ($div->divisi == 'TUNGKU 1- 15 熔炉') || ($div->divisi == 'WELDER SMELTER 钳工') || ($div->divisi == 'CONTROL ROOM SMELTER 铁厂中控') || ($div->divisi == 'GUDANG ORE 原料普工') || ($div->divisi == 'LOGISTIK 物流部'))
 
-                                                @elseif(($hasil >= 1416.8) && ($hasil <= 1922.79))
+                                                                    @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @elseif($div->departemen == 'ADMINISTRATION DEPARTMENT')
 
-                                                Cukup
+                                                                                @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @elseif($div->divisi == 'TRANSPORTASI JETTY 码头储运部')
 
-                                                @else
+                                                                                            @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @elseif($div->divisi == 'GUDANG ORE 原料普工/PELUMAS BAHAN BAKU')
 
-                                                Kurang
+                                                                                                        @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @elseif($div->divisi == 'EXCAVATOR SMELTER 冶炼挖掘机')
 
-                                                @endif
-
-                                            @elseif($div->data_karyawan->nm_perusahaan == 'VDNIP')
-                                            
-                                                @if(($hasil >= 1922.8) && ($hasil <= 2024)) 
-                                                
-                                                Sangat baik
-
-                                                @elseif(($hasil >= 1821.6) && ($hasil <= 1922.79))
-
-                                                Baik
-
-                                                @elseif(($hasil >= 1416.8) && ($hasil <= 1821.59))
-
-                                                Cukup
-
-                                                @else
-
-                                                Kurang
-
-                                                @endif
-
-                                            @elseif($div->data_karyawan->nm_perusahaan == 'VDNI')
-
-                                                @if(($div->divisi == 'LOADER SMELTER 冶炼装载机') || ($div->divisi == 'TUNGKU 1- 15 熔炉') || ($div->divisi == 'WELDER SMELTER 钳工') || ($div->divisi == 'CONTROL ROOM SMELTER  铁厂中控') || ($div->divisi == 'GUDANG ORE 原料普工') || ($div->divisi == 'LOGISTIK 物流部'))
-
-                                                    @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-
-                                                    Sangat baik
-
-                                                    @elseif(($hasil >= 1922.8) && ($hasil <= 1943.03))
-
-                                                    Baik
-
-                                                    @elseif(($hasil >= 1214.4) && ($hasil <= 1922.79))
-
-                                                    Cukup
-
-                                                    @else
-
-                                                    Kurang
-
-                                                @endif
-
-                                            @endif
-
-                                            @elseif(($div->data_karyawan->nm_perusahaan == 'VDNI') && ($div->departemen == 'ADMINISTRATION DEPARTMENT'))
-
-                                                @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-                                                
-                                                Sangat baik
-
-                                                @elseif(($hasil >= 1679.92) && ($hasil <= 1943.03))
-
-                                                Baik
-
-                                                @elseif(($hasil >= 1214.4) && ($hasil <= 1679.91))
-
-                                                Cukup
-
-                                                @else
-
-                                                Kurang
-
-                                                @endif
-
-                                            @elseif(($div->data_karyawan->nm_perusahaan == 'VDNI') && ($div->divisi == 'TRANSPORTASI JETTY 码头储运部'))
-
-                                                @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-
-                                                Sangat baik
-
-                                                @elseif(($hasil >= 1679.92) && ($hasil <= 1943.03))
-
-                                                Baik
-
-                                                @elseif(($hasil >= 1214.4) && ($hasil <= 1679.91))
-
-                                                Cukup
-
-                                                @else
-
-                                                Kurang
-
-                                                @endif
-
-                                            @elseif(($div->data_karyawan->nm_perusahaan == 'VDNI') && ($div->divisi == 'GUDANG ORE 原料普工/PELUMAS BAHAN BAKU'))
-
-                                                @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-
-                                                Sangat baik
-
-                                                @elseif(($hasil >= 1679.92) && ($hasil <= 1943.03))
-
-                                                Baik
-
-                                                @elseif(($hasil >= 1214.4) && ($hasil <= 1679.91))
-
-                                                Cukup
-
-                                                @else
-
-                                                Kurang
-
-                                                @endif
-
-                                            @elseif(($div->data_karyawan->nm_perusahaan == 'VDNI') && ($div->divisi == 'EXCAVATOR SMELTER 冶炼挖掘机'))
-
-                                                @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-
-                                                Sangat baik
-
-                                                @elseif(($hasil >= 1922.8) && ($hasil <= 1943.03))
-
-                                                Baik
-
-                                                @elseif(($hasil >= 1214.4) && ($hasil <= 1922.79))
-
-                                                Cukup
-
-                                                @else
-
-                                                Kurang
-
-                                                @endif
-
-                                            @elseif($div->data_karyawan->nm_perusahaan == 'VDNI')
-                                                
-                                                @if(($hasil >= 1902.56) && ($hasil <= 2024)) 
-                                                
-                                                Sangat baik
-
-                                                @elseif(($hasil >= 1679.92) && ($hasil <= 1902.55))
-
-                                                Baik 
-
-                                                @elseif(($hasil >= 1214.4) && ($hasil <= 1679.91))
-
-                                                Cukup
-
-                                                @else
-
-                                                Kurang
-
-                                                @endif
-                                            
-                                            @else
-
-                                            Undifined
-
-                                            @endif 
-                                        </td>
+                                                                                                                    @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @else @if(($hasil>= 1902.56) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1902.55)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @endif @else Undifined @endif </td>
                                     </tr>
                                 </tbody>
                             </table>
