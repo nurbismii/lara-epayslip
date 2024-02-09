@@ -1,62 +1,64 @@
 <?php
 
 namespace App\Imports;
+
 use App\Models\DataKaryawan;
-use App\Models\KomponenGaji;
-use App\Models\FailUploadKomponen;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Validators\Failure;
-use Throwable;
 use Carbon;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
-
-class PerubahanKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
+class PerubahanKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
 {
     use Importable, SkipsErrors, SkipsFailures;
 
     private $niks;
-    private $row = 2;
 
     public function __construct()
     {
-        $this->niks = DataKaryawan::select('id','nik','no_ktp')->get();
+        $this->niks = DataKaryawan::select('id', 'nik', 'no_ktp')->get();
     }
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function collection(Collection $collection)
     {
-        $karyawan = $this->niks->where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->first();
-        if($karyawan === null) {
-            FailUploadKomponen::create([
-                'baris' => $this->row,
-                'nik' => $row['nik'],
-                'no_ktp' => $row['no_ktp'],
-            ]);
-        } else {
-            $karyawan->nik = $row['nik'];
-            $karyawan->no_ktp = $row['no_ktp'];
-            $karyawan->nama = $row['nama'];
-            $karyawan->npwp = $row['no_npwp'];
-            $karyawan->tgl_lahir = Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_lahir']));
-            $karyawan->nm_perusahaan = $row['nm_perusahaan'];
-            $karyawan->bpjs_ket = $row['no_bpjs_kes'];
-            $karyawan->bpjs_tk = $row['no_bpjs_tk'];
-            $karyawan->vaksin_1 = $row['vaksin'];
-            $karyawan->tgl_join =  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_join']));
-            $karyawan->update();
-       }
+        foreach ($collection as $collect) {
+
+            $check_exist = DataKaryawan::where('nik', '!=', $collect['nik'])->where('no_ktp', $collect['no_ktp'])->first();
+
+            if ($check_exist) {
+                $check_exist->delete();
+            }
+
+            DataKaryawan::updateOrCreate(
+                [
+                    'nik' => $collect['nik'],
+                ],
+                [
+                    'nik' => $collect['nik'],
+                    'no_ktp' => $collect['no_ktp'],
+                    'nama' => $collect['nama'],
+                    'npwp' => $collect['no_npwp'],
+                    'tgl_lahir' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_lahir'])),
+                    'nm_perusahaan' => $collect['nm_perusahaan'],
+                    'bpjs_ket' => $collect['no_bpjs_kes'],
+                    'bpjs_tk' => $collect['no_bpjs_tk'],
+                    'vaksin_1' => $collect['vaksin'],
+                    'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_join'])),
+                ]
+            );
+        }
     }
-    
+
     public function rules(): array
     {
         return [
@@ -64,5 +66,4 @@ class PerubahanKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withVa
             '*.no_ktp' => ['required'],
         ];
     }
-
 }

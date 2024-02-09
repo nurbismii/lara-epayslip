@@ -11,9 +11,9 @@ use App\Imports\PerubahanKaryawan;
 use App\Imports\HapusKaryawan;
 use App\Jobs\ImportJob;
 use Yajra\DataTables\Datatables;
-use Auth;
-use DB;
-use Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KaryawanController extends Controller
 {
@@ -72,7 +72,7 @@ class KaryawanController extends Controller
           if($cek === Null) {
             return DataKaryawan::create($data);
           } else {
-            return DataKaryawan::create($datas);
+            return DataKaryawan::create($data);
           }
     }
 
@@ -132,7 +132,7 @@ class KaryawanController extends Controller
                 if($cek === Null) {
                     return $upd->update();
                 } else {
-                    return $upds->update();
+                    return $upd->update();
                 }
             } else if(($request['nik'] == $request['nik_lm']) && ($request['no_ktp'] != ($request['no_ktp_lm']))) {
                 $cek = DataKaryawan::where('no_ktp',$request['no_ktp'])
@@ -140,7 +140,7 @@ class KaryawanController extends Controller
                 if($cek === Null) {
                     return $upd->update();
                 } else {
-                    return $upds->update();
+                    return $upd->update();
                 }
             } else if(($request['nik'] != $request['nik_lm']) && ($request['no_ktp'] != ($request['no_ktp_lm']))) {
                $cek = DataKaryawan::where('nik',$request['nik'])
@@ -149,7 +149,7 @@ class KaryawanController extends Controller
                 if($cek === Null) {
                     return $upd->update();
                 } else {
-                    return $upds->update();
+                    return $upd->update();
                 }
             }
 
