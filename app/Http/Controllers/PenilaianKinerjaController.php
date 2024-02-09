@@ -101,6 +101,8 @@ class PenilaianKinerjaController extends Controller
         $hasil_evaluasi_c = ($pencapaian_kerja >= 4 && $pencapaian_kerja <= 4) ? $pencapaian_kerja : 0;
         $hasil_evaluasi_c_min = ($pencapaian_kerja >= 2 && $pencapaian_kerja <= 3) ?: 0;
 
+
+
         return view('penilaian_kinerja.detail', compact('data', 'div', 'hasil_evaluasi_a_plus', 'hasil_evaluasi_a', 'hasil_evaluasi_a_min', 'hasil_evaluasi_b_plus', 'hasil_evaluasi_b', 'hasil_evaluasi_b_min', 'hasil_evaluasi_c_plus', 'hasil_evaluasi_c', 'hasil_evaluasi_c_min'));
     }
 
@@ -141,14 +143,36 @@ class PenilaianKinerjaController extends Controller
     public function detail_penilaian_kinerja()
     {
         $data = PenilaianPencapaianKinerja::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
+
+
         if (!$data) {
             Alert::error('Opps', 'Data penilaian kamu belum tersedia');
             return back();
         }
+
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
             ->where('periode', '2024-01')
             ->first();
 
-        return view('penilaian_kinerja.detail', compact('data', 'div'));
+        if ($data->total_nilai_pencapaian) {
+            $pencapaian_kerja = 0;
+
+            $pencapaian_kerja = $data->total_nilai_pencapaian;
+
+            $hasil_evaluasi_a_plus = ($pencapaian_kerja >= 18 && $pencapaian_kerja <= 20) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_a = ($pencapaian_kerja >= 15 && $pencapaian_kerja <= 17) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_a_min = ($pencapaian_kerja >= 13 && $pencapaian_kerja <= 14) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_b_plus = ($pencapaian_kerja >= 11 && $pencapaian_kerja <= 12) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_b = ($pencapaian_kerja >= 9 && $pencapaian_kerja <= 10) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_b_min = ($pencapaian_kerja >= 7 && $pencapaian_kerja <= 8) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_c_plus = ($pencapaian_kerja >= 5 && $pencapaian_kerja <= 6) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_c = ($pencapaian_kerja >= 4 && $pencapaian_kerja <= 4) ? $pencapaian_kerja : 0;
+            $hasil_evaluasi_c_min = ($pencapaian_kerja >= 2 && $pencapaian_kerja <= 3) ?: 0;
+
+            return view('penilaian_kinerja.detail', compact('data', 'div', 'hasil_evaluasi_a_plus', 'hasil_evaluasi_a', 'hasil_evaluasi_a_min', 'hasil_evaluasi_b_plus', 'hasil_evaluasi_b', 'hasil_evaluasi_b_min', 'hasil_evaluasi_c_plus', 'hasil_evaluasi_c', 'hasil_evaluasi_c_min'));
+        }
+
+        Alert::error('Terjadi kesalahan', 'Opps, terjadi kesalahan penilaian kamu tidak dapat ditemukan');
+        return back();
     }
 }
