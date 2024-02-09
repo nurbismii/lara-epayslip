@@ -38,7 +38,7 @@
                                         <td>Departemen</td>
                                         <td>@if($div != null) {{ $div->departemen }} @endif</td>
                                         <td rowspan="2">Email</td>
-                                        <td rowspan="2">{{ $data->user->email }}</td>
+                                        <td rowspan="2">{{ $data->user->email ?? 'Tidak terdaftar sebagai pengguna' }}</td>
                                     </tr>
                                     <tr>
                                         <td>NIK</td>
