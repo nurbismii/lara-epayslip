@@ -126,7 +126,7 @@
                                         <?php
                                         $hasil = ($data->total_nilai_kinerja / 413.5 * 910.8) + ($data->total_nilai_pencapaian / 20 * 404.8) + ($evaluasi->total_nilai / 950 * 708.4);
                                         ?>
-                                        <td>{{ ($data->total_nilai_kinerja/413.5*910.35) + ($data->total_nilai_pencapaian/20*404.6) + ($evaluasi->total_nilai/950*708.50)  }}</td>
+                                        <td>{{ ($data->total_nilai_kinerja/413.5*910.8) + ($data->total_nilai_pencapaian/20*404.8) + ($evaluasi->total_nilai/950*708.4)  }}</td>
                                         <td>
                                             @if(($div->data_karyawan->nm_perusahaan == 'VDNIP') && ($div->divisi == 'HUMAS 公共关系-KAPOIALA'))
 
