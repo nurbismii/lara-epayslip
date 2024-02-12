@@ -51,12 +51,12 @@ class HasilEvaluasiController extends Controller
     public function show($id)
     {
         $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
-        
+
         $div = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $data->data_karyawan_id)
             ->where('periode', '2024-01')
             ->first();
 
-        if(!$div){
+        if (!$div) {
             Alert::error('Opps', 'Data gaji belum tersedia dari hasil evaluasi');
             return back();
         }
@@ -100,6 +100,11 @@ class HasilEvaluasiController extends Controller
 
     public function detail_hasil_evaluasi()
     {
+        if (Auth::user()->data_karyawan->id == '177873' || Auth::user()->data_karyawan->id == '181732' || Auth::user()->data_karyawan->id == '182177' || Auth::user()->data_karyawan->id == '182275') {
+            Alert::error('Oppss', 'Data penilaian kamu tidak dapat ditemukan, silahkan laporkan ini ke kantor HRD');
+            return back();
+        }
+
         $data = PenilaianPencapaianKinerja::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
         if (!$data) {
             Alert::error('Opps', 'Data penilaian kamu belum tersedia');

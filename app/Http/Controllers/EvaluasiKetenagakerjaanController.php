@@ -123,6 +123,11 @@ class EvaluasiKetenagakerjaanController extends Controller
 
     public function detail_evaluasi()
     {
+        if (Auth::user()->data_karyawan->id == '177873' || Auth::user()->data_karyawan->id == '181732' || Auth::user()->data_karyawan->id == '182177' || Auth::user()->data_karyawan->id == '182275') {
+            Alert::error('Oppss', 'Data penilaian kamu tidak dapat ditemukan, silahkan laporkan ini ke kantor HRD');
+            return back();
+        }
+
         $data = EvaluasiKetenagakerjaan::with('user')->where('data_karyawan_id', Auth::user()->data_karyawan->id)->first();
         if (!$data) {
             Alert::error('Opps', 'Data penilaian kamu belum tersedia');
