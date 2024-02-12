@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\DataKaryawan;
 use App\Models\User;
 use App\Models\InfoPengumuman;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 
 class HomeController extends Controller
@@ -28,11 +28,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = DB::table('users')
-                    ->where('level', 'Pengguna')
-                    ->count();
+        $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();
+        $user_nonaktif = User::where('level', 'Pengguna')->where('status', 'Tidak Aktif')->count();
         $karyawan = DB::table('data_karyawans')->count();
+        $list_queue = DB::table('jobs')->count();
         $pengumuman = InfoPengumuman::orderBy('id', 'DESC')->limit(4)->get();
-        return view('home.index', compact('user','karyawan','pengumuman'));
+
+        return view('home.index', compact('user_aktif', 'list_queue', 'user_nonaktif', 'karyawan', 'pengumuman'));
     }
 }

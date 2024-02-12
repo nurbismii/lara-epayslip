@@ -83,24 +83,57 @@
                                     <tr>
                                         <td>1</td>
                                         <td>EVALUASI PENCAPAIAN KINERJA(A)</td>
+                                        @if($data->total_nilai_kinerja/413.5*910.8 > 0)
                                         <td>{{ $data->total_nilai_kinerja  }}</td>
+                                        @else
+                                        @php
+                                        $data->total_nilai_kinerja = 0
+                                        @endphp
+                                        <td>0</td>
+                                        @endif
                                         <td>45%</td>
+                                        @if($data->total_nilai_kinerja/413.5*910.8 > 0)
                                         <td>{{ number_format($data->total_nilai_kinerja/413.5*910.8,2,'.','') }}</td>
+                                        @else
+                                        <td>0</td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td>EVALUASI PENCAPAIAN KERJA(B)</td>
+                                        @if($data->total_nilai_pencapaian > 0)
                                         <td>{{ $data->total_nilai_pencapaian }}</td>
+                                        @else
+                                        @php
+                                        $data->total_nilai_pencapaian = 0
+                                        @endphp
+                                        <td>0</td>
+                                        @endif
                                         <td>20%</td>
+                                        @if($data->total_nilai_pencapaian/20*404.8 > 0)
                                         <td>{{ number_format($data->total_nilai_pencapaian/20*404.8,2,'.','') }}</td>
+                                        @else
+                                        <td>0</td>
+                                        @endif
                                     </tr>
                                     @foreach ($data->data_karyawan->evaluasi_ketenagakerjaan as $evaluasi)
                                     <tr>
                                         <td>3</td>
                                         <td>EVALUASI PATUH KETENAGAKERJAAN(C)</td>
+                                        @if($evaluasi->total_nilai/950*708.4 > 0)
                                         <td>{{ $evaluasi->total_nilai }}</td>
+                                        @else
+                                        @php
+                                        $evaluasi->total_nilai = 0
+                                        @endphp
+                                        <td>0</td>
+                                        @endif
                                         <td>35%</td>
+                                        @if($evaluasi->total_nilai/950*708.4 > 0)
                                         <td>{{ number_format($evaluasi->total_nilai/950*708.4,2,'.','') }}</td>
+                                        @else
+                                        <td>0</td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td colspan="4"><b>TOTAL NILAI KESELURUHAN</b></td>
@@ -130,75 +163,26 @@
                                         <td>
                                             @if(($div->data_karyawan->nm_perusahaan == 'VDNIP') && ($div->divisi == 'HUMAS 公共关系-KAPOIALA'))
 
-                                            @if(($hasil >= 1963.28) && ($hasil <= 2024)) 
-                                            
-                                            Sangat baik 
-                                            @elseif(($hasil>= 1922.8) && ($hasil <= 1963.27)) Baik 
-                                            @elseif(($hasil>= 1416.8) && ($hasil <= 1922.79)) Cukup 
-                                            @else Kurang 
-                                            @endif 
-                                            
-                                            @elseif($div->data_karyawan->nm_perusahaan == 'VDNIP')
+                                            @if(($hasil >= 1963.28) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1963.27)) Baik @elseif(($hasil>= 1416.8) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @elseif($div->data_karyawan->nm_perusahaan == 'VDNIP')
 
-                                                       
-                                            
-                                            
-                                            @if(($hasil >= 1922.8) && ($hasil <= 2024)) 
-                                            
-                                            Sangat baik
-                                            @elseif(($hasil>= 1821.6) && ($hasil <= 1922.79)) 
-                                            Baik 
-                                            @elseif(($hasil>= 1416.8) && ($hasil <= 1821.59)) 
-                                            Cukup
-                                            @else Kurang 
-                                            @endif 
-                                            
-                                            @elseif($div->data_karyawan->nm_perusahaan == 'VDNI')           
-                                            
-                                            @if(($div->divisi == 'LOADER SMELTER 冶炼装载机') || ($div->divisi == 'TUNGKU 1- 15 熔炉') || ($div->divisi == 'WELDER SMELTER 钳工') || ($div->divisi == 'CONTROL ROOM SMELTER 铁厂中控') || ($div->divisi == 'GUDANG ORE 原料普工') || ($div->divisi == 'LOGISTIK 物流部') || ($div->divisi == 'EXCAVATOR SMELTER 冶炼挖掘机'))
 
-                                                                    
-                                            @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-                                            Sangat baik 
-                                            @elseif(($hasil>= 1922.8) && ($hasil <= 1943.03)) 
-                                            Baik 
-                                            @elseif(($hasil>= 1214.4) && ($hasil <= 1922.79)) 
-                                            Cukup 
-                                            @else 
-                                            Kurang 
-                                            @endif 
-                                            
-                                            @elseif($div->departemen == 'ADMINISTRATION DEPARTMENT')
 
-                                                                                
-                                            @if(($hasil >= 1943.04) && ($hasil <= 2024)) 
-                                            Sangat baik 
-                                            @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik 
-                                            @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup 
-                                            @else Kurang 
-                                            @endif
-                                            
-                                            @elseif($div->divisi == 'TRANSPORTASI JETTY 码头储运部')
 
-                                                                                           
-                                            @if(($hasil >= 1902.56) && ($hasil <= 2024)) Sangat baik 
-                                            @elseif(($hasil>= 1781.12) && ($hasil <= 1902.55)) Baik 
-                                            @elseif(($hasil>= 1214.4) && ($hasil <= 1781.11)) Cukup 
-                                            @else Kurang 
-                                            @endif 
-                                            
-                                            @elseif(($div->divisi == 'WAREHOUSE 仓库') || $div->departemen == 'SMELTER 炼铁厂')
+                                                        @if(($hasil >= 1922.8) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1821.6) && ($hasil <= 1922.79)) Baik @elseif(($hasil>= 1416.8) && ($hasil <= 1821.59)) Cukup @else Kurang @endif @elseif($div->data_karyawan->nm_perusahaan == 'VDNI')
 
-                                                                                                        
-                                            @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik 
-                                            @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik 
-                                            @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup 
-                                            @else Kurang 
-                                            @endif 
-                                            
-                                            @else 
-                                            
-                                            @if(($hasil>= 1902.56) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1902.55)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @endif @else Undifined @endif </td>
+                                                                    @if(($div->divisi == 'LOADER SMELTER 冶炼装载机') || ($div->divisi == 'TUNGKU 1- 15 熔炉') || ($div->divisi == 'WELDER SMELTER 钳工') || ($div->divisi == 'CONTROL ROOM SMELTER 铁厂中控') || ($div->divisi == 'GUDANG ORE 原料普工') || ($div->divisi == 'LOGISTIK 物流部') || ($div->divisi == 'EXCAVATOR SMELTER 冶炼挖掘机'))
+
+
+                                                                    @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @elseif($div->departemen == 'ADMINISTRATION DEPARTMENT')
+
+
+                                                                                @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @elseif($div->divisi == 'TRANSPORTASI JETTY 码头储运部')
+
+
+                                                                                            @if(($hasil >= 1902.56) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1781.12) && ($hasil <= 1902.55)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1781.11)) Cukup @else Kurang @endif @elseif(($div->divisi == 'WAREHOUSE 仓库') || $div->departemen == 'SMELTER 炼铁厂')
+
+
+                                                                                                        @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @else @if(($hasil>= 1902.56) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1902.55)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @endif @else Undifined @endif </td>
                                     </tr>
                                 </tbody>
                             </table>
