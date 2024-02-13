@@ -2,6 +2,7 @@
 
 @push('css')
 <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="{{ asset('assets/css/style-custom.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
@@ -36,46 +37,46 @@
                         </div>
                         @endif
                         @if(isset($errors) && $errors->any())
-                            <div class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    {{ $error }}
-                                @endforeach
-                            </div>
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                            {{ $error }}
+                            @endforeach
+                        </div>
                         @endif
                         <form action="{{ route('nonaktifkan_pengguna') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
-                                 <div class="form-example-wrap mg-t-30">
-                                     <div class="cmp-tb-hd cmp-int-hd">
-                                         <h5>Nonaktifkan Data Pengguna</h5>
-                                     </div>
-                                     <div class="form-example-int form-horizental">
-                                         <div class="form-group">
-                                             <div class="row">
-                                                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                                                     <label class="hrzn-fm">Pilih File (.xls .xlsx)</label>
-                                                 </div>
-                                                 <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                                                     <div class="nk-int-st">
-                                                         <input type="file" name="file" class="form-control input-sm" required>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-
-
-                                     <div class="form-example-int mg-t-15">
-                                         <div class="row">
-                                             <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-                                             </div>
-                                             <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                                                 <button class="btn btn-danger notika-btn-success">Upload</button>
-                                             </div>
-                                         </div>
-                                     </div>
+                            <div class="form-example-wrap mg-t-30">
+                                <div class="cmp-tb-hd cmp-int-hd">
+                                    <h5>Nonaktifkan Data Pengguna</h5>
+                                </div>
+                                <div class="form-example-int form-horizental">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                                <label class="hrzn-fm">Pilih File (.xls .xlsx)</label>
+                                            </div>
+                                            <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                                                <div class="nk-int-st">
+                                                    <input type="file" name="file" class="form-control input-sm" required>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                               </form>
+                                </div>
+
+
+                                <div class="form-example-int mg-t-15">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                        </div>
+                                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                                            <button class="btn btn-danger notika-btn-success">Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
@@ -107,11 +108,11 @@
                                     <td>{{ $validation->row() }}</td>
                                     <td>{{ $validation->attribute() }}</td>
                                     <td>
-                                         @foreach ($validation->errors() as $e)
-                                            <ul>
-                                                <li>{{ $e }}</li>
-                                            </ul>
-                                         @endforeach
+                                        @foreach ($validation->errors() as $e)
+                                        <ul>
+                                            <li>{{ $e }}</li>
+                                        </ul>
+                                        @endforeach
                                     </td>
                                     <td>{{ $validation->values()[$validation->attribute()] }}</td>
                                 </tr>
@@ -135,15 +136,15 @@
                 <div class="card">
                     <div class="card-body">
                         <h4> Data <span class="table-project-n">Data Pengguna</span>
-                            </h4></br>
+                        </h4></br>
                         <table id="table-list-pengguna" class="table dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
-                                    <th>Nik</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Status </th>
-                                    <th>Aksi</th>
+                                    <th width="50px">Nik</th>
+                                    <th width="100px">Nama</th>
+                                    <th width="150px">Email</th>
+                                    <th width="50px">Status </th>
+                                    <th width="120px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -170,4 +171,3 @@
 @include('user.form')
 @endif
 @endsection
-

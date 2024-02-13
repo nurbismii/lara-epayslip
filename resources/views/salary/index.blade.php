@@ -71,14 +71,14 @@
                         <table id="table-list-salary" class="table dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
-                                    <th>Nik</th>
-                                    <th>Periode</th>
-                                    <th>Gaji Pokok</th>
-                                    <th>Tunj Uang Makan</th>
-                                    <th>Tunj Pegawai</th>
-                                    <th>Tunj Masa Kerja</th>
-                                    <th>Total</th>
-                                    <th>Aksi</th>
+                                    <th width="50px">Nik</th>
+                                    <th width="50px">Periode</th>
+                                    <th width="80px">Gaji Pokok</th>
+                                    <th width="100px">Tunj Uang Makan</th>
+                                    <th width="80px">Tunj Pegawai</th>
+                                    <th width="100px">Tunj Masa Kerja</th>
+                                    <th width="80px">Total</th>
+                                    <th width="80px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
