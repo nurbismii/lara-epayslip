@@ -129,12 +129,8 @@
 
          <!-- Calendar init -->
          <script src="{{ asset('assets/js/pages/calendar.init.js') }}"></script>
- 
+
          <!-- Wizard Form -->
-         <!-- <script src="{{ asset('assets/js/steps/js/modernizr-2.6.2.min.js') }}"></script>
-         <script src="{{ asset('assets/js/steps/js/jquery.steps.min.js') }}"></script>
-         <script src="{{ asset('assets/js/steps/js/jquery.steps.js') }}"></script>
-         <script src="{{ asset('assets/js/steps/js/jquery.cookie-1.3.1.js') }}"></script> -->
          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
          <script>
              $(document).ready(function() {

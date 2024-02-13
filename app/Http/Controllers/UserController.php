@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Excel;
 use App\Imports\NonaktifPengguna;
-use App\Jobs\ImportJob;
 use Yajra\DataTables\Datatables;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -22,41 +22,39 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+
+            if ((Auth::user()->level == "Administrator")) {
+                $data = User::join('data_karyawans', 'users.data_karyawan_id', '=', 'data_karyawans.id')->select('data_karyawans.nik', 'users.*')->where('level', 'pengguna');
+            }
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    if (Auth::user()->level == "Administrator") {
+                        return view('user._aksi', [
+                            'data' => $data,
+                            'edit' => route('user.edit', $data->id),
+                            'destroy' => route('user.destroy', $data->id),
+                        ]);
+                    }
+                })
+                ->filter(function ($instance) use ($request) {
+                    if (!empty($request->get('search'))) {
+                        $instance->where(function ($w) use ($request) {
+                            $search = $request->get('search');
+                            $w->where('name', 'LIKE', "%$search%");
+                            $w->Orwhere('nik', 'LIKE', "%$search%");
+                            $w->Orwhere('email', 'LIKE', "%$search%");
+                        });
+                    }
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('user.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -67,10 +65,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $user['nik'] = $user->data_karyawan->nik;
-
-        return $user;
+        $data = User::where('id', $id)->first();
+        return view('user.edit', compact('data'));
     }
 
     /**
@@ -82,10 +78,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->status = $request['status'];
-        $user->update();
-        return $user;
+        try {
+            $user = User::findOrFail($id);
+            $user->status = $request['status'];
+            $user->update();
+            Alert::success('Berhasil', 'Perbarui data pengguna berhasil dilakukan');
+            return redirect('user');
+        } catch (\Throwable $e) {
+            Alert::error('Opps', 'Terjadi kesalahan');
+            return back();
+        }
     }
 
     /**
@@ -96,32 +98,22 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
-    }
+        $data = User::where('id', $id)->first();
 
-    public function api()
-    {
-        $nmr = '1';
-        $user = User::where('level','Pengguna')
-                    ->get();
-        return Datatables::of($user)
-         ->addColumn('action', function($user) {
-           if(Auth::user()->level == "Administrator") {
-            return
-           '<a onclick="edit_user('. $user->id .')"  class="btn btn-outline-blue waves-effect waves-light"><i class="mdi mdi-pencil"></i><b> Ubah </b></a> ' .
-           '<a onclick="delete_user('. $user->id .')" class="btn btn-outline-danger waves-effect waves-light"><i class="mdi mdi-close mr-1"></i><b> Hapus </b></a>';
+        if ($data) {
+            $data->delete();
+            Alert::success('Berhasil', 'Data pengguna berhasil dihapus');
+            return back();
         }
-        })
-        ->addColumn('nik', function($user) {
-            return $user->data_karyawan->nik;
-        })
-        ->make(true);
+
+        Alert::error('Opps', 'Data tidak dapat terjadi perubahan data');
+        return back();
     }
 
     public function nonaktifkan_pengguna(Request $request)
     {
-         //VALIDASI
-         $this->validate($request, [
+        //VALIDASI
+        $this->validate($request, [
             'file' => 'required|mimes:xls,xlsx'
         ]);
 
@@ -130,7 +122,7 @@ class UserController extends Controller
             $file = $request->file('file')->store('import'); //GET FILE
             $import = new NonaktifPengguna;
             $import->import($file);
-            if($import->failures()->isNotEmpty()){
+            if ($import->failures()->isNotEmpty()) {
                 return redirect()->back()->withFailures($import->failures());
             }
 

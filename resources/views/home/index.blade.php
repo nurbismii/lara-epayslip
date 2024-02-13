@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-xl-8">
+            <div class="col-md-6 col-lg-8">
                 <div class="widget-rounded-circle card-box">
                     <div class="row">
                         <div class="chartjs-size-monitor">

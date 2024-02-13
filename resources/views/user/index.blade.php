@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@push('css')
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
 <div class="content">
 
@@ -131,7 +136,7 @@
                     <div class="card-body">
                         <h4> Data <span class="table-project-n">Data Pengguna</span>
                             </h4></br>
-                        <table id="user-table" class="table dt-responsive nowrap w-100">
+                        <table id="table-list-pengguna" class="table dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>Nik</th>
@@ -155,6 +160,12 @@
     </div> <!-- container -->
 
 </div>
+
+@push('js')
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+@endpush
+
 @if(Auth::user()->level == "Administrator")
 @include('user.form')
 @endif

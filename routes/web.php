@@ -1,20 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 
 Auth::routes();
 
@@ -22,6 +10,13 @@ Route::group(['middleware' => 'is_active'], function () {
 
   Route::get('/upload-salary', [App\Http\Controllers\SalaryController::class, 'uploadSalary']);
   Route::get('/salary/detail/{id}', [App\Http\Controllers\SalaryController::class, 'show'])->name('detail.salary');
+  Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::get('{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::patch('{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::get('{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('nonaktifkan-pengguna', [UserController::class, 'nonaktifkan_pengguna'])->name('nonaktifkan_pengguna');
+  });
 });
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
@@ -43,8 +38,7 @@ Route::get('profile', [App\Http\Controllers\ProfileController::class, 'index'])-
 Route::get('slip-gaji', [App\Http\Controllers\SlipGajiController::class, 'index'])->name('slip_gaji')->middleware('is_active');
 Route::post('slip-gaji/cari', [App\Http\Controllers\SlipGajiController::class, 'search'])->name('search.slip_gaji')->middleware('is_active');
 Route::post('/slip-gaji/cetak_pdf', [App\Http\Controllers\SlipGajiController::class, 'cetak_pdf'])->name('cetak.slip_gaji')->middleware('is_active');
-Route::resource('user', '\App\Http\Controllers\UserController')->middleware('is_admin');
-Route::get('api/user', [App\Http\Controllers\UserController::class, 'api'])->name('api.user')->middleware('is_admin');
+
 Route::get('lupa-password', [App\Http\Controllers\LupaPasswordController::class, 'index'])->name('forget');
 Route::post('store-forget', [App\Http\Controllers\LupaPasswordController::class, 'store'])->name('store.forget');
 Route::get('konfirmasi/reset/{id}', [App\Http\Controllers\LupaPasswordController::class, 'konfirmasi'])->name('konfirmasi.reset');
@@ -59,7 +53,7 @@ Route::resource('info-pengumuman', '\App\Http\Controllers\InfoPengumumanControll
 Route::get('api/pengumuman', [App\Http\Controllers\InfoPengumumanController::class, 'api'])->name('api.pengumuman')->middleware('is_admin');
 Route::post('perubahan-data', [App\Http\Controllers\KaryawanController::class, 'perubahan'])->name('perubahan')->middleware('is_admin');
 Route::post('hapus-karyawan', [App\Http\Controllers\KaryawanController::class, 'hapus_karyawan'])->name('hapus_karyawan')->middleware('is_admin');
-Route::post('nonaktifkan-pengguna', [App\Http\Controllers\UserController::class, 'nonaktifkan_pengguna'])->name('nonaktifkan_pengguna')->middleware('is_admin');
+
 Route::resource('pencapaian-kinerja', 'App\Http\Controllers\PenilaianKinerjaController')->middleware('is_admin');
 Route::resource('evaluasi-ketangakerjaan', 'App\Http\Controllers\EvaluasiKetenagakerjaanController')->middleware('is_admin');
 Route::resource('hasil-evaluasi', 'App\Http\Controllers\HasilEvaluasiController')->middleware('is_admin');
