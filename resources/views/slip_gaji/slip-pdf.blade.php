@@ -284,7 +284,7 @@ if ($bulan == "01") {
                                             <div class="">Hour machine</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ $cek->hm ?? '-' }}</td>
+                                        <td class="">{{ number_format($cek->hm) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->insentif > 0)
@@ -296,7 +296,7 @@ if ($bulan == "01") {
                                         <td class="">{{ $cek->insentif ?? '-' }}</td>
                                     </tr>
                                     @endif
-                                    @if($cek->insentif > 0)
+                                    @if($cek->rapel > 0)
                                     <tr class="">
                                         <td>
                                             <div class="">Rapel</div>
@@ -305,7 +305,7 @@ if ($bulan == "01") {
                                         <td class="">{{ $cek->rapel ?? '-' }}</td>
                                     </tr>
                                     @endif
-                                    @if($cek->insentif > 0)
+                                    @if($cek->bonus > 0)
                                     <tr class="">
                                         <td>
                                             <div class="">Bonus</div>
