@@ -118,6 +118,7 @@
          <script src="{{ asset('assets/js/support_app.js') }}"></script>
          <script src="{{ asset('assets/js/fetchData.js') }}"></script>
          <script src="{{ asset('assets/js/fetchDataUser.js') }}"></script>
+         <script src="{{ asset('assets/js/fetchDataKaryawan.js') }}"></script>
 
          <!-- plugin js -->
          <script src="{{ asset('assets/libs/moment/min/moment.min.js') }}"></script>

@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\Datatables;
-use Auth;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PenggunaController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('auth');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -48,15 +49,15 @@ class PenggunaController extends Controller
         $level = $request['level'];
         $status = $request['status'];
 
-        $cek = User::where('email',$request['email'])->first();
-        if($cek === Null){
+        $cek = User::where('email', $request['email'])->first();
+        if ($cek === Null) {
             $simpan =  User::create([
                 'name' => $nama,
                 'email' => $email,
                 'password' => $password,
                 'status' => $status,
                 'level' => $level,
-              ]);
+            ]);
             return $simpan;
         } else {
             return $simpan;
@@ -82,7 +83,7 @@ class PenggunaController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->level == "Administrator") {
+        if (Auth::user()->level == "Administrator") {
             $data = User::findOrFail($id);
             return $data;
         }
@@ -102,14 +103,14 @@ class PenggunaController extends Controller
         $upd->email = $request['email'];
         $upd->status = $request['status'];
         $upd->level = $request['level'];
-        if(!empty($request['password'])) {
+        if (!empty($request['password'])) {
             $upd->password = Hash::make($request['password']);
         }
-        if($request['email'] == $request['email_lm']){
+        if ($request['email'] == $request['email_lm']) {
             return $upd->update();
         } else {
-            $cek = User::where('email',$request['email'])->first();
-            if($cek === Null) {
+            $cek = User::where('email', $request['email'])->first();
+            if ($cek === Null) {
                 return $upd->update();
             } else {
                 return $upds->update();
@@ -125,28 +126,28 @@ class PenggunaController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->level == "Administrator") {
+        if (Auth::user()->level == "Administrator") {
             User::destroy($id);
-          } else {
+        } else {
             Alert::error('Gagal', 'Oops, Hayoo Mau ngapain ???');
             return redirect()->route('warga.index');
-         }
+        }
     }
 
     public function api()
     {
         $nmr = '1';
-        $user = User::where('level','Administrator')
-                    ->where('id','!=',Auth::user()->id)
-                    ->get();
+        $user = User::where('level', 'Administrator')
+            ->where('id', '!=', Auth::user()->id)
+            ->get();
         return Datatables::of($user)
-         ->addColumn('action', function($user) {
-           if(Auth::user()->level == "Administrator") {
-            return
-           '<a onclick="edit_pengguna('. $user->id .')"  class="btn btn-outline-blue waves-effect waves-light"><i class="mdi mdi-pencil"></i><b> Ubah </b></a> ' .
-           '<a onclick="delete_pengguna('. $user->id .')" class="btn btn-outline-danger waves-effect waves-light"><i class="mdi mdi-close mr-1"></i><b> Hapus </b></a>';
-        }
-        })
-        ->make(true);
+            ->addColumn('action', function ($user) {
+                if (Auth::user()->level == "Administrator") {
+                    return
+                        '<a onclick="edit_pengguna(' . $user->id . ')"  class="btn btn-outline-blue waves-effect waves-light"><i class="mdi mdi-pencil"></i><b> Ubah </b></a> ' .
+                        '<a onclick="delete_pengguna(' . $user->id . ')" class="btn btn-outline-danger waves-effect waves-light"><i class="mdi mdi-close mr-1"></i><b> Hapus </b></a>';
+                }
+            })
+            ->make(true);
     }
 }

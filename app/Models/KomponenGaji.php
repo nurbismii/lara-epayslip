@@ -21,4 +21,11 @@ class KomponenGaji extends Model
     {
         return $this->belongsTo(DataKaryawan::class);
     }
+
+    public function karyawan()
+    {
+        return $this->hasOne(DataKaryawan::class, 'id', 'data_karyawan_id');
+    }
+
+
 }

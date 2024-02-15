@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -10,26 +12,39 @@ Route::group(['middleware' => 'is_active'], function () {
 
   Route::get('/upload-salary', [App\Http\Controllers\SalaryController::class, 'uploadSalary']);
   Route::get('/salary/detail/{id}', [App\Http\Controllers\SalaryController::class, 'show'])->name('detail.salary');
+
   Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');
-    Route::get('{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::patch('{id}/update', [UserController::class, 'update'])->name('user.update');
-    Route::get('{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
-    Route::post('nonaktifkan-pengguna', [UserController::class, 'nonaktifkan_pengguna'])->name('nonaktifkan_pengguna');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::patch('/{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::get('/{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/nonaktifkan-pengguna', [UserController::class, 'nonaktifkan_pengguna'])->name('nonaktifkan_pengguna');
+  });
+
+  Route::get('api/pengguna', [App\Http\Controllers\PenggunaController::class, 'api'])->name('api.pengguna');
+  Route::resource('pengguna', '\App\Http\Controllers\PenggunaController');
+
+  Route::group(['prefix' => 'karyawan'], function () {
+    Route::get('/', [KaryawanController::class, 'index'])->name('karyawan.index');
+    Route::get('/{id}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+    Route::patch('/{id}/update', [KaryawanController::class, 'update'])->name('karyawan.update');
+    Route::get('/{id}/destroy', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
+    Route::get('/{id}/show', [KaryawanController::class, 'show'])->name('karyawan.show');
+    Route::post('/upload', [KaryawanController::class, 'upload'])->name('karyawan.upload');
+    Route::post('/upload/update', [KaryawanController::class, 'perubahan'])->name('perubahan');
+    Route::post('/upload/destroy', [KaryawanController::class, 'hapus_karyawan'])->name('hapus_karyawan');
   });
 });
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
-Route::resource('karyawan', '\App\Http\Controllers\KaryawanController')->middleware('is_admin');
 Route::get('api/karyawan', [App\Http\Controllers\KaryawanController::class, 'api'])->name('api.karyawan')->middleware('is_admin');
-Route::post('upload/karyawan', [App\Http\Controllers\KaryawanController::class, 'upload'])->name('karyawan.upload')->middleware('is_admin');
+
 Route::resource('salary', '\App\Http\Controllers\SalaryController')->middleware('is_admin');
 Route::get('api/salary', [App\Http\Controllers\SalaryController::class, 'api'])->name('api.salary')->middleware('is_admin');
 Route::post('upload/salary', [App\Http\Controllers\SalaryController::class, 'upload'])->name('salary.upload')->middleware('is_admin');
 Route::post('search/salary', [App\Http\Controllers\SalaryController::class, 'search'])->name('salary.search')->middleware('is_admin');
-Route::get('api/pengguna', [App\Http\Controllers\PenggunaController::class, 'api'])->name('api.pengguna')->middleware('is_admin');
-Route::resource('pengguna', '\App\Http\Controllers\PenggunaController')->middleware('is_admin');
+
 Route::get('akun-saya', [App\Http\Controllers\SettingController::class, 'my_account'])->name('pengguna.akun')->middleware('is_active');
 Route::patch('update-akun/{id}', [App\Http\Controllers\SettingController::class, 'update'])->name('update.akun')->middleware('is_active');
 Route::post('proses-pendaftaran',  [App\Http\Controllers\PendaftaranController::class, 'pendaftaran'])->name('pendaftaran');
@@ -51,8 +66,6 @@ Route::post('store-resend', [App\Http\Controllers\ResendEmailController::class, 
 Route::get('data-tertolak', [App\Http\Controllers\FailUploadKomponenController::class, 'index'])->name('data_tertolak')->middleware('is_admin');
 Route::resource('info-pengumuman', '\App\Http\Controllers\InfoPengumumanController')->middleware('is_admin');
 Route::get('api/pengumuman', [App\Http\Controllers\InfoPengumumanController::class, 'api'])->name('api.pengumuman')->middleware('is_admin');
-Route::post('perubahan-data', [App\Http\Controllers\KaryawanController::class, 'perubahan'])->name('perubahan')->middleware('is_admin');
-Route::post('hapus-karyawan', [App\Http\Controllers\KaryawanController::class, 'hapus_karyawan'])->name('hapus_karyawan')->middleware('is_admin');
 
 Route::resource('pencapaian-kinerja', 'App\Http\Controllers\PenilaianKinerjaController')->middleware('is_admin');
 Route::resource('evaluasi-ketangakerjaan', 'App\Http\Controllers\EvaluasiKetenagakerjaanController')->middleware('is_admin');

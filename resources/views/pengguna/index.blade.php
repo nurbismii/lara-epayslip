@@ -29,9 +29,9 @@
                     <div class="card-body">
                         <h4> Data <span class="table-project-n"> Administrator</span>
                             @if(Auth::user()->level == "Administrator")
-                             <a onclick="add_pengguna()" class="btn btn-success waves-effect waves-light float-right" style="margin-top: -6px;"><i class="mdi mdi-plus-circle mr-2"></i><b> Administrator </b></a>
+                            <a onclick="add_pengguna()" class="btn btn-success waves-effect waves-light float-right" style="margin-top: -6px;"><i class="mdi mdi-plus-circle mr-2"></i><b> Administrator </b></a>
                             @endif
-                            </h4></br>
+                        </h4></br>
                         <table id="pengguna-table" class="table dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
@@ -60,4 +60,3 @@
 @include('pengguna.form')
 @endif
 @endsection
-
