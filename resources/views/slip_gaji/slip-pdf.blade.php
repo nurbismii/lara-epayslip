@@ -181,15 +181,15 @@ if ($bulan == "01") {
                                     <td>{{ $cek->departemen }}</td>
                                     <td class="">Divisi</td>
                                     <td width="20px">:</td>
-                                    <td class="">{{ $cek->posisi }}</td>
+                                    <td class="">{{ $cek->divisi }}</td>
                                 </tr>
                                 <tr>
                                     <td scope="row">Posisi</td>
                                     <td width="20px">:</td>
-                                    <td>{{ $cek->divisi }}</td>
+                                    <td>{{ $cek->posisi }}</td>
                                     <td class="">Jumlah hour machine</td>
                                     <td width="20px">:</td>
-                                    <td class="">{{ $cek->jml_hour_machine ?? '-' }} {{ $cek->jml_hour_machine != '' ? 'Jam' : ''}}</td>
+                                    <td class="">{{ $cek->jml_hour_machine == '0' ? '- Jam' : $cek->jml_hour_machine}}</td>
                                 </tr>
                             </tbody>
                         </table>
