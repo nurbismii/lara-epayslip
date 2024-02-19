@@ -211,7 +211,7 @@ if ($bulan == "01") {
                                             <div class="">Gaji pokok</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp.{{ number_format($cek->gaji_pokok) }}</td>
+                                        <td class="">Rp {{ number_format($cek->gaji_pokok) }}</td>
                                     </tr>
                                     @endif
                                     <!-- Invoice item 2-->
@@ -221,7 +221,7 @@ if ($bulan == "01") {
                                             <div class="">Tunj. Uang Makan</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->tunj_um) }}</td>
+                                        <td class="">Rp {{ number_format($cek->tunj_um) }}</td>
                                     </tr>
                                     @endif
                                     <!-- Invoice item 3-->
@@ -231,7 +231,7 @@ if ($bulan == "01") {
                                             <div class="">Tunj. Pengawas</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->tunj_pengawas) }}</td>
+                                        <td class="">Rp {{ number_format($cek->tunj_pengawas) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_koefisien > 0)
@@ -240,7 +240,7 @@ if ($bulan == "01") {
                                             <div class="">Tunj. Koefisien</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->tunj_koefisien) }}</td>
+                                        <td class="">Rp {{ number_format($cek->tunj_koefisien) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_mk > 0)
@@ -249,7 +249,7 @@ if ($bulan == "01") {
                                             <div class="">Tunj. Masa Kerja</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->tunj_mk) }}</td>
+                                        <td class="">Rp {{ number_format($cek->tunj_mk) }}</td>
                                     </tr>
                                     @endif
                                     <!-- Invoice item 4-->
@@ -259,14 +259,14 @@ if ($bulan == "01") {
                                             <div class="">Tunj. Transport</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->tunj_transport) ?? '-' }}</td>
+                                        <td class="">Rp {{ number_format($cek->tunj_transport) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_lap)
                                     <tr>
                                         <td>Tunj. Lapangan</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_lap) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_lap) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->ot > 0)
@@ -275,7 +275,7 @@ if ($bulan == "01") {
                                             <div class="">Lembur</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->ot) }}</td>
+                                        <td class="">Rp {{ number_format($cek->ot) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->hm > 0)
@@ -284,7 +284,7 @@ if ($bulan == "01") {
                                             <div class="">Hour machine</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ number_format($cek->hm) ?? '-' }}</td>
+                                        <td class="">Rp {{ number_format($cek->hm) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->insentif > 0)
@@ -293,7 +293,7 @@ if ($bulan == "01") {
                                             <div class="">Insentif</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ $cek->insentif ?? '-' }}</td>
+                                        <td class="">Rp {{ number_format($cek->insentif) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->rapel > 0)
@@ -302,7 +302,7 @@ if ($bulan == "01") {
                                             <div class="">Rapel</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ $cek->rapel ?? '-' }}</td>
+                                        <td class="">Rp {{ number_format($cek->rapel) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->bonus > 0)
@@ -311,7 +311,7 @@ if ($bulan == "01") {
                                             <div class="">Bonus</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ $cek->bonus ?? '-' }}</td>
+                                        <td class="">Rp {{ number_format($cek->bonus) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->thr > 0)
@@ -320,7 +320,7 @@ if ($bulan == "01") {
                                             <div class="">Tunj. hari raya</div>
                                         </td>
                                         <td width="20px">:</td>
-                                        <td class="">{{ $cek->thr ?? '-' }}</td>
+                                        <td class="">Rp {{ number_format($cek->thr) ?? '-' }}</td>
                                     </tr>
                                     @endif
                                 </tbody>
@@ -340,7 +340,7 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td class="">BPJS TK JHT</td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp.{{ number_format($cek->jht) }}</td>
+                                        <td class="">Rp {{ number_format($cek->jht) }}</td>
                                     </tr>
                                     @endif
                                     <!-- Invoice item 2-->
@@ -348,7 +348,7 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td class="">BPJS TK JP</td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->jp) }}</td>
+                                        <td class="">Rp {{ number_format($cek->jp) }}</td>
                                     </tr>
                                     @endif
                                     <!-- Invoice item 3-->
@@ -356,28 +356,28 @@ if ($bulan == "01") {
                                     <tr class="">
                                         <td class="">BPSJ Kesehatan</td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->pot_bpjskes) }}</td>
+                                        <td class="">Rp {{ number_format($cek->pot_bpjskes) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->unpaid_leave > 0)
                                     <tr class="">
                                         <td class="">Deduction Unpaid Leave</td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->unpaid_leave) }}</td>
+                                        <td class="">Rp {{ number_format($cek->unpaid_leave) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->deduction > 0)
                                     <tr class="">
                                         <td class="">Deduction</td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->deduction) }}</td>
+                                        <td class="">Rp {{ number_format($cek->deduction) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->deduction_pph21 > 0)
                                     <tr class="">
                                         <td class="">Deduction PPH 21</td>
                                         <td width="20px">:</td>
-                                        <td class="">Rp. {{ number_format($cek->deduction_pph21) }}</td>
+                                        <td class="">Rp {{ number_format($cek->deduction_pph21) }}</td>
                                     </tr>
                                     @endif
                                     <tr class="">
@@ -391,7 +391,7 @@ if ($bulan == "01") {
                                         </td>
                                         <td>:</td>
                                         <td class="pb-0">
-                                            <div class="h6 mb-0 fw-700">Rp. {{ number_format($cek->tot_diterima) }} </div>
+                                            <div class="h6 mb-0 fw-700">Rp {{ number_format($cek->tot_diterima) }} </div>
                                         </td>
                                     </tr>
 

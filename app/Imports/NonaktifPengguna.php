@@ -23,29 +23,29 @@ class NonaktifPengguna implements ToModel, WithHeadingRow, SkipsOnError, withVal
 
     public function __construct()
     {
-        $this->niks = DataKaryawan::select('id','nik','no_ktp')->get();
+        $this->niks = DataKaryawan::select('id', 'nik', 'no_ktp')->get();
     }
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         $karyawan = $this->niks->where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->first();
-        if($karyawan === null) {
+        if ($karyawan === null) {
             FailUploadKomponen::create([
                 'baris' => $this->row,
                 'nik' => $row['nik'],
                 'no_ktp' => $row['no_ktp'],
             ]);
         } else {
-            $upd = User::where('data_karyawan_id', $karyawan->id)->first();
-            $upd->status = $row['status'];
-            $upd->update();
-       }
+            $karyawan->update([
+                'status' => ucwords($row['status'])
+            ]);
+        }
     }
-    
+
     public function rules(): array
     {
         return [

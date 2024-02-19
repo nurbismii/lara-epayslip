@@ -201,90 +201,90 @@
                                     <tr>
                                         <td>GAJI POKOK</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->gaji_pokok) }} </td>
+                                        <td>Rp {{ number_format($cek->gaji_pokok) }} </td>
                                     </tr>
                                     @if($cek->tunj_um)
                                     <tr>
                                         <td>TUNJANGAN UANG MAKAN</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_um) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_um) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_pengawas)
                                     <tr>
                                         <td>TUNJANGAN PENGAWAS</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_pengawas) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_pengawas) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_koefisien)
                                     <tr>
                                         <td>TUNJANGAN KOEFISIEN JABATAN </td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_koefisien) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_koefisien) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_mk)
                                     <tr>
                                         <td>TUNJANGAN MASA KERJA</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_mk) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_mk) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_transport)
                                     <tr>
                                         <td>TUNJANGAN TRANSPORT & PULSA</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_transport) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_transport) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->tunj_lap)
                                     <tr>
                                         <td>TUNJANGAN KINERJA DAN LAPANGAN</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->tunj_lap) }}</td>
+                                        <td>Rp {{ number_format($cek->tunj_lap) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->ot)
                                     <tr>
                                         <td>OVERTIME</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->ot) }}</td>
+                                        <td>Rp {{ number_format($cek->ot) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->hm)
                                     <tr>
                                         <td>HOUR MACHINE</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->hm) }}</td>
+                                        <td>Rp {{ number_format($cek->hm) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->insentif)
                                     <tr>
                                         <td>INSENTIF</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->insentif) }}</td>
+                                        <td>Rp {{ number_format($cek->insentif) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->rapel)
                                     <tr>
                                         <td>RAPEL</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->rapel) }}</td>
+                                        <td>Rp {{ number_format($cek->rapel) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->bonus)
                                     <tr>
                                         <td>BONUS</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->bonus) }}</td>
+                                        <td>Rp {{ number_format($cek->bonus) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->thr)
                                     <tr>
                                         <td>TUNJANGAN HARI RAYA</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->thr) }}</td>
+                                        <td>Rp {{ number_format($cek->thr) }}</td>
                                     </tr>
                                     @endif
                                 </table>
@@ -306,42 +306,42 @@
                                     <tr>
                                         <td>BPJS TK JHT</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->jht) }} </td>
+                                        <td>Rp {{ number_format($cek->jht) }} </td>
                                     </tr>
                                     @endif
                                     @if($cek->jp)
                                     <tr>
                                         <td>BPJS TK JP</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->jp) }}</td>
+                                        <td>Rp {{ number_format($cek->jp) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->pot_bpjskes)
                                     <tr>
                                         <td>BPJS KESEHATAN</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->pot_bpjskes) }}</td>
+                                        <td>Rp {{ number_format($cek->pot_bpjskes) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->unpaid_leave)
                                     <tr>
                                         <td>DEDUCTION UNPAID LEAVE </td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->unpaid_leave) }}</td>
+                                        <td>Rp {{ number_format($cek->unpaid_leave) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->deduction)
                                     <tr>
                                         <td>DEDUCTION </td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->deduction) }}</td>
+                                        <td>Rp {{ number_format($cek->deduction) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->deduction_pph21)
                                     <tr>
                                         <td>DEDUCTION PPH 21</td>
                                         <td>:</td>
-                                        <td>Rp. {{ number_format($cek->deduction_pph21) }}</td>
+                                        <td>Rp {{ number_format($cek->deduction_pph21) }}</td>
                                     </tr>
                                     @endif
                                     <tr>
@@ -364,7 +364,7 @@
                                     <tr>
                                         <td>TOTAL DITERIMA</td>
                                         <td>:</td>
-                                        <td><b>Rp. {{ number_format($cek->tot_diterima) }} </b></td>
+                                        <td><b>Rp {{ number_format($cek->tot_diterima) }} </b></td>
                                     <tr>
                                     <tr>
                                         <td><br></td>
