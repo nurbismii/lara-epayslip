@@ -56,7 +56,7 @@ class PerubahanKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, w
                     'nik' => $collect['nik'],
                     'no_ktp' => $collect['no_ktp'],
                     'nama' => $collect['nama'],
-                    'npwp' => $collect['no_npwp'],
+                    'npwp' => str_replace(array('.', '-', ','), '', $collect['no_npwp']),
                     'tgl_lahir' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_lahir'])),
                     'nm_perusahaan' => $collect['nm_perusahaan'],
                     'bpjs_ket' => $collect['no_bpjs_kes'],
