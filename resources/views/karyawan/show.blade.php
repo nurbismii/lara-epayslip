@@ -174,6 +174,33 @@
                     <h4>{{ $data->karyawan->vaksin_1 }}</h4>
                   </td>
                 </tr>
+                <tr>
+                  <td>
+                    <h4>CUTI TAHUNAN </h4>
+                  </td>
+                  <td>
+                    <h4>:</h4>
+                  </td>
+                  <td>
+                    <h4>
+                      {{ $data_cuti->sisa_cuti ?? 'Belum tersedia' }} {{ $data_cuti->sisa_cuti == null ? '' : ' Hari' }}
+                      @if($data_cuti->sisa_cuti > 0)
+                      <span class="badge badge-primary">Kadaluwarsa {{ $jatuh_tempo }} hari lagi</span>
+                      @endif
+                    </h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h4>CUTI COVID </h4>
+                  </td>
+                  <td>
+                    <h4>:</h4>
+                  </td>
+                  <td>
+                    <h4>{{ $data_cuti->sisa_cuti_covid ?? 'Tidak diketahui' }}</h4>
+                  </td>
+                </tr>
               </table>
             </div>
           </div>
