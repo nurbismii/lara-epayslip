@@ -132,7 +132,7 @@ class KaryawanController extends Controller
                 $jatuh_tempo = date('Y-m-d', strtotime('+1 year', strtotime($tahun_sekarang . '-' .  $tanggal_masuk)));
             }
 
-            $jatuh_tempo = Carbon::now()->diffInDays($jatuh_tempo);git 
+            $jatuh_tempo = Carbon::now()->diffInDays($jatuh_tempo);
 
             return view('karyawan.show', compact('data', 'data_cuti', 'jatuh_tempo'));
         }
