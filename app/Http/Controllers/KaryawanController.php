@@ -132,9 +132,25 @@ class KaryawanController extends Controller
                 $jatuh_tempo = date('Y-m-d', strtotime('+1 year', strtotime($tahun_sekarang . '-' .  $tanggal_masuk)));
             }
 
-            $jatuh_tempo = Carbon::now()->diffInDays($jatuh_tempo);
+            $bulan = Carbon::now()->diffInMonths($jatuh_tempo);
+            $hari  = Carbon::now()->diffInDays($jatuh_tempo);
 
-            return view('karyawan.show', compact('data', 'data_cuti', 'jatuh_tempo'));
+            $msg_bulan = $bulan > 0 ? $bulan . ' ' . 'bulan' : '';
+            $msg_hari = $msg_bulan == '' ? $hari . ' ' . 'hari' : '';
+
+            $jatuh_tempo = $msg_bulan . ' ' . $msg_hari;
+
+            $masa_berlaku_covid = '2024-12-31';
+
+            $bulan_covid = Carbon::now()->diffInMonths($masa_berlaku_covid);
+            $hari_covid  = Carbon::now()->diffInDays($masa_berlaku_covid);
+
+            $msg_bulan_covid = $bulan_covid > 0 ? $bulan_covid . ' ' . 'bulan' : '';
+            $msg_hari_covid = $hari_covid == '' ? $hari_covid . ' ' . 'hari' : '';
+
+            $jatuh_tempo_covid = $msg_bulan_covid . ' ' . $msg_hari_covid;
+
+            return view('karyawan.show', compact('data', 'data_cuti', 'jatuh_tempo', 'jatuh_tempo_covid'));
         }
         Alert::error('Oppps', 'Kamu tidak dapat mengakses halaman ini');
         return back();

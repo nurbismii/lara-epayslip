@@ -179,9 +179,9 @@
                                     </td>
                                     <td>
                                         <h4>
-                                            {{ $data_cuti->sisa_cuti ?? 'Belum tersedia' }} {{ $data_cuti->sisa_cuti == null ? '' : ' Hari' }}
+                                            {{ $data_cuti->sisa_cuti ?? 'Belum tersedia' }} {{ $data_cuti->sisa_cuti > 0 ? ' hari' : '' }}
                                             @if($data_cuti->sisa_cuti > 0)
-                                            <span class="badge badge-primary">Kadaluwarsa {{ $jatuh_tempo }} hari lagi</span>
+                                            <span class="badge badge-primary">Masa berlaku {{ $jatuh_tempo }}</span>
                                             @endif
                                         </h4>
                                     </td>
@@ -194,7 +194,11 @@
                                         <h4>:</h4>
                                     </td>
                                     <td>
-                                        <h4>{{ $data_cuti->sisa_cuti_covid ?? 'Tidak diketahui' }}</h4>
+                                        <h4>{{ $data_cuti->sisa_cuti_covid == 0 ? 'Tidak tersedia' :  $data_cuti->sisa_cuti_covid}} {{ $data_cuti->sisa_cuti_covid > 0 ? ' hari' : ''}}
+                                            @if($data_cuti->sisa_cuti_covid > 0)
+                                            <span class="badge badge-primary">Masa berlaku {{ $jatuh_tempo_covid }}</span>
+                                            @endif
+                                        </h4>
                                     </td>
                                 </tr>
                             </table>
