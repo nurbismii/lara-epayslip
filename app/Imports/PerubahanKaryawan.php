@@ -63,8 +63,7 @@ class PerubahanKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, w
                         'vaksin_1' => $collect['vaksin'],
                         'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_join'])),
                     ]);
-                }
-                if ($check_exist->nik == $collect['nik'] && $check_exist->no_ktp != $collect['no_ktp']) {
+                } else {
                     DataKaryawan::updateOrCreate(
                         [
                             'nik' => $collect['nik'],
