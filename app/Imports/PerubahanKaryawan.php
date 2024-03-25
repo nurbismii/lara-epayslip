@@ -35,38 +35,23 @@ class PerubahanKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, w
     {
         foreach ($collection as $collect) {
 
-            $check_exist = DataKaryawan::where('nik', '!=', $collect['nik'])->where('no_ktp', $collect['no_ktp'])->first();
+            $check_exist = DataKaryawan::where('nik', $collect['nik'])->first();
 
             if ($check_exist) {
 
-                $check_exist->update([
-                    'status_karyawan' => 'EX KARYAWAN'
-                ]);
+                if ($check_exist->nik != $collect['nik'] && $check_exist->no_ktp == $collect['no_ktp']) {
 
-                FailUploadKomponen::create([
-                    'baris' => $this->getRowNumber(),
-                    'nik' => $check_exist->nik,
-                    'no_ktp' => $check_exist->no_ktp,
-                ]);
+                    $check_exist->update([
+                        'status_karyawan' => 'EX KARYAWAN'
+                    ]);
 
-                DataKaryawan::create([
-                    'nik' => $collect['nik'],
-                    'no_ktp' => $collect['no_ktp'],
-                    'nama' => $collect['nama'],
-                    'npwp' => str_replace(array('.', '-', ','), '', $collect['no_npwp']),
-                    'tgl_lahir' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_lahir'])),
-                    'nm_perusahaan' => $collect['nm_perusahaan'],
-                    'bpjs_ket' => $collect['no_bpjs_kes'],
-                    'bpjs_tk' => $collect['no_bpjs_tk'],
-                    'vaksin_1' => $collect['vaksin'],
-                    'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_join'])),
-                ]);
-            } else {
-                DataKaryawan::updateOrCreate(
-                    [
-                        'nik' => $collect['nik'],
-                    ],
-                    [
+                    FailUploadKomponen::create([
+                        'baris' => $this->getRowNumber(),
+                        'nik' => $check_exist->nik,
+                        'no_ktp' => $check_exist->no_ktp,
+                    ]);
+
+                    DataKaryawan::create([
                         'nik' => $collect['nik'],
                         'no_ktp' => $collect['no_ktp'],
                         'nama' => $collect['nama'],
@@ -77,8 +62,27 @@ class PerubahanKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, w
                         'bpjs_tk' => $collect['no_bpjs_tk'],
                         'vaksin_1' => $collect['vaksin'],
                         'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_join'])),
-                    ]
-                );
+                    ]);
+                }
+                if ($check_exist->nik == $collect['nik'] && $check_exist->no_ktp != $collect['no_ktp']) {
+                    DataKaryawan::updateOrCreate(
+                        [
+                            'nik' => $collect['nik'],
+                        ],
+                        [
+                            'nik' => $collect['nik'],
+                            'no_ktp' => $collect['no_ktp'],
+                            'nama' => $collect['nama'],
+                            'npwp' => str_replace(array('.', '-', ','), '', $collect['no_npwp']),
+                            'tgl_lahir' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_lahir'])),
+                            'nm_perusahaan' => $collect['nm_perusahaan'],
+                            'bpjs_ket' => $collect['no_bpjs_kes'],
+                            'bpjs_tk' => $collect['no_bpjs_tk'],
+                            'vaksin_1' => $collect['vaksin'],
+                            'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_join'])),
+                        ]
+                    );
+                }
             }
         }
     }
