@@ -30,7 +30,7 @@ class KaryawanController extends Controller
         if ($request->ajax()) {
 
             if ((Auth::user()->level == "Administrator")) {
-                $data = DataKaryawan::select('*');
+                $data = DataKaryawan::where('status_karyawan', NULL)->select('*');
             }
 
             return DataTables::of($data)

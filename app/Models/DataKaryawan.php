@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DataKaryawan extends Model
 {
     protected $fillable = [
-        'nik', 'no_ktp', 'nama', 'tgl_lahir', 'nm_perusahaan', 'npwp', 'bpjs_ket', 'bpjs_tk', 'vaksin_1', 'tgl_join'
+        'nik', 'no_ktp', 'nama', 'tgl_lahir', 'nm_perusahaan', 'npwp', 'bpjs_ket', 'bpjs_tk', 'vaksin_1', 'tgl_join', 'status_karyawan'
     ];
     use HasFactory;
 
