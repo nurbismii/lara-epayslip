@@ -17,22 +17,22 @@ class PendaftaranController extends Controller
     {
         $cek_nik = DataKaryawan::where('nik', $request['nik'])->first();
 
-        if($cek_nik == null) {
+        if ($cek_nik == null) {
             Alert::error('Gagal', 'Maaf NIK yang kamu masukkan tidak terdaftar');
             return redirect()->route('register');
         }
 
-        $cek_ktp = DataKaryawan::where('no_ktp', $request['no_ktp'])->first();
-
-        if($cek_ktp == null) {
-            Alert::error('Gagal', 'Maaf nomor KTP yang kamu masukkan tidak terdaftar');
-            return redirect()->route('register');
+        if ($cek_nik) {
+            if ($cek_nik->tgl_lahir != $request['tgl_lahir']) {
+                Alert::error('Gagal', 'Maaf tanggal lahir yang kamu masukkan tidak sesuai, harap lapor ke kantor HRD');
+                return back();
+            }
         }
 
-        $cek_tgl_lahir = DataKaryawan::where('tgl_lahir', $request['tgl_lahir'])->first();
+        $cek_ktp = DataKaryawan::where('no_ktp', $request['no_ktp'])->first();
 
-        if($cek_tgl_lahir == null) {
-            Alert::error('Gagal', 'Maaf tanggal lahir yang kamu masukkan tidak sesuai, harap lapor ke kantor HRD');
+        if ($cek_ktp == null) {
+            Alert::error('Gagal', 'Maaf nomor KTP yang kamu masukkan tidak terdaftar');
             return redirect()->route('register');
         }
 
