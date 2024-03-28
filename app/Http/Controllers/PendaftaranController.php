@@ -15,37 +15,28 @@ class PendaftaranController extends Controller
 {
     public function pendaftaran(Request $request)
     {
-        $cek_nik = DataKaryawan::where('nik', $request['nik'])->first();
+        $karyawan = DataKaryawan::where('nik', $request->nik)->first();
 
-        if ($cek_nik == null) {
-            Alert::error('Gagal', 'Maaf NIK yang kamu masukkan tidak terdaftar');
-            return redirect()->route('register');
+        if (!$karyawan) {
+            return redirect()->route('register')->with('error', 'Maaf, NIK yang Anda masukkan tidak terdaftar.');
         }
 
-        if ($cek_nik) {
-            if ($cek_nik->tgl_lahir != $request['tgl_lahir']) {
-                Alert::error('Gagal', 'Maaf tanggal lahir yang kamu masukkan tidak sesuai, harap lapor ke kantor HRD');
-                return back();
-            }
+        if ($karyawan->tgl_lahir != $request->tgl_lahir) {
+            return redirect()->route('register')->with('error', 'Maaf, tanggal lahir yang Anda masukkan tidak sesuai. Harap laporkan ke HRD.');
         }
 
-        $cek_ktp = DataKaryawan::where('no_ktp', $request['no_ktp'])->first();
-
-        if ($cek_ktp == null) {
-            Alert::error('Gagal', 'Maaf nomor KTP yang kamu masukkan tidak terdaftar');
-            return redirect()->route('register');
+        if ($karyawan->no_ktp != $request->no_ktp) {
+            return redirect()->route('register')->with('error', 'Maaf, No KTP yang kamu masukkan tidak sesuai dengan data kami. Silahkan laporkan ini ke HRD');
         }
 
-        $cek_data = DataKaryawan::where('nik', $request['nik'])->where('no_ktp', $request['no_ktp'])->where('tgl_lahir', $request['tgl_lahir'])->first();
-
-        if ($cek_data == NULL) {
-            Alert::error('Gagal', 'Maaf kamu belum terdaftar pada sistem kami!!!');
-            return redirect()->route('register');
+        if ($request->password !== $request->confirm_password) {
+            return redirect()->route('register')->with('error', 'Maaf, kata sandi dan konfirmasi kata sandi harus sama.');
         }
 
-        if ($request['password'] != $request['confirm_password']) {
-            Alert::error('Gagal', 'Maaf kata sandi dan konfirmasi kata sandi harus sama');
-            return redirect()->route('register');
+        $exist_user = User::where('email', $request->email)->orWhere('data_karyawan_id', $karyawan->id)->first();
+
+        if ($exist_user) {
+            return redirect()->route('register')->with('error', 'Maaf, data Anda telah terdaftar dalam sistem kami.');
         }
 
         $email = $request['email'];
@@ -53,16 +44,14 @@ class PendaftaranController extends Controller
         $status = "Tidak Aktif";
         $token = Str::random(32);
         $level = "Pengguna";
-        $karyawan_id = $cek_data->id;
-
-        $cek_user = User::where('email', $email)->orWhere('data_karyawan_id', $karyawan_id)->first();
+        $karyawan_id = $karyawan->id;
 
         $cek_token = User::where('token', $token)->first();
 
-        if ($cek_token == null && $cek_user == null) {
+        if ($cek_token == null && $exist_user == null) {
 
             User::create([
-                'name' => $cek_data->nama,
+                'name' => $karyawan->nama,
                 'email' => $email,
                 'password' => $password,
                 'level' => $level,
@@ -72,7 +61,7 @@ class PendaftaranController extends Controller
             ]);
 
             $param = [
-                'nama' => $cek_data->nama,
+                'nama' => $karyawan->nama,
                 'token' => $token
             ];
 
