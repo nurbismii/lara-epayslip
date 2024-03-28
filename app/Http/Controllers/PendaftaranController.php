@@ -18,25 +18,30 @@ class PendaftaranController extends Controller
         $karyawan = DataKaryawan::where('nik', $request->nik)->first();
 
         if (!$karyawan) {
-            return redirect()->route('register')->with('error', 'Maaf, NIK yang Anda masukkan tidak terdaftar.');
+            Alert::error('Gagal', 'Maaf, NIK yang Anda masukkan tidak terdaftar');
+            return redirect()->route('register');
         }
 
         if ($karyawan->tgl_lahir != $request->tgl_lahir) {
-            return redirect()->route('register')->with('error', 'Maaf, tanggal lahir yang Anda masukkan tidak sesuai. Harap laporkan ke HRD.');
+            Alert::error('Gagal', 'Maaf, tanggal lahir yang Anda masukkan tidak sesuai. Harap laporkan ke HRD.');
+            return redirect()->route('register');
         }
 
         if ($karyawan->no_ktp != $request->no_ktp) {
-            return redirect()->route('register')->with('error', 'Maaf, No KTP yang kamu masukkan tidak sesuai dengan data kami. Silahkan laporkan ini ke HRD');
+            Alert::error('Gagal', 'Maaf, No KTP yang kamu masukkan tidak sesuai dengan data kami. Silahkan laporkan ini ke HRD');
+            return redirect()->route('register');
         }
 
         if ($request->password !== $request->confirm_password) {
-            return redirect()->route('register')->with('error', 'Maaf, kata sandi dan konfirmasi kata sandi harus sama.');
+            Alert::error('Gagal', 'Maaf, kata sandi dan konfirmasi kata sandi harus sama.');
+            return redirect()->route('register');
         }
 
         $exist_user = User::where('email', $request->email)->orWhere('data_karyawan_id', $karyawan->id)->first();
 
         if ($exist_user) {
-            return redirect()->route('register')->with('error', 'Maaf, data Anda telah terdaftar dalam sistem kami.');
+            Alert::error('Gagal', 'Maaf, data Anda telah terdaftar dalam sistem kami.');
+            return redirect()->route('register');
         }
 
         $email = $request['email'];
@@ -46,32 +51,24 @@ class PendaftaranController extends Controller
         $level = "Pengguna";
         $karyawan_id = $karyawan->id;
 
-        $cek_token = User::where('token', $token)->first();
+        User::create([
+            'name' => $karyawan->nama,
+            'email' => $email,
+            'password' => $password,
+            'level' => $level,
+            'status' => $status,
+            'data_karyawan_id' => $karyawan_id,
+            'token' => $token
+        ]);
 
-        if ($cek_token == null && $exist_user == null) {
+        $param = [
+            'nama' => $karyawan->nama,
+            'token' => $token
+        ];
 
-            User::create([
-                'name' => $karyawan->nama,
-                'email' => $email,
-                'password' => $password,
-                'level' => $level,
-                'status' => $status,
-                'data_karyawan_id' => $karyawan_id,
-                'token' => $token
-            ]);
-
-            $param = [
-                'nama' => $karyawan->nama,
-                'token' => $token
-            ];
-
-            Mail::to($email)->send(new RegisterEmail($param));
-            Alert::success('Sukses', 'Pendaftaran Berhasil Silahkan Cek folder Inbox Email atau Folder Spam Email Anda. Terimakasih');
-            return redirect()->route('login');
-        }
-
-        Alert::error('info', 'Data kamu telah terdaftar disistem kami');
-        return redirect()->route('register');
+        Mail::to($email)->send(new RegisterEmail($param));
+        Alert::success('Sukses', 'Pendaftaran Berhasil Silahkan Cek folder Inbox Email atau Folder Spam Email Anda. Terimakasih');
+        return redirect()->route('login');
     }
 
     public function verifikasi($id)
