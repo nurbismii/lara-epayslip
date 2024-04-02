@@ -119,9 +119,9 @@ class ProsesImportEvaluasiKetenagakerjaan implements ShouldQueue
 
                         if (!empty($nik) && !empty($no_ktp)) {
 
-                            $karyawan = DataKaryawan::where('nik', $nik)->where('no_ktp', $no_ktp)->first();
+                            $karyawan = DataKaryawan::where('nik', $nik)->latest()->first();
 
-                            if (empty($karyawan)) {
+                            if (!$karyawan) {
                                 // jika nip tidak ada maka insert ke tabel pegawai
                                 FailUploadKomponen::insert([
                                     'baris' => $no,
