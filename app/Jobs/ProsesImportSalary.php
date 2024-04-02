@@ -63,7 +63,7 @@ class ProsesImportSalary implements ShouldQueue
                         // untuk isi kolom pertama diambil dengan $cells[0]
                         // untuk kolom kedua $cells[1], dst.
                         $nik = $cells[0];
-                        $no_ktp = str_replace(array('\'', '"'), '', $cells[1]);
+                        $no_ktp = str_replace(array('\'', '"'), '' ,$cells[1]);
                         $departemen = $cells[2];
                         $divisi = $cells[3];
                         $posisi = $cells[4];
@@ -101,9 +101,9 @@ class ProsesImportSalary implements ShouldQueue
 
                         if (!empty($nik) && !empty($no_ktp)) {
 
-                            $karyawan = DataKaryawan::where('nik', $nik)->latest()->first();
+                            $karyawan = DataKaryawan::where('nik', $nik)->where('no_ktp', $no_ktp)->first();
 
-                            if (!$karyawan) {
+                            if (empty($karyawan)) {
                                 // jika nip tidak ada maka insert ke tabel pegawai
                                 FailUploadKomponen::insert([
                                     'baris' => $no,
