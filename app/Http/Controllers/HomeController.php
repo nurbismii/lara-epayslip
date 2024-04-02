@@ -36,7 +36,7 @@ class HomeController extends Controller
 
             $user_nonaktif = User::where('level', 'Pengguna')->where('status', 'Tidak Aktif')->count();
 
-            $karyawan = DB::table('data_karyawans')->count();
+            $karyawan = DB::table('data_karyawans')->where('status_karyawan', null)->count();
 
             $list_queue = DB::table('jobs')->count();
 

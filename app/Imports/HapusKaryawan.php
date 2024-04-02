@@ -5,20 +5,22 @@ namespace App\Imports;
 use App\Models\DataKaryawan;
 use App\Models\FailUploadKomponen;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Carbon;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 
-class HapusKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
+class HapusKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, withValidation, SkipsOnFailure
 {
-    use Importable, SkipsErrors, SkipsFailures;
+    use Importable, SkipsErrors, SkipsFailures, RemembersRowNumber;
 
     private $niks;
-    private $row = 2;
 
     public function __construct()
     {
@@ -29,22 +31,25 @@ class HapusKaryawan implements ToModel, WithHeadingRow, SkipsOnError, withValida
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function model(array $row)
+    public function collection(Collection $collection)
     {
-        $karyawan = $this->niks->where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->first();
+        foreach ($collection as $collect) {
 
-        if ($karyawan === NULL) {
-            FailUploadKomponen::create([
-                'baris' => $this->row,
-                'nik' => $row['nik'],
-                'no_ktp' => $row['no_ktp'],
-            ]);
-        } else {
-            DataKaryawan::where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->chunkById(1000, function ($karyawan) {
-                foreach ($karyawan as $row) {
-                    $row->delete();
-                }
-            });
+            $check_exist = DataKaryawan::where('nik', $collect['nik'])->where('no_ktp', $collect['no_ktp'])->first();
+
+            if (empty($check_exist)) {
+                FailUploadKomponen::create([
+                    'baris' => $this->getRowNumber(),
+                    'nik' => $collect['nik'],
+                    'no_ktp' => $collect['no_ktp'],
+                ]);
+            } else {
+                DataKaryawan::where('nik', $collect['nik'])->update([
+                    'nik' => $collect['nik'],
+                    'no_ktp' => $collect['no_ktp'],
+                    'status_karyawan' => $collect['status_karyawan'],
+                ]);
+            }
         }
     }
 

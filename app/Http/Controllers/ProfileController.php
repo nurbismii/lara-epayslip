@@ -27,6 +27,11 @@ class ProfileController extends Controller
             ->orderby('periode', 'desc')
             ->first();
 
+        if (!$data) {
+            Alert::info('Info', 'Epayslip tidak dapat ditemukan..');
+            return back();
+        }
+
         $data_cuti = DB::connection('mysql_hris')->table('employees')->select('sisa_cuti', 'sisa_cuti_covid', 'entry_date')->where('nik', $data->karyawan->nik)->first();
 
         if (!$data_cuti) {
