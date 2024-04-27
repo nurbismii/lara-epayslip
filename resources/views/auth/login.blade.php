@@ -93,7 +93,7 @@
 
                     <div class="row mt-3">
                         <div class="col-12 text-center">
-                            <p> <a href="{{ route('forget') }}" class="text-white-50 ml-1">Lupa Password?</a></p>
+                            <p> <a href="{{ route('forget') }}" class="text-white ml-1"><b>Lupa Password?</b></a></p>
                             <p class="text-white-50">Belum Punya Akun? <a href="{{ route('register') }}" class="text-white ml-1"><b>Buat Akun</b></a></p>
                             <p class="text-white-50">Belum Menerima Email? <a href="{{ route('resend_email') }}" class="text-white ml-1"><b>Kirim Ulang</b></a></p>
                         </div> <!-- end col -->
@@ -112,7 +112,7 @@
     <footer class="footer footer-alt text-white-50">
         <script>
             document.write(new Date().getFullYear())
-        </script> by <a href="" class="text-white-50">IT VDNI</a>
+        </script> by <a href="" class="text-white-50">HR VDNI</a>
     </footer>
     @include('sweetalert::alert')
     <!-- Vendor js -->
