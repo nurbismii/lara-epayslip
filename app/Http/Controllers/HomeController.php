@@ -65,8 +65,10 @@ class HomeController extends Controller
 
         $list_queue = DB::table('jobs')->count();
 
-        $pengumuman = InfoPengumuman::orderBy('id', 'DESC')->limit(4)->get();
+        $pengumuman = InfoPengumuman::orderBy('id', 'ASC')->limit(4)->get();
 
-        return view('home.index', compact('user_aktif', 'list_queue', 'user_nonaktif', 'karyawan', 'pengumuman'));
+        $post_pengumuman = InfoPengumuman::where('description', '!=', null)->orderBy('id', 'DESC')->limit(4)->get();
+
+        return view('home.index', compact('user_aktif', 'post_pengumuman', 'list_queue', 'user_nonaktif', 'karyawan', 'pengumuman'));
     }
 }

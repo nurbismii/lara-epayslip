@@ -27,11 +27,23 @@ class User extends Authenticatable
         'data_karyawan_id'
     ];
 
-    public function data_karyawan() {
+    public function karyawan()
+    {
+        return $this->hasOne(DataKaryawan::class, 'id', 'data_karyawan_id');
+    }
+
+    public function komponenGaji()
+    {
+        return $this->hasOne(KomponenGaji::class, 'data_karyawan_id', 'data_karyawan_id')->orderBy('periode', 'DESC');
+    }
+
+    public function data_karyawan()
+    {
         return $this->belongsTo(DataKaryawan::class);
     }
 
-    public function lupa_password() {
+    public function lupa_password()
+    {
         return $this->hasMany(LupaPassword::class);
     }
 

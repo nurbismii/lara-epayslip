@@ -157,13 +157,63 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <!-- end row -->
         @endif
         @if(Auth::user()->level == "Pengguna")
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card bg-secondary">
+                    <div class="card-body text-white">
+                        <img src="{{ asset('assets/images/users/user-1.jpg')}}" alt="user-image" class="rounded-circle mb-3" style="height: 7em;">
+                        <h5 class="card-title text-white">{{ Auth::user()->name }} | {{ Auth::user()->karyawan->nik }} </h5>
+                        <table>
+                            <tr>
+                                <td>Departemen</td>
+                                <td>:</td>
+                                <td>{{ Auth::user()->komponenGaji->departemen }}</td>
+                            </tr>
+                            <tr>
+                                <td>Divisi</td>
+                                <td>:</td>
+                                <td>{{ Auth::user()->komponenGaji->divisi }}</td>
+                            </tr>
+                            <tr>
+                                <td>Posisi</td>
+                                <td>:</td>
+                                <td>{{ Auth::user()->komponenGaji->posisi }}</td>
+                            </tr>
+                            <tr>
+                                <td>BPJS</td>
+                                <td>:</td>
+                                <td>{{ Auth::user()->karyawan->bpjs_ket }}</td>
+                            </tr>
+                            <tr>
+                                <td>BPJS TK</td>
+                                <td>:</td>
+                                <td>{{ Auth::user()->karyawan->bpjs_tk }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        Pengumumam
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach ($post_pengumuman as $p)
+                        <a href="" data-toggle="modal" data-target="#post_pengumuman{{$p->id}}">
+                            <li class="list-group-item">{{ $p->judul }}</li>
+                        </a>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             @foreach ($pengumuman as $p)
             <div class="col-lg-6 col-xl-3">
@@ -180,8 +230,29 @@
             @endforeach
             @endif
         </div>
-        <!-- end row -->
     </div> <!-- container -->
 </div> <!-- content -->
+
+@foreach ($post_pengumuman as $p)
+<div class="modal fade" id="post_pengumuman{{$p->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">{{ $p->judul }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <img src="{{ asset('images/' . $p->image)}}" alt="user-image" class="rounded mb-3" style="height: 25em;">
+            <div class="modal-body">
+                {{ $p->description }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @endsection
