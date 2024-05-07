@@ -164,7 +164,7 @@
         @if(Auth::user()->level == "Pengguna")
         <div class="row">
             <div class="col-lg-4">
-                <div class="card bg-secondary">
+                <div class="card bg-primary">
                     <div class="card-body text-white">
                         <img src="{{ asset('assets/images/users/user-1.jpg')}}" alt="user-image" class="rounded-circle mb-3" style="height: 7em;">
                         <h5 class="card-title text-white">{{ Auth::user()->name }} | {{ Auth::user()->karyawan->nik }} </h5>
@@ -200,7 +200,7 @@
             </div>
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-primary text-white">
                         Pengumumam
                     </div>
                     <ul class="list-group list-group-flush">
