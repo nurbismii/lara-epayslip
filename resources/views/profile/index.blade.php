@@ -179,9 +179,14 @@
                                     </td>
                                     <td>
                                         <h4>
+                                            @if($data_cuti)
                                             {{ $data_cuti->sisa_cuti ?? 'Belum tersedia' }} {{ $data_cuti->sisa_cuti > 0 ? ' hari' : '' }}
+
                                             @if($data_cuti->sisa_cuti > 0)
                                             <span class="badge badge-primary">Masa berlaku {{ $jatuh_tempo }}</span>
+                                            @endif
+                                            @else
+                                            -
                                             @endif
                                         </h4>
                                     </td>
@@ -194,9 +199,14 @@
                                         <h4>:</h4>
                                     </td>
                                     <td>
-                                        <h4>{{ $data_cuti->sisa_cuti_covid == 0 ? 'Tidak tersedia' :  $data_cuti->sisa_cuti_covid}} {{ $data_cuti->sisa_cuti_covid > 0 ? ' hari' : ''}}
+                                        <h4>
+                                            @if($data_cuti)
+                                            {{ $data_cuti->sisa_cuti_covid == 0 ? 'Tidak tersedia' :  $data_cuti->sisa_cuti_covid}} {{ $data_cuti->sisa_cuti_covid > 0 ? ' hari' : ''}}
                                             @if($data_cuti->sisa_cuti_covid > 0)
                                             <span class="badge badge-primary">Masa berlaku {{ $jatuh_tempo_covid }}</span>
+                                            @endif
+                                            @else
+                                            -
                                             @endif
                                         </h4>
                                     </td>
@@ -204,17 +214,10 @@
                             </table>
                         </div>
                     </div>
-
                 </div> <!-- end card-box -->
-
-
             </div> <!-- end col-->
-
-
         </div>
         <!-- end row-->
-
     </div> <!-- container -->
-
 </div> <!-- content -->
 @endsection
