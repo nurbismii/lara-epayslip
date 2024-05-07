@@ -163,6 +163,25 @@
         @endif
         @if(Auth::user()->level == "Pengguna")
         <div class="row">
+            <div class="col-lg-8 mb-3">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($post_pengumuman as $key => $p)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img class="d-block w-100" src="{{ asset('images/'. $p->image . '') }}" alt="...">
+                        </div>
+                        @endforeach
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
             <div class="col-lg-4">
                 <div class="card bg-primary">
                     <div class="card-body text-white">
@@ -198,20 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        Pengumumam
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @foreach ($post_pengumuman as $p)
-                        <a href="" data-toggle="modal" data-target="#post_pengumuman{{$p->id}}">
-                            <li class="list-group-item">{{ $p->judul }}</li>
-                        </a>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+
         </div>
 
         <div class="row">
@@ -219,7 +225,7 @@
             <div class="col-lg-6 col-xl-3">
                 <!-- Simple card -->
                 <div class="card">
-                    <a href="{{ asset('images/500/'. $p->image .'') }}" target="_blank"><img class="card-img-top img-fluid" src="{{ asset('images/500/'. $p->image .'') }}" alt="Card image cap"></a>
+                    <a href="{{ asset('images/500/'. $p->image . '') }}" target="_blank"><img class="card-img-top img-fluid" src="{{ asset('images/500/'. $p->image .'') }}" alt="Card image cap"></a>
                     <p class="card-text" align="center"><i>{{ $p->caption }}</i></p>
                     <div class="card-body">
                         <h5 class="card-title">{{ $p->judul }}</h5>
