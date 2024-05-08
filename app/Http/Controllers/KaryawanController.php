@@ -102,6 +102,9 @@ class KaryawanController extends Controller
     public function show($id)
     {
         //
+        $jatuh_tempo = '';
+        $jatuh_tempo_covid = '';
+        
         if (Auth::user()->level == "Administrator") {
 
             $data = KomponenGaji::with('karyawan')->where('data_karyawan_id', $id)->latest()->first();
@@ -110,26 +113,22 @@ class KaryawanController extends Controller
 
             if (!$data_cuti) {
                 $tahun_sekarang = date('Y', strtotime(Carbon::now()));
-
                 $tanggal_masuk = date('m-d', strtotime($data->tgl_join));
+                $jatuh_tempo = date('Y-m-d', strtotime($tahun_sekarang . '-' .  $tanggal_masuk));
+                if ($jatuh_tempo < Carbon::now()) {
+                    $jatuh_tempo = date('Y-m-d', strtotime('+1 year', strtotime($tahun_sekarang . '-' .  $tanggal_masuk)));
+                }
+                $jatuh_tempo = Carbon::now()->diffInDays($jatuh_tempo);
 
+                return view('karyawan.show', compact('data', 'data_cuti', 'jatuh_tempo', 'jatuh_tempo_covid'));
+            } else {
+                $tahun_sekarang = date('Y', strtotime(Carbon::now()));
+                $tanggal_masuk = date('m-d', strtotime($data_cuti->entry_date));
                 $jatuh_tempo = date('Y-m-d', strtotime($tahun_sekarang . '-' .  $tanggal_masuk));
 
                 if ($jatuh_tempo < Carbon::now()) {
                     $jatuh_tempo = date('Y-m-d', strtotime('+1 year', strtotime($tahun_sekarang . '-' .  $tanggal_masuk)));
                 }
-
-                $jatuh_tempo = Carbon::now()->diffInDays($jatuh_tempo);
-            }
-
-            $tahun_sekarang = date('Y', strtotime(Carbon::now()));
-
-            $tanggal_masuk = date('m-d', strtotime($data_cuti->entry_date));
-
-            $jatuh_tempo = date('Y-m-d', strtotime($tahun_sekarang . '-' .  $tanggal_masuk));
-
-            if ($jatuh_tempo < Carbon::now()) {
-                $jatuh_tempo = date('Y-m-d', strtotime('+1 year', strtotime($tahun_sekarang . '-' .  $tanggal_masuk)));
             }
 
             $bulan = Carbon::now()->diffInMonths($jatuh_tempo);
@@ -144,10 +143,8 @@ class KaryawanController extends Controller
 
             $bulan_covid = Carbon::now()->diffInMonths($masa_berlaku_covid);
             $hari_covid  = Carbon::now()->diffInDays($masa_berlaku_covid);
-
             $msg_bulan_covid = $bulan_covid > 0 ? $bulan_covid . ' ' . 'bulan' : '';
             $msg_hari_covid = $hari_covid == '' ? $hari_covid . ' ' . 'hari' : '';
-
             $jatuh_tempo_covid = $msg_bulan_covid . ' ' . $msg_hari_covid;
 
             return view('karyawan.show', compact('data', 'data_cuti', 'jatuh_tempo', 'jatuh_tempo_covid'));
