@@ -140,10 +140,10 @@ if ($bulan == "01") {
                     <div class="text-center">
                         <h4 class="fw-bold">PT VDNI</h4>
                         @if($cek->data_karyawan->nm_perusahaan == "VDNI")
-                        <img src="{{ public_path('assets/images/logo-vdni.png') }}" style="height: 40px;" alt=""><br>
+                        <img src="{{ asset('assets/images/logo-vdni.png') }}" style="height: 40px;" alt=""><br>
                         @endif
                         @if($cek->data_karyawan->nm_perusahaan == "VDNIP")
-                        <img src="{{ public_path('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
+                        <img src="{{ asset('assets/images/vdnip-logo.png') }}" style="height: 30px;" alt=""><br>
                         @endif
                         <span class="fw-normal">SLIP GAJI </span> <br>
                         @if($cek->mulai_periode)
