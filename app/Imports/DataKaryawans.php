@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Imports;
+
 use App\Models\DataKaryawan;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -18,17 +19,17 @@ class DataKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withValida
 {
     use Importable, SkipsErrors, SkipsFailures;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new DataKaryawan([
             'nik' => $row['nik'],
             'no_ktp' => $row['no_ktp'],
             'nama' => $row['nama'],
-            'npwp' => $row['no_npwp'],
+            'npwp' => str_replace(array('.', '-'), '', $row['no_npwp']),
             'tgl_lahir' => Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_lahir'])),
             'nm_perusahaan' => $row['nm_perusahaan'],
             'bpjs_ket' => $row['no_bpjs_kes'],
@@ -55,6 +56,4 @@ class DataKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withValida
             '*.no_ktp' => ['required', 'unique:data_karyawans,no_ktp'],
         ];
     }
-
-
 }
