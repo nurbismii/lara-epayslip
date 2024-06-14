@@ -367,6 +367,8 @@ function getSelisih($data, $data_baru)
 
 function konversiNumber($number)
 {
+  $number = abs($number);
+
   if ($number >= 1000000000) {
     $miliar = floor($number / 1000000000);
     $sisa = $number % 1000000000;
