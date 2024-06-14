@@ -187,9 +187,9 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Januari</h6>
+                                        <h6 class="mb-1">Januari</h6>
                                         @if(number_format($persentase[0]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
+                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small> <br>
                                         @elseif(number_format($persentase[0]) == 0)
                                         <small class="text-muted">Data belum tersedia...</small>
                                         @else
@@ -199,11 +199,16 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[0], 2) }}%
                                             @if(number_format($persentase[0]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success"> <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[0]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[0]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[0]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -215,7 +220,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Februari</h6>
+                                        <h6 class="mb-1">Februari</h6>
                                         @if(number_format($persentase[1]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[1]) == 0)
@@ -227,11 +232,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[1], 2) }}%
                                             @if(number_format($persentase[1]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[1]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[1]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[1]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -243,7 +254,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Maret</h6>
+                                        <h6 class="mb-1">Maret</h6>
                                         @if(number_format($persentase[2]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[2]) == 0)
@@ -255,11 +266,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[2], 2) }}%
                                             @if(number_format($persentase[2]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[2]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[2]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[2]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -271,7 +288,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">April</h6>
+                                        <h6 class="mb-1">April</h6>
                                         @if(number_format($persentase[3]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[3]) == 0)
@@ -283,11 +300,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[3], 2) }}%
                                             @if(number_format($persentase[3]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[3]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[3]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[3]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -299,7 +322,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Mei</h6>
+                                        <h6 class="mb-1">Mei</h6>
                                         @if(number_format($persentase[4]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[4]) == 0)
@@ -311,11 +334,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[4], 2) }}%
                                             @if(number_format($persentase[4]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[4]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[4]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[4]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -327,7 +356,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Juni</h6>
+                                        <h6 class="mb-1">Juni</h6>
                                         @if(number_format($persentase[5]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[5]) == 0)
@@ -339,11 +368,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[5], 2) }}%
                                             @if(number_format($persentase[5]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[5]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[5]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[5]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -355,7 +390,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Juli</h6>
+                                        <h6 class="mb-1">Juli</h6>
                                         @if(number_format($persentase[6]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[6]) == 0)
@@ -367,11 +402,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[6], 2) }}%
                                             @if(number_format($persentase[6]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[6]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[6]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[6]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -383,7 +424,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Agustus</h6>
+                                        <h6 class="mb-1">Agustus</h6>
                                         @if(number_format($persentase[7]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[7]) == 0)
@@ -395,11 +436,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[7], 2) }}%
                                             @if(number_format($persentase[7]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[7]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[7]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[7]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -411,7 +458,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">September</h6>
+                                        <h6 class="mb-1">September</h6>
                                         @if(number_format($persentase[8]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[8]) == 0)
@@ -423,11 +470,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[8], 2) }}%
                                             @if(number_format($persentase[8]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[8]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[8]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[8]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -439,7 +492,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Oktober</h6>
+                                        <h6 class="mb-1">Oktober</h6>
                                         @if(number_format($persentase[9]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[9]) == 0)
@@ -451,11 +504,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[9], 2) }}%
                                             @if(number_format($persentase[9]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[9]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[9]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[9]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -467,7 +526,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">November</h6>
+                                        <h6 class="mb-1">November</h6>
                                         @if(number_format($persentase[10]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[10]) == 0)
@@ -479,11 +538,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[10], 2) }}%
                                             @if(number_format($persentase[10]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[10]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[10]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[10]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -495,7 +560,7 @@
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-0">Desember</h6>
+                                        <h6 class="mb-1">Desember</h6>
                                         @if(number_format($persentase[11]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
                                         @elseif(number_format($persentase[11]) == 0)
@@ -507,11 +572,17 @@
                                     <div class="user-progress">
                                         <small class="fw-semibold">{{ number_format($persentase[11], 2) }}%
                                             @if(number_format($persentase[11]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"></i>
+                                            <i class="fe-arrow-up font-12 text-success">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[11]) }} </small>
+                                            </i>
                                             @elseif(number_format($persentase[11]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
-                                            <i class="fe-arrow-down font-12 text-danger"></i>
+                                            <i class="fe-arrow-down font-12 text-danger">
+                                                <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[11]) }} </small>
+                                            </i>
                                             @endif
                                         </small>
                                     </div>
@@ -522,7 +593,6 @@
                 </div>
             </div>
         </div>
-
         <!-- end row -->
         @endif
         @if(Auth::user()->level == "Pengguna")
