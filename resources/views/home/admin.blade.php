@@ -169,425 +169,110 @@
                                 <div class=""></div>
                             </div>
                         </div>
-                        <canvas id="canvas" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+                        <canvas id="canvas_pay" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
                     </div>
-                </div> <!-- end row-->
-            </div> <!-- end widget-rounded-circle-->
+                </div>
+                <div class="widget-rounded-circle card-box">
+                    <div class="row">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="canvas_emp" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-6 col-lg-4 col-xl-4 order-0">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <h5 class="fw-bold">Selisih total bayar tahun {{ $tahun_lalu }} & {{ $tahun_sekarang }}</h5>
-                    </div>
+                <div class="card">
+                    <h5 class="fw-bold text-center">Selisih upah {{ $tahun_lalu }} & {{ $tahun_sekarang }}</h5>
                     <div class="card-body">
                         <ul class="p-0 m-0">
-                            <li class="d-flex mb-2">
+                            @php
+                            $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                            @endphp
+                            @for($i=0; $i < count($persentase); $i++) @if(number_format($persentase[$i])==0) @break @endif <li class="d-flex mb-2">
                                 <div class="avatar flex-shrink-0 me-3">
                                     <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-1">Januari</h6>
-                                        @if(number_format($persentase[0]) > 0)
+                                        <h6 class="mb-1">{{ $months[$i] }}</h6>
+                                        @if(number_format($persentase[$i]) > 0)
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small> <br>
-                                        @elseif(number_format($persentase[0]) == 0)
+                                        @elseif(number_format($persentase[$i]) == 0)
                                         <small class="text-muted">Data belum tersedia...</small>
                                         @else
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
                                         @endif
                                     </div>
                                     <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[0], 2) }}%
-                                            @if(number_format($persentase[0]) > 0)
+                                        <small class="fw-semibold">{{ number_format($persentase[$i], 2) }}%
+                                            @if(number_format($persentase[$i]) > 0)
                                             <i class="fe-arrow-up font-12 text-success"> <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[0]) }} </small>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
                                             </i>
-                                            @elseif(number_format($persentase[0]) == 0)
+                                            @elseif(number_format($persentase[$i]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
                                             <i class="fe-arrow-down font-12 text-danger">
                                                 <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[0]) }} </small>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
                                             </i>
                                             @endif
                                         </small>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
+                                </li>
+                                @endfor
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h5 class="fw-bold text-center">Selisih karyawan {{ $tahun_lalu }} & {{ $tahun_sekarang }}</h5>
+                    <div class="card-body">
+                        <ul class="p-0 m-0">
+                            @php
+                            $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                            @endphp
+                            @for($i=0; $i < count($persentase_selisih_karyawan); $i++) @if(number_format($persentase_selisih_karyawan[$i])==0) @break @endif <li class="d-flex mb-2">
                                 <div class="avatar flex-shrink-0 me-3">
                                     <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
-                                        <h6 class="mb-1">Februari</h6>
-                                        @if(number_format($persentase[1]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[1]) == 0)
+                                        <h6 class="mb-1">{{ $months[$i] }}</h6>
+                                        @if(number_format($persentase_selisih_karyawan[$i]) > 0)
+                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small> <br>
+                                        @elseif(number_format($persentase_selisih_karyawan[$i]) == 0)
                                         <small class="text-muted">Data belum tersedia...</small>
                                         @else
                                         <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
                                         @endif
                                     </div>
                                     <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[1], 2) }}%
-                                            @if(number_format($persentase[1]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[1]) }} </small>
+                                        <small class="fw-semibold">{{ number_format($persentase_selisih_karyawan[$i], 2) }}%
+                                            @if(number_format($persentase_selisih_karyawan[$i]) > 0)
+                                            <i class="fe-arrow-up font-12 text-success"> <br>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih_karyawan[$i]) }} karyawan</small>
                                             </i>
-                                            @elseif(number_format($persentase[1]) == 0)
+                                            @elseif(number_format($persentase_selisih_karyawan[$i]) == 0)
                                             <i class="fe-minus font-12 text-black"></i>
                                             @else
                                             <i class="fe-arrow-down font-12 text-danger">
                                                 <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[1]) }} </small>
+                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih_karyawan[$i]) }} karyawan</small>
                                             </i>
                                             @endif
                                         </small>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Maret</h6>
-                                        @if(number_format($persentase[2]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[2]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[2], 2) }}%
-                                            @if(number_format($persentase[2]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[2]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[2]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[2]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">April</h6>
-                                        @if(number_format($persentase[3]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[3]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[3], 2) }}%
-                                            @if(number_format($persentase[3]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[3]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[3]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[3]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Mei</h6>
-                                        @if(number_format($persentase[4]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[4]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[4], 2) }}%
-                                            @if(number_format($persentase[4]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[4]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[4]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[4]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Juni</h6>
-                                        @if(number_format($persentase[5]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[5]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[5], 2) }}%
-                                            @if(number_format($persentase[5]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[5]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[5]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[5]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Juli</h6>
-                                        @if(number_format($persentase[6]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[6]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[6], 2) }}%
-                                            @if(number_format($persentase[6]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[6]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[6]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[6]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Agustus</h6>
-                                        @if(number_format($persentase[7]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[7]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[7], 2) }}%
-                                            @if(number_format($persentase[7]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[7]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[7]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[7]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">September</h6>
-                                        @if(number_format($persentase[8]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[8]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[8], 2) }}%
-                                            @if(number_format($persentase[8]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[8]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[8]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[8]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Oktober</h6>
-                                        @if(number_format($persentase[9]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[9]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[9], 2) }}%
-                                            @if(number_format($persentase[9]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[9]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[9]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[9]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">November</h6>
-                                        @if(number_format($persentase[10]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[10]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[10], 2) }}%
-                                            @if(number_format($persentase[10]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[10]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[10]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[10]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-2 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">Desember</h6>
-                                        @if(number_format($persentase[11]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small>
-                                        @elseif(number_format($persentase[11]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[11], 2) }}%
-                                            @if(number_format($persentase[11]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[11]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[11]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[11]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                                @endfor
                         </ul>
                     </div>
                 </div>
@@ -620,235 +305,14 @@
 <script>
     var payroll_record = JSON.parse('{!! json_encode($total_payroll) !!}');
     var payroll_tahun_lalu_record = JSON.parse('{!! json_encode($total_payroll_tahun_lalu) !!}');
+    var total_karyawan = JSON.parse('{!! json_encode($total_karyawan) !!}');
+    var total_karyawan_tahun_lalu = JSON.parse('{!! json_encode($total_karyawan_tahun_lalu) !!}');
     var tahun_sekarang = JSON.parse('{!! json_encode($tahun_sekarang) !!}');
     var tahun_lalu = JSON.parse('{!! json_encode($tahun_lalu) !!}');
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
-<script>
-    var config = {
-        type: "line",
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agust", "Sept", "Oct", "Nov", "Dec"],
-            datasets: [{
-                    label: tahun_lalu,
-                    backgroundColor: '#d63158',
-                    borderColor: '#d63158',
-                    fill: false,
-                    data: payroll_tahun_lalu_record
-                },
-                {
-                    label: tahun_sekarang,
-                    backgroundColor: '#397ecc',
-                    borderColor: '#397ecc',
-                    fill: false,
-                    data: payroll_record
-                }
-            ]
-        },
-        options: {
-            tooltips: {
-                callbacks: {
-                    label: function(t, d) {
-                        var xLabel = d.datasets[t.datasetIndex].label;
-                        var yLabel = t.yLabel >= 1000 ? 'Rp ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'Rp ' + t.yLabel;
-                        var result = yLabel.length >= 16 ? yLabel.substring(0, 5) : yLabel;
-                        return ': ' + yLabel;
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        callback: function(value, index, yValues) {
-                            if (parseInt(value) >= 1000) {
-                                var rupiah = 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                return rupiah.length >= 16 ? rupiah.substring(0, 5) + ' M' : rupiah
-                            } else {
-                                return 'Rp ' + value;
-                            }
-                        }
-                    }
-                }]
-            },
-            responsive: true,
-            title: {
-                display: true,
-                text: "Line chart payroll " + tahun_lalu + ' & ' + tahun_sekarang
-            },
-        }
-    };
-
-    window.onload = function() {
-        var ctx = document.getElementById("canvas").getContext("2d");
-        window.myLine = new Chart(ctx, config);
-    };
-
-    document.getElementById("randomizeData").addEventListener("click", function() {
-        config.data.datasets.forEach(function(dataset) {
-            dataset.data = dataset.data.map(function() {
-                return randomScalingFactor();
-            });
-        });
-
-        window.myLine.update();
-    });
-</script>
-
-<script>
-    var xValues = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agust", "Sept", "Oct", "Nov", "Dec"];
-    var yValues = payroll_record;
-    var barColors = [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-    ];
-    var borderColor = [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255,99,132,1)',
-        'rgba(255, 206, 86, 1)',
-    ]
-
-    new Chart("payroll-chart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColors,
-                borderColor: borderColor,
-                data: yValues
-            }]
-        },
-        options: {
-            tooltips: {
-                callbacks: {
-                    label: function(t, d) {
-                        var xLabel = d.datasets[t.datasetIndex].label;
-                        var yLabel = t.yLabel >= 1000 ? 'Rp ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'Rp ' + t.yLabel;
-                        var result = yLabel.length >= 16 ? yLabel.substring(0, 5) : yLabel;
-                        return ': ' + yLabel;
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        callback: function(value, index, yValues) {
-                            if (parseInt(value) >= 1000) {
-                                var rupiah = 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                return rupiah.length >= 16 ? rupiah.substring(0, 5) + ' M' : rupiah
-                            } else {
-                                return 'Rp ' + value;
-                            }
-                        }
-                    }
-                }]
-            },
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: "Grafik payroll tahun " + tahun_sekarang
-            }
-        }
-    });
-
-    var xValues = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agust", "Sept", "Oct", "Nov", "Dec"];
-    var yValues = payroll_tahun_lalu_record;
-    var barColors = [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-    ];
-    var borderColor = [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255,99,132,1)',
-        'rgba(255, 206, 86, 1)',
-    ]
-
-    new Chart("payroll-chart-tahun-lalu", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColors,
-                borderColor: borderColor,
-                data: yValues
-            }]
-        },
-        options: {
-            tooltips: {
-                callbacks: {
-                    label: function(t, d) {
-                        var xLabel = d.datasets[t.datasetIndex].label;
-                        var yLabel = t.yLabel >= 1000 ? 'Rp ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'Rp ' + t.yLabel;
-                        var result = yLabel.length >= 16 ? yLabel.substring(0, 5) : yLabel;
-                        return ': ' + yLabel;
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        callback: function(value, index, yValues) {
-                            if (parseInt(value) >= 1000) {
-                                var rupiah = 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                return rupiah.length >= 16 ? rupiah.substring(0, 5) + ' M' : rupiah
-                            } else {
-                                return 'Rp ' + value;
-                            }
-                        }
-                    }
-                }]
-            },
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: "Grafik payroll tahun " + tahun_lalu
-            }
-        }
-    });
-</script>
+<script src="{{ asset('assets/js/lineChart.js') }}"></script>
 
 @endpush
 @endsection

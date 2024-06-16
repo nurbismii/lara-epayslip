@@ -50,13 +50,21 @@ class HomeController extends Controller
 
             $total_payroll_tahun_lalu = getDataPayroll($gaji, $tahun_lalu);
 
+            $total_karyawan = getTotalKaryawan($gaji, $tahun_sekarang);
+
+            $total_karyawan_tahun_lalu = getTotalKaryawan($gaji, $tahun_lalu);
+
+            $persentase_selisih_karyawan = persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
+            
+            $selisih_karyawan = selisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
+
             $persentase = getPersentase($total_payroll_tahun_lalu, $total_payroll);
 
             $selisih = getSelisih($total_payroll_tahun_lalu, $total_payroll);
 
             $pengumuman = InfoPengumuman::orderBy('id', 'DESC')->limit(4)->get();
 
-            return view('home.admin', compact('selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
+            return view('home.admin', compact('selisih_karyawan' ,'persentase_selisih_karyawan', 'total_karyawan', 'total_karyawan_tahun_lalu', 'selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
         }
 
         $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();

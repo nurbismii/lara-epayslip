@@ -37,7 +37,6 @@ Route::group(['middleware' => 'is_active'], function () {
 });
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
 Route::get('api/karyawan', [App\Http\Controllers\KaryawanController::class, 'api'])->name('api.karyawan')->middleware('is_admin');
 
 Route::resource('salary', '\App\Http\Controllers\SalaryController')->middleware('is_admin');

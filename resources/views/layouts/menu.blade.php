@@ -2,13 +2,23 @@
 <div id="sidebar-menu">
 
     <ul id="side-menu">
-
         <li class="menu-title">Menu</li>
         <li>
-            <a href="{{ route('home') }}">
-                <i class="mdi mdi-view-dashboard-outline"></i>
-                <span> Dashboards </span>
+            <a href="#sidebarDashboard" data-toggle="collapse">
+                <i data-feather="credit-card"></i>
+                <span> Dashboard</span>
+                <span class="menu-arrow"></span>
             </a>
+            <div class="collapse" id="sidebarDashboard">
+                <ul class="nav-second-level">
+                    <li>
+                        <a href="{{ route('home') }}">Dashboard 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Dashboard 2</a>
+                    </li>
+                </ul>
+            </div>
         </li>
         @if(Auth::user()->level == "Administrator")
         <li>
