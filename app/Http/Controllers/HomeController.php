@@ -29,7 +29,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::user()->level == 'Administrator') {
             $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();
@@ -40,11 +40,11 @@ class HomeController extends Controller
 
             $list_queue = DB::table('jobs')->count();
 
-            $gaji = KomponenGaji::select('periode', 'tot_diterima')->get();
+            $gaji = KomponenGaji::select('periode', 'gaji_pokok')->get();
 
-            $tahun_sekarang = date('Y', strtotime(Carbon::now()));
+            $tahun_sekarang = $request->tahun != '' ? $request->tahun : date('Y', strtotime(Carbon::now()));
 
-            $tahun_lalu = date('Y', strtotime("$tahun_sekarang -1 Year"));
+            $tahun_lalu = $tahun_sekarang - 1;
 
             $total_payroll = getDataPayroll($gaji, $tahun_sekarang);
 
@@ -53,6 +53,10 @@ class HomeController extends Controller
             $total_karyawan = getTotalKaryawan($gaji, $tahun_sekarang);
 
             $total_karyawan_tahun_lalu = getTotalKaryawan($gaji, $tahun_lalu);
+
+            $rerata_upah = rerataUpah($total_payroll, $total_karyawan);
+
+            $rerata_upah_tahun_lalu = rerataUpahTahunLalu($total_payroll_tahun_lalu, $total_karyawan_tahun_lalu);
 
             $persentase_selisih_karyawan = persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
             
@@ -64,7 +68,7 @@ class HomeController extends Controller
 
             $pengumuman = InfoPengumuman::orderBy('id', 'DESC')->limit(4)->get();
 
-            return view('home.admin', compact('selisih_karyawan' ,'persentase_selisih_karyawan', 'total_karyawan', 'total_karyawan_tahun_lalu', 'selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
+            return view('home.admin', compact('rerata_upah_tahun_lalu', 'rerata_upah', 'selisih_karyawan' ,'persentase_selisih_karyawan', 'total_karyawan', 'total_karyawan_tahun_lalu', 'selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
         }
 
         $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();

@@ -157,123 +157,287 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-6 col-lg-8">
-                <div class="widget-rounded-circle card-box">
-                    <div class="row">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" method="get">
+                            <select name="tahun" class="form-control mb-2">
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                            </select>
+                            <div class="mb-0">
+                                <a href="{{ route('home') }}" class="btn btn-warning">Bersihkan</a>
+                                <button type="submit" class="btn btn-primary">Cari data</button>
                             </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="canvas_pay" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+                        </form>
                     </div>
                 </div>
+
                 <div class="widget-rounded-circle card-box">
-                    <div class="row">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
+                    <nav id="navbar-example2" class="navbar navbar-light bg-light">
+                        <a class="navbar-brand" href="#">Navigasi</a>
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#upah_pokok">Upah Pokok</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#penerima_upah">Penerima upah</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Lainnya</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#one">Selisih upah</a>
+                                    <a class="dropdown-item" href="#two">Selisih karyawan</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#three">Rata rata upah</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+                        <div class="row" id="upah_pokok">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
                             </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
+                            <canvas id="canvas_pay" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
                         </div>
-                        <canvas id="canvas_emp" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+                        <div class="row" id="penerima_upah">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="canvas_emp" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4 col-xl-4 order-0">
-                <div class="card">
-                    <h5 class="fw-bold text-center">Selisih upah {{ $tahun_lalu }} & {{ $tahun_sekarang }}</h5>
-                    <div class="card-body">
-                        <ul class="p-0 m-0">
-                            @php
-                            $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                            @endphp
-                            @for($i=0; $i < count($persentase); $i++) @if(number_format($persentase[$i])==0) @break @endif <li class="d-flex mb-2">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">{{ $months[$i] }}</h6>
-                                        @if(number_format($persentase[$i]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small> <br>
-                                        @elseif(number_format($persentase[$i]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase[$i], 2) }}%
-                                            @if(number_format($persentase[$i]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"> <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
-                                            </i>
-                                            @elseif(number_format($persentase[$i]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                                </li>
-                                @endfor
-                        </ul>
+
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5>
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Selisih upah {{ $tahun_lalu }} & {{ $tahun_sekarang }}
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <ul class="p-0 m-0">
+                                    @php
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    @endphp
+                                    @for($i=0; $i < count($persentase); $i++) @if(number_format($persentase[$i])==0) @break @endif <li class="d-flex mb-2">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-1">{{ $months[$i] }}</h6>
+                                                @if(number_format($persentase[$i]) > 0)
+                                                <small class="text-muted">{{ $tahun_sekarang }} Naik </small> <br>
+                                                @elseif(number_format($persentase[$i]) == 0)
+                                                <small class="text-muted">Data belum tersedia...</small>
+                                                @else
+                                                <small class="text-muted">{{ $tahun_sekarang }} Turun </small>
+                                                @endif
+                                            </div>
+                                            <div class="user-progress">
+                                                <small class="fw-semibold">{{ number_format($persentase[$i], 2) }}%
+                                                    @if(number_format($persentase[$i]) > 0)
+                                                    <i class="fe-arrow-up font-12 text-success"> <br>
+                                                        <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
+                                                    </i>
+                                                    @elseif(number_format($persentase[$i]) == 0)
+                                                    <i class="fe-minus font-12 text-black"></i>
+                                                    @else
+                                                    <i class="fe-arrow-down font-12 text-danger">
+                                                        <br>
+                                                        <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
+                                                    </i>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        @endfor
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <h5 class="fw-bold text-center">Selisih karyawan {{ $tahun_lalu }} & {{ $tahun_sekarang }}</h5>
-                    <div class="card-body">
-                        <ul class="p-0 m-0">
-                            @php
-                            $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                            @endphp
-                            @for($i=0; $i < count($persentase_selisih_karyawan); $i++) @if(number_format($persentase_selisih_karyawan[$i])==0) @break @endif <li class="d-flex mb-2">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-1">{{ $months[$i] }}</h6>
-                                        @if(number_format($persentase_selisih_karyawan[$i]) > 0)
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi kenaikan </small> <br>
-                                        @elseif(number_format($persentase_selisih_karyawan[$i]) == 0)
-                                        <small class="text-muted">Data belum tersedia...</small>
-                                        @else
-                                        <small class="text-muted">{{ $tahun_sekarang }} terjadi penurunan </small>
-                                        @endif
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">{{ number_format($persentase_selisih_karyawan[$i], 2) }}%
-                                            @if(number_format($persentase_selisih_karyawan[$i]) > 0)
-                                            <i class="fe-arrow-up font-12 text-success"> <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih_karyawan[$i]) }} karyawan</small>
-                                            </i>
-                                            @elseif(number_format($persentase_selisih_karyawan[$i]) == 0)
-                                            <i class="fe-minus font-12 text-black"></i>
-                                            @else
-                                            <i class="fe-arrow-down font-12 text-danger">
-                                                <br>
-                                                <small class="text-muted fw-bold">{{ konversiNumber($selisih_karyawan[$i]) }} karyawan</small>
-                                            </i>
-                                            @endif
-                                        </small>
-                                    </div>
-                                </div>
-                                </li>
-                                @endfor
-                        </ul>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h5>
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Selisih karyawan {{ $tahun_lalu }} & {{ $tahun_sekarang }}
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                <ul class="p-0 m-0">
+                                    @php
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    @endphp
+                                    @for($i=0; $i < count($persentase_selisih_karyawan); $i++) @if(number_format($persentase_selisih_karyawan[$i])==0) @break @endif <li class="d-flex mb-2">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-1">{{ $months[$i] }}</h6>
+                                                @if(number_format($persentase_selisih_karyawan[$i]) > 0)
+                                                <small class="text-muted">{{ $tahun_sekarang }} Naik </small> <br>
+                                                @elseif(number_format($persentase_selisih_karyawan[$i]) == 0)
+                                                <small class="text-muted">Data belum tersedia...</small>
+                                                @else
+                                                <small class="text-muted">{{ $tahun_sekarang }} Turun </small>
+                                                @endif
+                                            </div>
+                                            <div class="user-progress">
+                                                <small class="fw-semibold">{{ number_format($persentase_selisih_karyawan[$i], 2) }}%
+                                                    @if(number_format($persentase_selisih_karyawan[$i]) > 0)
+                                                    <i class="fe-arrow-up font-12 text-success"> <br>
+                                                        <small class="text-muted fw-bold">{{ konversiNumber($selisih_karyawan[$i]) }} karyawan</small>
+                                                    </i>
+                                                    @elseif(number_format($persentase_selisih_karyawan[$i]) == 0)
+                                                    <i class="fe-minus font-12 text-black"></i>
+                                                    @else
+                                                    <i class="fe-arrow-down font-12 text-danger">
+                                                        <br>
+                                                        <small class="text-muted fw-bold">{{ konversiNumber($selisih_karyawan[$i]) }} karyawan</small>
+                                                    </i>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        @endfor
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                            <h5>
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Selisih rata rata upah pokok {{ $tahun_lalu }} & {{ $tahun_sekarang }}
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                            <div class="card-body">
+                                <ul class="p-0 m-0">
+                                    @php
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    @endphp
+                                    @for($i=0; $i < count($rerata_upah); $i++) @if(number_format($rerata_upah[$i])==0) @break @endif <li class="d-flex mb-2">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-1">{{ $months[$i] }}</h6>
+                                                @if(number_format($rerata_upah[$i]) > 0)
+                                                <small class="text-muted">{{ $tahun_sekarang }} Naik </small> <br>
+                                                @elseif(number_format($rerata_upah[$i]) == 0)
+                                                <small class="text-muted">Data belum tersedia...</small>
+                                                @else
+                                                <small class="text-muted">{{ $tahun_sekarang }} Turun </small>
+                                                @endif
+                                            </div>
+                                            @php
+                                            $selisih_upah = $rerata_upah[$i] - $rerata_upah_tahun_lalu[$i];
+                                            $persen_selisih_rerata = ($rerata_upah[$i] - $rerata_upah_tahun_lalu[$i]) / $rerata_upah_tahun_lalu[$i] * 100;
+                                            @endphp
+                                            <div class="user-progress">
+                                                <small class="fw-semibold">{{ number_format($persen_selisih_rerata, 2) }}%
+                                                    @if(number_format($selisih_upah) > 0)
+                                                    <i class="fe-arrow-up font-12 text-success">
+                                                        <br>
+                                                        <small class="text-muted fw-bold">Rp{{ number_format($selisih_upah, 2) }}</small>
+                                                    </i>
+                                                    @elseif(number_format($selisih_upah) == 0)
+                                                    <i class="fe-minus font-12 text-black"></i>
+                                                    @else
+                                                    <i class="fe-arrow-down font-12 text-danger">
+                                                        <br>
+                                                        <small class="text-muted fw-bold">Rp{{ number_format($selisih_upah, 2) }}</small>
+                                                    </i>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        @endfor
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h5>
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Rata rata upah pokok {{ $tahun_sekarang }}
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                <ul class="p-0 m-0">
+                                    @php
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    @endphp
+                                    @for($i=0; $i < count($rerata_upah); $i++) @if(number_format($rerata_upah[$i])==0) @break @endif <li class="d-flex mb-2">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-1">{{ $months[$i] }}</h6>
+                                                @if(number_format($rerata_upah[$i]) > 0)
+                                                <small class="text-muted">{{ $tahun_sekarang }} Naik </small> <br>
+                                                @elseif(number_format($rerata_upah[$i]) == 0)
+                                                <small class="text-muted">Data belum tersedia...</small>
+                                                @else
+                                                <small class="text-muted">{{ $tahun_sekarang }} Turun </small>
+                                                @endif
+                                            </div>
+                                            <div class="user-progress">
+                                                <small class="fw-semibold">Rp{{ number_format($rerata_upah[$i], 2) }}
+                                                    @if(number_format($rerata_upah[$i]) > 0)
+                                                    <i class="fe-arrow-up font-12 text-success">
+                                                        <br>
+                                                        <small class="text-muted fw-bold">{{ $total_karyawan[$i] }} karyawan</small>
+                                                    </i>
+                                                    @elseif(number_format($rerata_upah[$i]) == 0)
+                                                    <i class="fe-minus font-12 text-black"></i>
+                                                    @else
+                                                    <i class="fe-arrow-down font-12 text-danger">
+                                                        <br>
+                                                        <small class="text-muted fw-bold">{{ $total_karyawan[$i] }} karyawan</small>
+                                                    </i>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        @endfor
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

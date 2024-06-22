@@ -38,7 +38,7 @@ function getDataPayroll($data, $waktu)
     $validation[] = date('Y', strtotime($d->periode));
     $payroll_record[] = [
       'bulan' => date('m', strtotime($d->periode)),
-      'tot_diterima' => $d->tot_diterima
+      'gaji_pokok' => $d->gaji_pokok
     ];
   }
 
@@ -46,7 +46,7 @@ function getDataPayroll($data, $waktu)
   foreach ($payroll_record as $i => $record) {
     if ($validation[$i] == $waktu) {
       $month_index = (int)$record['bulan'] - 1; // Konversi bulan ke indeks array (0-11)
-      $months[$month_index][] = $record['tot_diterima'];
+      $months[$month_index][] = (int)$record['gaji_pokok'];
     }
   }
 
@@ -84,7 +84,6 @@ function getSelisih($data, $data_baru)
       $persentase_all[] = 0;
     }
   }
-
   return $persentase_all;
 }
 
@@ -131,7 +130,6 @@ function getTotalKaryawan($data, $waktu)
       $months[$month_index] += 1;
     }
   }
-
   return $months;
 }
 
@@ -146,7 +144,6 @@ function persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu)
       $persentase_all[] = 0;
     }
   }
-
   return $persentase_all;
 }
 
@@ -161,6 +158,31 @@ function selisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu)
       $persentase_all[] = 0;
     }
   }
-
   return $persentase_all;
+}
+
+function rerataUpah($total_bayar, $total_karyawan)
+{
+  $rerata_upah = [];
+
+  for ($i = 0; $i < 12; $i++) {
+    if ($total_bayar[$i] > 0) {
+      $rerata_upah[] = $total_bayar[$i] / $total_karyawan[$i];
+    } else {
+      $rerata_upah[] = 0;
+    }
+  }
+  return $rerata_upah;
+}
+
+function rerataUpahTahunLalu($total_payroll_tahun_lalu, $total_karyawan_tahun_lalu)
+{
+  for ($i = 0; $i < 12; $i++) {
+    if ($total_payroll_tahun_lalu[$i] > 0) {
+      $rerata_upah[] = $total_payroll_tahun_lalu[$i] / $total_karyawan_tahun_lalu[$i];
+    } else {
+      $rerata_upah[] = 0;
+    }
+  }
+  return $rerata_upah;
 }

@@ -29,7 +29,7 @@ const config_emp = {
       },
       title: {
         display: true,
-        text: "Line graph jumlah penerima upah " + tahun_lalu + " & " + tahun_sekarang
+        text: "Line graph penerima upah pokok " + tahun_lalu + " & " + tahun_sekarang
     },
   },
 };
@@ -82,7 +82,7 @@ var config = {
       responsive: true,
       title: {
           display: true,
-          text: "Line graph total bayar " + tahun_lalu + " & " + tahun_sekarang
+          text: "Line graph total upah pokok " + tahun_lalu + " & " + tahun_sekarang
       },
   }
 };
