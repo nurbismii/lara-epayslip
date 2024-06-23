@@ -1,4 +1,8 @@
 <?php
+
+use App\Models\KomponenGaji;
+use Illuminate\Support\Facades\DB;
+
 function getTanggalIndo($tanggal)
 {
   if (isset($tanggal)) {
@@ -175,14 +179,32 @@ function rerataUpah($total_bayar, $total_karyawan)
   return $rerata_upah;
 }
 
-function rerataUpahTahunLalu($total_payroll_tahun_lalu, $total_karyawan_tahun_lalu)
+function jumlahKaryawanGrupByMasaKerja($data)
 {
-  for ($i = 0; $i < 12; $i++) {
-    if ($total_payroll_tahun_lalu[$i] > 0) {
-      $rerata_upah[] = $total_payroll_tahun_lalu[$i] / $total_karyawan_tahun_lalu[$i];
-    } else {
-      $rerata_upah[] = 0;
-    }
+  $count = [];
+
+  foreach ($data as $d) {
+    $count[] = $d->count;
   }
-  return $rerata_upah;
+  return $count;
 }
+
+function labelKaryawanGrupByMasaKerja($data)
+{
+  $count = [];
+
+  foreach ($data as $d) {
+    $count[] = $d->years_worked . ' Tahun';
+  }
+  return $count;
+}
+
+function fetchMasaKerjaByPeriode($periode)
+{
+  return  KomponenGaji::where('periode', $periode)
+    ->select('periode', DB::raw('FLOOR(tunj_mk / 50000) as years_worked'), DB::raw('COUNT(*) as count'), DB::raw('SUM(tunj_mk) as total_tunj_mk'))
+    ->groupBy('periode', 'years_worked')
+    ->having('years_worked', '>=', 1)
+    ->get();
+}
+

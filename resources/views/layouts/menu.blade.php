@@ -12,10 +12,10 @@
             <div class="collapse" id="sidebarDashboard">
                 <ul class="nav-second-level">
                     <li>
-                        <a href="{{ route('home') }}">Dashboard 1</a>
+                        <a href="{{ route('home') }}">Gaji Pokok</a>
                     </li>
                     <li>
-                        <a href="#">Dashboard 2</a>
+                        <a href="{{ route('masaKerja') }}">Masa Kerja</a>
                     </li>
                 </ul>
             </div>

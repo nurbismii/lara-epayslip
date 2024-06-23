@@ -239,7 +239,11 @@
                                     @php
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                     @endphp
-                                    @for($i=0; $i < count($persentase); $i++) @if(number_format($persentase[$i])==0) @break @endif <li class="d-flex mb-2">
+                                    @for($i=0; $i < count($persentase); $i++) 
+                                    @if(number_format($persentase[$i], 2) === '0.00') 
+                                    @break
+                                    @endif 
+                                    <li class="d-flex mb-2">
                                         <div class="avatar flex-shrink-0 me-3">
                                             <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
                                         </div>
@@ -248,7 +252,7 @@
                                                 <h6 class="mb-1">{{ $months[$i] }}</h6>
                                                 @if(number_format($persentase[$i]) > 0)
                                                 <small class="text-muted">{{ $tahun_sekarang }} Naik </small> <br>
-                                                @elseif(number_format($persentase[$i]) == 0)
+                                                @elseif(number_format($persentase[$i], 2) == '0.00')
                                                 <small class="text-muted">Data belum tersedia...</small>
                                                 @else
                                                 <small class="text-muted">{{ $tahun_sekarang }} Turun </small>
@@ -260,9 +264,9 @@
                                                     <i class="fe-arrow-up font-12 text-success"> <br>
                                                         <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
                                                     </i>
-                                                    @elseif(number_format($persentase[$i]) == 0)
+                                                    @elseif(number_format($persentase[$i], 2) == '0.00')
                                                     <i class="fe-minus font-12 text-black"></i>
-                                                    @else
+                                                    @else\
                                                     <i class="fe-arrow-down font-12 text-danger">
                                                         <br>
                                                         <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>
