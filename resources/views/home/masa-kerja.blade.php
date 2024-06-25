@@ -86,7 +86,36 @@
 		<!-- end page title -->
 		@if(Auth::user()->level == "Administrator")
 		<div class="row">
-			<div class="col-md-6 col-lg-6">
+			<div class="col-md-6 col-lg-8">
+				<div class="widget-rounded-circle card-box">
+					<form action="{{ route('masaKerja') }}" method="get" class="row g-3 mb-2">
+						<div class="col-lg-2">
+							<label for="">Periode</label>
+						</div>
+						<div class="col-lg-6">
+							<input type="month" name="periode" id="periode" class="form-control form-control-sm">
+						</div>
+						<div class="col-lg-4">
+							<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+								<button class="btn btn-primary btn-sm me-md-2" type="submit">Cari periode</button>
+								<a href="{{ route('masaKerja') }}" class="btn btn-light btn-sm" type="button">Default</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="widget-rounded-circle card-box">
+					<div class="row">
+						<div class="chartjs-size-monitor">
+							<div class="chartjs-size-monitor-expand">
+								<div class=""></div>
+							</div>
+							<div class="chartjs-size-monitor-shrink">
+								<div class=""></div>
+							</div>
+						</div>
+						<canvas id="canvas_perbandingan_mk" style="width:100%" height="450" class="chartjs-render-monitor"></canvas>
+					</div>
+				</div> <!-- end col-->
 				<div class="widget-rounded-circle card-box">
 					<form class="row g-3 mb-2">
 						<div class="col-lg-6">
@@ -123,7 +152,7 @@
 				</div> <!-- end widget-rounded-circle-->
 			</div> <!-- end col-->
 
-			<div class="col-md-6 col-lg-6">
+			<div class="col-md-6 col-lg-4">
 				<div class="widget-rounded-circle card-box">
 					<div class="row">
 						<div class="chartjs-size-monitor">
@@ -134,30 +163,10 @@
 								<div class=""></div>
 							</div>
 						</div>
-						<canvas id="canvas_mk" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+						<canvas id="canvas_grand_total_mk" style="width:100%;" height="600px" class="chartjs-render-monitor"></canvas>
 					</div>
-				</div> <!-- end widget-rounded-circle-->
-			</div> <!-- end col-->
-
-			<div class="col-md-6 col-lg-8">
+				</div>
 				<div class="widget-rounded-circle card-box">
-					<form action="{{ route('masaKerja') }}" method="get" class="row g-3 mb-2">
-						<div class="col-lg-2">
-							<label for="">Periode</label>
-						</div>
-						<div class="col-lg-6">
-							<input type="month" name="periode" id="periode" class="form-control form-control-sm">
-						</div>
-						<div class="col-lg-4">
-							<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-								<button class="btn btn-primary btn-sm me-md-2" type="submit">Cari periode</button>
-								<a href="{{ route('masaKerja') }}" class="btn btn-primary btn-sm" type="button">Default</a>
-							</div>
-						</div>
-					</form>
-					<div class="text-center fw-bold text-uppercase mb-1">
-						Masa Kerja Penerima Upah
-					</div>
 					<div class="row">
 						<div class="chartjs-size-monitor">
 							<div class="chartjs-size-monitor-expand">
@@ -167,10 +176,60 @@
 								<div class=""></div>
 							</div>
 						</div>
-						<canvas id="canvas_perbandingan_mk" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+						<canvas id="canvas_mk" style="width:100%;" height="600px" class="chartjs-render-monitor"></canvas>
 					</div>
-				</div> <!-- end widget-rounded-circle-->
-			</div> <!-- end col-->
+				</div>
+				<div id="accordion">
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<h5>
+								<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									Selisih total bayar
+								</button>
+							</h5>
+						</div>
+						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+							<div class="card-body">
+								<ul class="p-0 m-0">
+									@for($i=0; $i < count($persentase); $i++) @if(number_format($total_bayar_masa_kerja[$i], 2)==='0.00' ) @break @endif <li class="d-flex mb-2">
+										<div class="avatar flex-shrink-0 me-3">
+											<span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
+										</div>
+										<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+											<div class="me-2">
+												<h6 class="mb-1">Masa Kerja {{ $label_masa[$i]}}</h6>
+												@if(number_format($persentase[$i]) > 0)
+												<small class="text-muted">{{ $periode_saat_ini }} Naik </small> <br>
+												@elseif(number_format($total_bayar_masa_kerja[$i], 2) == '0.00')
+												<small class="text-muted">Data belum tersedia...</small>
+												@else
+												<small class="text-muted">{{ $periode_saat_ini }} Turun </small>
+												@endif
+											</div>
+											<div class="user-progress">
+												<small class="fw-semibold">{{ number_format($persentase[$i], 2) }}%
+													@if(number_format($persentase[$i]) < 0) <i class="fe-arrow-down font-12 text-danger">
+														<br>
+														<small class="text-muted fw-bold">{{ konversiNumber($total_bayar_masa_kerja[$i]) }}</small>
+														</i>
+														@elseif(number_format($persentase[$i], 2) == '0.00')
+														<i class="fe-minus font-12 text-black"></i>
+														@else
+														<i class="fe-arrow-up font-12 text-success"> <br>
+															<small class="text-muted fw-bold">{{ konversiNumber($total_bayar_masa_kerja[$i]) }}</small>
+														</i>
+														@endif
+												</small>
+											</div>
+										</div>
+										</li>
+										@endfor
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- end row -->
 		@endif
@@ -200,12 +259,16 @@
 <script>
 	var label_masa = JSON.parse('{!! json_encode($label_masa) !!}');
 	var jumlah_masa_kerja = JSON.parse('{!! json_encode($jumlah_masa_kerja) !!}');
-	var jumlah_mk_penerima_upah = JSON.parse('{!! json_encode($jumlah_mk_penerima_upah) !!}');
-	var jumlah_mk_penerima_upah_tahun_lalu = JSON.parse('{!! json_encode($jumlah_mk_penerima_upah_tahun_lalu) !!}');
+
 	var jumlah_mk_penerima_upah_tahun_lalu_min1 = JSON.parse('{!! json_encode($jumlah_mk_penerima_upah_tahun_lalu_min1) !!}');
-	var periode_saat_ini = JSON.parse('{!! json_encode($periode_saat_ini) !!}');
-	var periode_tahun_lalu = JSON.parse('{!! json_encode($periode_tahun_lalu) !!}');
+	var jumlah_mk_penerima_upah_tahun_lalu = JSON.parse('{!! json_encode($jumlah_mk_penerima_upah_tahun_lalu) !!}');
+	var jumlah_mk_penerima_upah = JSON.parse('{!! json_encode($jumlah_mk_penerima_upah) !!}');
+
 	var periode_tahun_lalu_min1 = JSON.parse('{!! json_encode($periode_tahun_lalu_min1) !!}');
+	var periode_tahun_lalu = JSON.parse('{!! json_encode($periode_tahun_lalu) !!}');
+	var periode_saat_ini = JSON.parse('{!! json_encode($periode_saat_ini) !!}');
+
+	var grand_total_mk = JSON.parse('{!! json_encode($grand_total_mk) !!}');
 </script>
 
 <script>
@@ -222,10 +285,10 @@
 			serverSide: true,
 			searching: true,
 			responsive: true,
-			pageLength: 3,
+			pageLength: 5,
 			lengthMenu: [
-				[3, 5, 7, -1],
-				[3, 5, 7, 10]
+				[5, 10, 15, -1],
+				[5, 10, 15, 20]
 			],
 			ajax: {
 				url: "api/masa-kerja",
@@ -288,16 +351,18 @@
 		labels: label_masa,
 		datasets: [{
 			axis: 'y',
-			label: 'Masa Kerja Karyawan',
+			label: 'TOTAL',
 			data: jumlah_masa_kerja,
 			backgroundColor: [
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(255, 159, 64, 0.2)',
-				'rgba(255, 205, 86, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(54, 162, 235, 0.2)',
-				'rgba(153, 102, 255, 0.2)',
-				'rgba(201, 203, 207, 0.2)'
+				'rgba(255, 99, 132, 0.8)',
+				'rgba(255, 159, 64, 0.8)',
+				'rgba(255, 205, 86, 0.8)',
+				'rgba(75, 192, 192, 0.8)',
+				'rgba(54, 162, 235, 0.8)',
+				'rgba(153, 102, 255, 0.8)',
+				'rgba(201, 203, 207, 0.8)',
+				'rgba(255, 159, 64, 0.8)',
+				'rgba(75, 192, 192, 0.8)',
 			],
 			borderColor: [
 				'rgb(255, 99, 132)',
@@ -306,7 +371,9 @@
 				'rgb(75, 192, 192)',
 				'rgb(54, 162, 235)',
 				'rgb(153, 102, 255)',
-				'rgb(201, 203, 207)'
+				'rgb(201, 203, 207)',
+				'rgb(255, 159, 64)',
+				'rgb(75, 192, 192)',
 			],
 			borderWidth: 1
 		}]
@@ -317,30 +384,34 @@
 		data: data,
 		options: {
 			indexAxis: 'y',
+			title: {
+				display: true,
+				text: 'RENTANG MASA KERJA'
+			}
 		},
 	};
 
 	const data_perbandingan_mk = {
 		labels: label_masa,
 		datasets: [{
-				label: periode_saat_ini,
-				data: jumlah_mk_penerima_upah,
-				backgroundColor: 'rgba(255, 99, 132, 0.2)',
-				borderColor: 'rgb(255, 99, 132)',
+				label: periode_tahun_lalu_min1,
+				data: jumlah_mk_penerima_upah_tahun_lalu_min1,
+				backgroundColor: 'rgba(75, 192, 192, 0.8)',
+				borderColor: 'rgb(75, 192, 192)',
 				fill: true,
 			},
 			{
 				label: periode_tahun_lalu,
 				data: jumlah_mk_penerima_upah_tahun_lalu,
-				backgroundColor: 'rgba(255, 159, 64, 0.2)',
+				backgroundColor: 'rgba(255, 159, 64, 0.8)',
 				borderColor: 'rgb(255, 159, 64)',
 				fill: true,
 			},
 			{
-				label: periode_tahun_lalu_min1,
-				data: jumlah_mk_penerima_upah_tahun_lalu_min1,
-				backgroundColor: 'rgba(255, 205, 86, 0.2)',
-				borderColor: 'rgb(255, 205, 86)',
+				label: periode_saat_ini,
+				data: jumlah_mk_penerima_upah,
+				backgroundColor: 'rgba(255, 99, 132, 0.8)',
+				borderColor: 'rgb(255, 99, 132)',
 				fill: true,
 			}
 		]
@@ -362,12 +433,55 @@
 			plugins: {
 				legend: {
 					position: 'right',
-				},
-				title: {
-					display: true,
-					text: 'Chart.js Horizontal Bar Chart'
 				}
+			},
+			title: {
+				display: true,
+				text: 'RENTANG PEMBAYARAN MASA KERJA'
 			}
+		},
+	};
+
+	const data_grand_total_mk = {
+		labels: [periode_tahun_lalu_min1, periode_tahun_lalu, periode_saat_ini],
+		datasets: [{
+			label: 'Total',
+			data: grand_total_mk,
+			backgroundColor: [
+				'rgba(153, 102, 255, 0.8)',
+				'rgba(255, 99, 132, 0.8)',
+				'rgba(255, 159, 64, 0.8)',
+			],
+		}]
+	};
+
+	const config_grand_total_mk = {
+		type: 'doughnut',
+		data: data_grand_total_mk,
+		options: {
+			responsive: true,
+			legend: {
+				position: 'top',
+			},
+			tooltips: {
+				callbacks: {
+					label: function(tooltipItem, data) {
+						var dataset = data.datasets[tooltipItem.datasetIndex];
+						var value = dataset.data[tooltipItem.index];
+						var formattedValue = new Intl.NumberFormat('id-ID', {
+							style: 'currency',
+							currency: 'IDR',
+							minimumFractionDigits: 0
+						}).format(value);
+
+						return data.labels[tooltipItem.index] + ': ' + formattedValue;
+					}
+				}
+			},
+			title: {
+				display: true,
+				text: 'GRAND TOTAL PEMBAYARAN MASA KERJA'
+			},
 		},
 	};
 
@@ -377,7 +491,10 @@
 
 		var ctx_perbandingan_mk = document.getElementById("canvas_perbandingan_mk").getContext("2d");
 		window.myLineMasaKerja = new Chart(ctx_perbandingan_mk, config_perbandingan_mk);
-	};
+
+		var ctx_grand_total_mk = document.getElementById("canvas_grand_total_mk").getContext("2d");
+		window.myLineMasaKerja = new Chart(ctx_grand_total_mk, config_grand_total_mk);
+	}
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>

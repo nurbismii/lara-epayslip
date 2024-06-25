@@ -141,13 +141,18 @@ function persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu)
 {
   $persentase_all = [];
 
+  // Menghitung panjang terkecil antara kedua array untuk menghindari Undefined offset
+  $length = min(count($total_karyawan), count($total_karyawan_tahun_lalu));
+
   for ($i = 0; $i < 12; $i++) {
-    if ($total_karyawan[$i] > 0) {
+    // Memastikan indeks tidak melebihi panjang terkecil dari kedua array
+    if ($i < $length && $total_karyawan_tahun_lalu[$i] > 0) {
       $persentase_all[] = (($total_karyawan[$i] - $total_karyawan_tahun_lalu[$i]) / $total_karyawan_tahun_lalu[$i]) * 100;
     } else {
       $persentase_all[] = 0;
     }
   }
+
   return $persentase_all;
 }
 
@@ -189,6 +194,16 @@ function jumlahKaryawanGrupByMasaKerja($data)
   return $count;
 }
 
+function totalBayarGrupByMasaKerja($data)
+{
+  $count = [];
+
+  foreach ($data as $d) {
+    $count[] = $d->total_tunj_mk;
+  }
+  return $count;
+}
+
 function labelKaryawanGrupByMasaKerja($data)
 {
   $count = [];
@@ -208,3 +223,35 @@ function fetchMasaKerjaByPeriode($periode)
     ->get();
 }
 
+function fetchSumMasaKerjaByPeriode($periode)
+{
+  $grand_total = [];
+
+  $data = KomponenGaji::where('periode', $periode)
+    ->select('periode', DB::raw('COUNT(*) as count'), DB::raw('SUM(tunj_mk) as total_tunj_mk'))
+    ->groupBy('periode')
+    ->get();
+
+  foreach($data as $row){
+    $grand_total[] = $row->total_tunj_mk;
+  }
+
+  return $grand_total;
+}
+
+function persentase($data, $data_lama)
+{
+  $persen = [];
+
+  $length = min(count($data), count($data_lama));
+
+  for ($i = 0; $i < $length; $i++) {
+    if ($data_lama[$i] > 0) {
+      $persen[] = (($data[$i] - $data_lama[$i]) / $data_lama[$i]) * 100;
+    } else {
+      $persen[] = 0;
+    }
+  }
+
+  return $persen;
+}

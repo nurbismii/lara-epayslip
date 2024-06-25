@@ -266,7 +266,7 @@
                                                     </i>
                                                     @elseif(number_format($persentase[$i], 2) == '0.00')
                                                     <i class="fe-minus font-12 text-black"></i>
-                                                    @else\
+                                                    @else
                                                     <i class="fe-arrow-down font-12 text-danger">
                                                         <br>
                                                         <small class="text-muted fw-bold">{{ konversiNumber($selisih[$i]) }} </small>

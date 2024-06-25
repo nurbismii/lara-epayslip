@@ -112,22 +112,28 @@ class HomeController extends Controller
         $periode_tahun_lalu_min1 = $tahun_lalu_min1 . '-' . $req_bulan;
 
         $data_masa_kerja = fetchMasaKerjaByPeriode($periode_saat_ini);
-
         $data_masa_kerja_tahun_lalu = fetchMasaKerjaByPeriode($periode_tahun_lalu);
-
         $data_masa_kerja_tahun_lalu_min1 = fetchMasaKerjaByPeriode($periode_tahun_lalu_min1);
 
+        $grand_total_mk = fetchSumMasaKerjaByPeriode($periode_saat_ini);
+        $grand_total_mk_tahun_lalu = fetchSumMasaKerjaByPeriode($periode_tahun_lalu);
+        $grand_total_mk_tahun_lalu_min1 = fetchSumMasaKerjaByPeriode($periode_tahun_lalu_min1);
+        $grand_total_mk = array_merge($grand_total_mk_tahun_lalu_min1, $grand_total_mk_tahun_lalu, $grand_total_mk);
+
         $jumlah_mk_penerima_upah = jumlahKaryawanGrupByMasaKerja($data_masa_kerja);
-
         $jumlah_mk_penerima_upah_tahun_lalu = jumlahKaryawanGrupByMasaKerja($data_masa_kerja_tahun_lalu);
-
         $jumlah_mk_penerima_upah_tahun_lalu_min1 = jumlahKaryawanGrupByMasaKerja($data_masa_kerja_tahun_lalu_min1);
+
+        $total_bayar_masa_kerja = totalBayarGrupByMasaKerja($data_masa_kerja);
+        $total_bayar_masa_kerja_tahun_lalu = totalBayarGrupByMasaKerja($data_masa_kerja_tahun_lalu);
+
+        $persentase = persentase($total_bayar_masa_kerja, $total_bayar_masa_kerja_tahun_lalu);
 
         $label_masa = labelKaryawanGrupByMasaKerja($data_karyawan);
 
         $jumlah_masa_kerja = jumlahKaryawanGrupByMasaKerja($data_karyawan);
 
-        return view('home.masa-kerja', compact('jumlah_mk_penerima_upah_tahun_lalu_min1', 'periode_tahun_lalu_min1', 'periode_tahun_lalu', 'periode_saat_ini', 'data_masa_kerja', 'data_masa_kerja_tahun_lalu', 'jumlah_mk_penerima_upah', 'jumlah_mk_penerima_upah_tahun_lalu', 'label_masa', 'jumlah_masa_kerja'));
+        return view('home.masa-kerja', compact('grand_total_mk', 'persentase', 'total_bayar_masa_kerja', 'total_bayar_masa_kerja_tahun_lalu', 'jumlah_mk_penerima_upah_tahun_lalu_min1', 'jumlah_mk_penerima_upah_tahun_lalu_min1', 'periode_tahun_lalu_min1', 'periode_tahun_lalu', 'periode_saat_ini', 'data_masa_kerja', 'data_masa_kerja_tahun_lalu', 'jumlah_mk_penerima_upah', 'jumlah_mk_penerima_upah_tahun_lalu', 'label_masa', 'jumlah_masa_kerja'));
     }
 
     public function fetchMasaKerja(Request $request)
