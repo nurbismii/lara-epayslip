@@ -80,6 +80,24 @@
          <!-- Right bar overlay-->
          <div class="rightbar-overlay"></div>
 
+         <script src="{{ asset('/sw.js') }}"></script>
+         <script>
+             if ("serviceWorker" in navigator) {
+                 // Register a service worker hosted at the root of the
+                 // site using the default scope.
+                 navigator.serviceWorker.register("/sw.js").then(
+                     (registration) => {
+                         console.log("Service worker registration succeeded:", registration);
+                     },
+                     (error) => {
+                         console.error(`Service worker registration failed: ${error}`);
+                     },
+                 );
+             } else {
+                 console.error("Service workers are not supported.");
+             }
+         </script>
+
          <!-- Vendor js -->
          <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
@@ -131,7 +149,6 @@
 
          <!-- Calendar init -->
          <script src="{{ asset('assets/js/pages/calendar.init.js') }}"></script>
-
          <!-- Wizard Form -->
          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
          <script>

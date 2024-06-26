@@ -1,60 +1,9 @@
 @extends('layouts.app')
 
-@push('css')
-<style>
-	@keyframes chartjs-render-animation {
-		from {
-			opacity: .99
-		}
-
-		to {
-			opacity: 1
-		}
-	}
-
-	.chartjs-render-monitor {
-		animation: chartjs-render-animation 1ms
-	}
-
-	.chartjs-size-monitor,
-	.chartjs-size-monitor-expand,
-	.chartjs-size-monitor-shrink {
-		position: absolute;
-		direction: ltr;
-		left: 0;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		overflow: hidden;
-		pointer-events: none;
-		visibility: hidden;
-		z-index: -1
-	}
-
-	.chartjs-size-monitor-expand>div {
-		position: absolute;
-		width: 1000000px;
-		height: 1000000px;
-		left: 0;
-		top: 0
-	}
-
-	.chartjs-size-monitor-shrink>div {
-		position: absolute;
-		width: 200%;
-		height: 200%;
-		left: 0;
-		top: 0
-	}
-</style>
-@endpush
-
 @section('content')
 <div class="content">
-
 	<!-- Start Content-->
 	<div class="container-fluid">
-
 		<!-- start page title -->
 		<div class="row">
 			<div class="col-12">
@@ -105,17 +54,14 @@
 				</div>
 				<div class="widget-rounded-circle card-box">
 					<div class="row">
-						<div class="chartjs-size-monitor">
-							<div class="chartjs-size-monitor-expand">
-								<div class=""></div>
-							</div>
-							<div class="chartjs-size-monitor-shrink">
-								<div class=""></div>
-							</div>
-						</div>
-						<canvas id="canvas_perbandingan_mk" style="width:100%" height="450" class="chartjs-render-monitor"></canvas>
+						<canvas id="canvas_perbandingan_mk" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
 					</div>
 				</div> <!-- end col-->
+				<div class="widget-rounded-circle card-box">
+					<div class="row">
+						<canvas id="canvas_mk" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
+					</div>
+				</div>
 				<div class="widget-rounded-circle card-box">
 					<form class="row g-3 mb-2">
 						<div class="col-lg-6">
@@ -155,28 +101,7 @@
 			<div class="col-md-6 col-lg-4">
 				<div class="widget-rounded-circle card-box">
 					<div class="row">
-						<div class="chartjs-size-monitor">
-							<div class="chartjs-size-monitor-expand">
-								<div class=""></div>
-							</div>
-							<div class="chartjs-size-monitor-shrink">
-								<div class=""></div>
-							</div>
-						</div>
-						<canvas id="canvas_grand_total_mk" style="width:100%;" height="600px" class="chartjs-render-monitor"></canvas>
-					</div>
-				</div>
-				<div class="widget-rounded-circle card-box">
-					<div class="row">
-						<div class="chartjs-size-monitor">
-							<div class="chartjs-size-monitor-expand">
-								<div class=""></div>
-							</div>
-							<div class="chartjs-size-monitor-shrink">
-								<div class=""></div>
-							</div>
-						</div>
-						<canvas id="canvas_mk" style="width:100%;" height="600px" class="chartjs-render-monitor"></canvas>
+						<canvas id="canvas_grand_total_mk" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
 					</div>
 				</div>
 				<div id="accordion">

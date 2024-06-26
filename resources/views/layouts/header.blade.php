@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <meta name="theme-color" content="#6777ef" />
     <meta charset="utf-8" />
     <title>Pay Slip VDNI </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,5 +47,7 @@
     <script src="{{ asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
     <link href="{{ asset('assets/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
 
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
     @stack('css')
 </head>

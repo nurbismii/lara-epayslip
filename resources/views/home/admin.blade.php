@@ -1,60 +1,8 @@
 @extends('layouts.app')
-
-@push('css')
-<style>
-    @keyframes chartjs-render-animation {
-        from {
-            opacity: .99
-        }
-
-        to {
-            opacity: 1
-        }
-    }
-
-    .chartjs-render-monitor {
-        animation: chartjs-render-animation 1ms
-    }
-
-    .chartjs-size-monitor,
-    .chartjs-size-monitor-expand,
-    .chartjs-size-monitor-shrink {
-        position: absolute;
-        direction: ltr;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
-        pointer-events: none;
-        visibility: hidden;
-        z-index: -1
-    }
-
-    .chartjs-size-monitor-expand>div {
-        position: absolute;
-        width: 1000000px;
-        height: 1000000px;
-        left: 0;
-        top: 0
-    }
-
-    .chartjs-size-monitor-shrink>div {
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        left: 0;
-        top: 0
-    }
-</style>
-@endpush
-
 @section('content')
 <div class="content">
-
     <!-- Start Content-->
     <div class="container-fluid">
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -196,25 +144,9 @@
                     </nav>
                     <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
                         <div class="row" id="upah_pokok">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
                             <canvas id="canvas_pay" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
                         </div>
                         <div class="row" id="penerima_upah">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
                             <canvas id="canvas_emp" style="width:100%;max-width:800px" class="chartjs-render-monitor"></canvas>
                         </div>
                     </div>
