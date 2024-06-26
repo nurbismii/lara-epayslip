@@ -18,6 +18,9 @@
                     <li>
                         <a href="{{ route('masaKerja') }}">Masa Kerja</a>
                     </li>
+                    <li>
+                        <a href="{{ route('bpjs-tk') }}">BPJS TK</a>
+                    </li>
                     @else
                     <li>
                         <a href="{{ route('home') }}">Dashboard</a>

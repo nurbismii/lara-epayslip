@@ -201,6 +201,7 @@ function totalBayarGrupByMasaKerja($data)
   foreach ($data as $d) {
     $count[] = $d->total_tunj_mk;
   }
+
   return $count;
 }
 
@@ -232,7 +233,7 @@ function fetchSumMasaKerjaByPeriode($periode)
     ->groupBy('periode')
     ->get();
 
-  foreach($data as $row){
+  foreach ($data as $row) {
     $grand_total[] = $row->total_tunj_mk;
   }
 
@@ -254,4 +255,32 @@ function persentase($data, $data_lama)
   }
 
   return $persen;
+}
+
+function fetchBpjsTkByPeriode($periode)
+{
+  return KomponenGaji::where('periode', $periode)
+    ->select('periode', DB::raw('COUNT(*) as count'), DB::raw('SUM(jht) as total_jht'))
+    ->groupBy('periode')
+    ->get();
+}
+
+function jumlahPembayaranJht($data)
+{
+  $count = [];
+
+  foreach ($data as $d) {
+    $count[] = $d->total_jht;
+  }
+  return $count;
+}
+
+function jumlahKaryawanJht($data)
+{
+  $count = [];
+
+  foreach ($data as $d) {
+    $count[] = $d->count;
+  }
+  return $count;
 }

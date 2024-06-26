@@ -136,6 +136,29 @@ class HomeController extends Controller
         return view('home.masa-kerja', compact('grand_total_mk', 'persentase', 'total_bayar_masa_kerja', 'total_bayar_masa_kerja_tahun_lalu', 'jumlah_mk_penerima_upah_tahun_lalu_min1', 'jumlah_mk_penerima_upah_tahun_lalu_min1', 'periode_tahun_lalu_min1', 'periode_tahun_lalu', 'periode_saat_ini', 'data_masa_kerja', 'data_masa_kerja_tahun_lalu', 'jumlah_mk_penerima_upah', 'jumlah_mk_penerima_upah_tahun_lalu', 'label_masa', 'jumlah_masa_kerja'));
     }
 
+    public function BPJSTK(Request $request)
+    {
+        if ($request->filled('periode')) {
+            $req_tahun = date('Y', strtotime($request->periode));
+        } else {
+            $req_tahun = date('Y', strtotime(Carbon::now()));
+        }
+
+        $periode_saat_ini = $req_tahun;
+        $periode_tahun_lalu = $req_tahun - 1;
+
+        $data_bpjs_tk = fetchBpjsTkByPeriode((int)$periode_saat_ini);
+        $data_bpjs_tk_tahun_lalu = fetchBpjsTkByPeriode($periode_tahun_lalu);
+
+        $data_jumlah_karyawan_jht = jumlahKaryawanJht($data_bpjs_tk);
+        $data_jumlah_karyawan_jht_thn_lalu = jumlahKaryawanJht($data_bpjs_tk_tahun_lalu);
+
+        $data_bpjs_tk = jumlahPembayaranJht($data_bpjs_tk);
+        $data_bpjs_tk_tahun_lalu = jumlahPembayaranJht($data_bpjs_tk_tahun_lalu);
+
+        return view('home.bpjs-tk', compact('data_jumlah_karyawan_jht_thn_lalu', 'data_jumlah_karyawan_jht', 'data_bpjs_tk_tahun_lalu', 'data_bpjs_tk', 'periode_saat_ini', 'periode_tahun_lalu'));
+    }
+
     public function fetchMasaKerja(Request $request)
     {
         $data = KomponenGaji::select('periode', DB::raw('FLOOR(tunj_mk / 50000) as years_worked'), DB::raw('COUNT(*) as count'), DB::raw('SUM(tunj_mk) as total_tunj_mk'))

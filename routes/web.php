@@ -39,6 +39,7 @@ Route::group(['middleware' => 'is_active'], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/masa-kerja', [App\Http\Controllers\HomeController::class, 'masaKerja'])->name('masaKerja')->middleware('is_admin');
+Route::get('/bpjs-tk', [App\Http\Controllers\HomeController::class, 'BPJSTK'])->name('bpjs-tk')->middleware('is_admin');
 Route::get('api/masa-kerja', [App\Http\Controllers\HomeController::class, 'fetchMasaKerja'])->middleware('is_admin');
 Route::get('api/karyawan', [App\Http\Controllers\KaryawanController::class, 'api'])->name('api.karyawan')->middleware('is_admin');
 
