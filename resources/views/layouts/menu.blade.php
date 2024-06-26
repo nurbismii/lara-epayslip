@@ -11,12 +11,18 @@
             </a>
             <div class="collapse" id="sidebarDashboard">
                 <ul class="nav-second-level">
+                    @if(Auth::user()->level == "Administrator")
                     <li>
                         <a href="{{ route('home') }}">Gaji Pokok</a>
                     </li>
                     <li>
                         <a href="{{ route('masaKerja') }}">Masa Kerja</a>
                     </li>
+                    @else
+                    <li>
+                        <a href="{{ route('home') }}">Dashboard</a>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </li>
