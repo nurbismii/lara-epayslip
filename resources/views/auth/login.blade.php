@@ -122,6 +122,9 @@
     <!-- App js -->
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+
     <script>
         (function() {
             $('.from-prevent-multiple-submits').on('submit', function() {
@@ -147,10 +150,6 @@
             console.error("Service workers are not supported.");
         }
     </script>
-
-    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
-
 </body>
 
 </html>
