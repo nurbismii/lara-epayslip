@@ -35,11 +35,11 @@
     <!-- end page title -->
     @if(Auth::user()->level == "Administrator")
     <div class="row">
-      <div class="col-md-6 col-lg-16">
+      <div class="col-md-6 col-lg-12">
         <div class="card">
           <div class="card-body">
             <form action="{{ route('bpjs-tk') }}" method="get">
-              <select name="tahun" class="form-control mb-2">
+              <select name="periode" class="form-control mb-2">
                 <option value="2024">2024</option>
                 <option value="2023">2023</option>
               </select>
