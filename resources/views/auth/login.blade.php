@@ -4,7 +4,7 @@
 <head>
     <meta name="theme-color" content="#6777ef" />
     <meta charset="utf-8" />
-    <title>Log In | Pay Slip </title>
+    <title>Masuk | Pay Slip </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="E-PaySlip PT Virtue Dragon Nickel Industry" name="description" />
     <meta content="E-PaySlip" name="HR-SITE" />
@@ -18,121 +18,148 @@
     <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
     <!-- icons -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .login-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .login-image,
+        .login-form {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .login-image {
+            background: url("{{ asset('assets/images/pay_online.svg') }}") no-repeat center center;
+            background-size: cover;
+            height: 500px;
+        }
+
+        .login-form {
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .form-control,
+        .btn {
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background-color: #6a5acd;
+            border-color: #6a5acd;
+        }
+
+        .btn-primary:hover {
+            background-color: #7e57c2;
+            border-color: #7e57c2;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (min-width: 768px) {
+            .login-image {
+                flex: 0 0 60%;
+                height: auto;
+            }
+
+            .login-form {
+                flex: 0 0 40%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .login-image {
+                display: none;
+            }
+        }
+
+        /* Fallback color for image */
+        .login-image::after {
+            content: '';
+            display: block;
+            background: url("{{ asset('assets/images/pay_online.svg') }}") no-repeat center center;
+            height: 450px;
+        }
+    </style>
 </head>
 
-<body class="loading authentication-bg authentication-bg-pattern">
-    <div class="account-pages mt-5 mb-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card bg-pattern">
-                        <div class="card-body p-4">
-                            <div class="text-center w-75 m-auto">
-                                <div class="auth-logo">
-                                    <a href="index.html" class="logo logo-dark text-center">
-                                        <span class="logo-lg">
-                                            <img src="{{ asset('assets/images/logo-vdni.png') }}" alt="" height="44">
-                                        </span>
-                                    </a>
-                                    <a href="index.html" class="logo logo-light text-center">
-                                        <span class="logo-lg">
-                                            <img src="{{ asset('assets/images/logo-vdni.png') }}" alt="" height="44">
-                                        </span>
-                                    </a>
-                                </div>
-                                <p class="text-muted mb-4 mt-3">Masukkan Email dan Password Anda Untuk Akses ke Website</p>
-                            </div>
-
-                            <form class="from-prevent-multiple-submits" method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="form-group mb-3">
-                                    <label for="emailaddress">Alamat Email</label>
-                                    <input class="form-control @error('email') is-invalid @enderror" type="email" id="email" name="email" required="" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Masukkan Alamat Email">
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="password">Kata Sandi</label>
-                                    <div class="input-group input-group-merge">
-                                        <input type="password" id="password" name="password" class="form-control  @error('password') is-invalid @enderror" name="password" placeholder="Masukkan Kata Sandi" autocomplete="current-password">
-                                        <div class="input-group-append" data-password="false">
-                                            <div class="input-group-text">
-                                                <span class="password-eye"></span>
-                                            </div>
-                                        </div>
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0 text-center">
-                                    <button class="btn btn-primary btn-block from-prevent-multiple-submits" type="submit"> Masuk </button>
-                                </div>
-                            </form>
-                        </div> <!-- end card-body -->
-                    </div>
-                    <!-- end card -->
-                    <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p> <a href="{{ route('forget') }}" class="text-white ml-1"><b>Lupa Password?</b></a></p>
-                            <p class="text-white-50">Belum Punya Akun? <a href="{{ route('register') }}" class="text-white ml-1"><b>Buat Akun</b></a></p>
-                            <p class="text-white-50">Belum Menerima Email? <a href="{{ route('resend_email') }}" class="text-white ml-1"><b>Kirim Ulang</b></a></p>
-                        </div> <!-- end col -->
-                    </div>
-                    <!-- end row -->
-                </div> <!-- end col -->
-            </div>
-            <!-- end row -->
+<body>
+    <div class="login-container">
+        <div class="login-image"></div>
+        <div class="login-form">
+            <h3 class="text-center">Masuk E-PaySlip VDNI</h3>
+            <p class="text-center text-muted">Gunakan email dan kata sandi yang telah terdaftar</p>
+            <form class="from-prevent-multiple-submits" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email kamu..." required autocomplete="email" autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Kata sandi</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="*********">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block from-prevent-multiple-submits">Masuk</button>
+                </div>
+                <div class="text-center mt-2">
+                    <a href="{{ route('forget') }}" class="text-muted text-primary">Lupa kata sandi?</a>
+                </div>
+                <div class="text-center mt-1">
+                    <a href="{{ route('register') }}" class="text-muted text-primary">Buat akun</a>
+                </div>
+                <div class="text-center mt-1">
+                    <a href="{{ route('resend_email') }}" class="text-muted text-primary">Belum menerima email?</a>
+                </div>
+            </form>
         </div>
-        <!-- end container -->
     </div>
-    <!-- end page -->
-    <footer class="footer footer-alt text-white-50">
-        <script>
-            document.write(new Date().getFullYear())
-        </script> by <a href="" class="text-white-50">HR VDNI</a>
-    </footer>
-    @include('sweetalert::alert')
-    <!-- Vendor js -->
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
-
-    <!-- App js -->
-    <script src="{{ asset('assets/js/app.min.js') }}"></script>
-
-    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
-
-    <script>
-        (function() {
-            $('.from-prevent-multiple-submits').on('submit', function() {
-                $('.from-prevent-multiple-submits').attr('disabled', 'true');
-            })
-        })();
-    </script>
-
-    <script src="{{ asset('/sw.js') }}"></script>
-    <script>
-        if ("serviceWorker" in navigator) {
-            // Register a service worker hosted at the root of the
-            // site using the default scope.
-            navigator.serviceWorker.register("/sw.js").then(
-                (registration) => {
-                    console.log("Service worker registration succeeded:", registration);
-                },
-                (error) => {
-                    console.error(`Service worker registration failed: ${error}`);
-                },
-            );
-        } else {
-            console.error("Service workers are not supported.");
-        }
-    </script>
 </body>
+
+@include('sweetalert::alert')
+<!-- Vendor js -->
+<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+<link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+<link rel="manifest" href="{{ asset('/manifest.json') }}">
+
+<script>
+    (function() {
+        $('.from-prevent-multiple-submits').on('submit', function() {
+            $('.from-prevent-multiple-submits').attr('disabled', 'true');
+
+            // Change the button text
+            $(this).find('button[type="submit"]').text('Tunggu sebentar...');
+        })
+    })();
+</script>
+
+<script src="{{ asset('/sw.js') }}"></script>
+<script>
+    if ("serviceWorker" in navigator) {
+        // Register a service worker hosted at the root of the
+        // site using the default scope.
+        navigator.serviceWorker.register("/sw.js").then(
+            (registration) => {
+                console.log("Service worker registration succeeded:", registration);
+            },
+            (error) => {
+                console.error(`Service worker registration failed: ${error}`);
+            },
+        );
+    } else {
+        console.error("Service workers are not supported.");
+    }
+</script>
 
 </html>

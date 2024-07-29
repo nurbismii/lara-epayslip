@@ -1,96 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Kirim Email |Pay Slip</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-		<!-- App css -->
-		<link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+<head>
+    <meta name="theme-color" content="#6777ef" />
+    <meta charset="utf-8" />
+    <title>Konfirmasi email | Pay Slip </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="E-PaySlip PT Virtue Dragon Nickel Industry" name="description" />
+    <meta content="E-PaySlip" name="HR-SITE" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/icon.png') }}">
+    <!-- App css -->
+    <link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+    <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+    <!-- icons -->
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .login-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
 
-		<link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+        .login-image,
+        .login-form {
+            width: 100%;
+            max-width: 600px;
+        }
 
-		<!-- icons -->
-		<link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        .login-image {
+            background: url("{{ asset('assets/images/resend_email.svg') }}") no-repeat center center;
+            background-size: cover;
+            height: 400px;
+        }
 
-    </head>
+        .login-form {
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
 
-    <body class="loading authentication-bg authentication-bg-pattern">
+        .form-control,
+        .btn {
+            border-radius: 8px;
+        }
 
-        <div class="account-pages mt-5 mb-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5">
-                        <div class="card bg-pattern">
+        .btn-primary {
+            background-color: #6a5acd;
+            border-color: #6a5acd;
+        }
 
-                            <div class="card-body p-4">
+        .btn-primary:hover {
+            background-color: #7e57c2;
+            border-color: #7e57c2;
+        }
 
-                                <div class="text-center w-75 m-auto">
-                                    <div class="auth-logo">
-                                        <a href="index.html" class="logo logo-dark text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22">
-                                            </span>
-                                        </a>
+        /* Media Queries for Responsive Design */
+        @media (min-width: 768px) {
+            .login-image {
+                flex: 0 0 60%;
+                height: auto;
+            }
 
-                                        <a href="index.html" class="logo logo-light text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="22">
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <p class="text-muted mb-4 mt-3">Masukkan alamat email anda yang terdaftar di sistem kami. Pastikan alamat email anda valid. Jika ingin mengganti alamat email yang terdaftar silahkan hubungi HRD</p>
-                                </div>
+            .login-form {
+                flex: 0 0 40%;
+            }
+        }
 
-                                <form action="{{ route('store.resend_email') }}" method="POST">
-                                    @csrf
-                                    <div class="form-group mb-3">
-                                        <label for="emailaddress">Alamat Email</label>
-                                        <input class="form-control" type="email" name="email" id="emailaddress" required="" placeholder="Masukkan Alamat Email Anda">
-                                    </div>
+        @media (max-width: 767px) {
+            .login-image {
+                display: none;
+            }
+        }
 
-                                    <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-primary btn-block" type="submit"> Kirim </button>
-                                    </div>
+        /* Fallback color for image */
+        .login-image::after {
+            content: '';
+            display: block;
+            background: "#e0e0e0";
+            height: 400px;
+        }
+    </style>
+</head>
 
-                                </form>
-
-                            </div> <!-- end card-body -->
-                        </div>
-                        <!-- end card -->
-
-                        <div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <p class="text-white-50">Kembali <a href="{{ route('login') }}" class="text-white ml-1"><b>Masuk</b></a></p>
-                            </div> <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                    </div> <!-- end col -->
+<body>
+    <div class="login-container">
+        <div class="login-image"></div>
+        <div class="login-form">
+            <h3 class="text-center">Konfirmasi email | VDNI</h3>
+            <p class="text-center text-muted">Gunakan email yang telah terdaftar dan belum menerima konfirmasi email</p>
+            <form class="from-prevent-multiple-submits" method="POST" action="{{ route('store.resend_email') }}">
+                @csrf
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email kamu..." required autocomplete="email" autofocus>
                 </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block from-prevent-multiple-submits">Kirim</button>
+                </div>
+                <div class="text-center mt-3">
+                    <p>Kembali <a href="{{ route('login') }}" class="text-muted text-primary">Masuk</a></p>
+                </div>
+            </form>
         </div>
-        <!-- end page -->
+    </div>
+</body>
 
+@include('sweetalert::alert')
+<!-- Vendor js -->
+<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
-        <footer class="footer footer-alt text-white-50">
-           <script>document.write(new Date().getFullYear())</script> &copy;  by <a href="" class="text-white-50">IT VDNI</a>
-        </footer>
-        @include('sweetalert::alert')
-        <!-- Vendor js -->
-        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+<!-- App js -->
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
 
-        <!-- App js -->
-        <script src="{{ asset('assets/js/app.min.js') }}"></script>
+<script>
+    (function() {
+        $('.from-prevent-multiple-submits').on('submit', function() {
+            $('.from-prevent-multiple-submits').attr('disabled', 'true');
 
-    </body>
+            // Change the button text
+            $(this).find('button[type="submit"]').text('Tunggu sebentar...');
+        })
+    })();
+</script>
+
 </html>
