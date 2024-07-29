@@ -10,21 +10,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/icon.png') }}">
-
     <!-- App css -->
     <link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
     <link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-
     <link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
     <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
-
     <!-- icons -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body class="loading authentication-bg authentication-bg-pattern">
-
     <div class="account-pages mt-5 mb-5">
         <div class="container">
             <div class="row justify-content-center">
@@ -50,11 +45,10 @@
                                 <p class="text-muted mb-4 mt-3">Untuk Pendaftaran Silahkan Isi Form Di Bawah. Pastikan Data Anda Valid. </p>
                             </div>
 
-                            <form method="POST" action="{{ route('pendaftaran') }}">
+                            <form class="from-prevent-multiple-submits" method="POST" action="{{ route('pendaftaran') }}">
                                 @csrf
-
                                 <div class="form-group">
-                                    <label for="nik">NIK </label>
+                                    <label for="nik">NIK Karyawan</label>
                                     <input class="form-control @error('nik') is-invalid @enderror" type="text" name="nik" value="{{ old('nik') }}" id="nik" placeholder="Masukkan Nik Anda" required autofocus>
                                 </div>
                                 <div class="form-group">
@@ -91,14 +85,10 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group mb-0 text-center">
-                                    <button class="btn btn-success btn-block" type="submit"> Daftar </button>
+                                    <button class="btn btn-success btn-block from-prevent-multiple-submits" type="submit"> Daftar </button>
                                 </div>
-
                             </form>
-
-
                         </div> <!-- end card-body -->
                     </div>
                     <!-- end card -->
@@ -109,7 +99,6 @@
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
-
                 </div> <!-- end col -->
             </div>
             <!-- end row -->
@@ -121,7 +110,7 @@
     <footer class="footer footer-alt text-white-50">
         <script>
             document.write(new Date().getFullYear())
-        </script> by <a href="" class="text-white-50">IT VDNI</a>
+        </script> by <a href="#" class="text-white-50">HR VDNI</a>
     </footer>
 
     <!-- Vendor js -->
@@ -129,6 +118,18 @@
 
     <!-- App js -->
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+    <script>
+        (function() {
+            $('.from-prevent-multiple-submits').on('submit', function(event) {
+                // Prevent multiple submissions
+                $('.from-prevent-multiple-submits').attr('disabled', true);
+
+                // Change the button text
+                $(this).find('button[type="submit"]').text('Data sedang diproses...');
+            });
+        })();
+    </script>
 </body>
 
 </html>
