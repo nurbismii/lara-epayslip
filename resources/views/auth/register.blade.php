@@ -58,8 +58,8 @@
         }
 
         .btn-primary:hover {
-            background-color: #7e57c2;
-            border-color: #7e57c2;
+            background-color: greenyellow;
+            border-color: greenyellow;
         }
 
         /* Media Queries for Responsive Design */
@@ -85,7 +85,7 @@
             content: '';
             display: block;
             background: "#e0e0e0";
-            height: 400px;
+            height: 490px;
         }
     </style>
 </head>

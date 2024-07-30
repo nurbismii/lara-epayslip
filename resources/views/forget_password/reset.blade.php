@@ -1,116 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title> Reset Password | Pay Slip  </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('assets/images/icon.png') }}">
 
-		<!-- App css -->
-		<link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+<head>
+    <meta name="theme-color" content="#6777ef" />
+    <meta charset="utf-8" />
+    <title>Lupa kata sandi | Pay Slip </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="E-PaySlip PT Virtue Dragon Nickel Industry" name="description" />
+    <meta content="E-PaySlip" name="HR-SITE" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/icon.png') }}">
+    <!-- App css -->
+    <link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+    <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+    <!-- icons -->
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .login-container {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
 
-		<link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+        .login-image,
+        .login-form {
+            width: 100%;
+            max-width: 600px;
+        }
 
-		<!-- icons -->
-		<link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        .login-image {
+            background: url("{{ asset('assets/images/my_password.svg') }}") no-repeat center center;
+            background-size: cover;
+            height: 400px;
+        }
 
-    </head>
+        .login-form {
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
 
-    <body class="loading authentication-bg authentication-bg-pattern">
+        .form-control,
+        .btn {
+            border-radius: 8px;
+        }
 
-        <div class="account-pages mt-5 mb-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5">
-                        <div class="card bg-pattern">
+        .btn-primary {
+            background-color: #6a5acd;
+            border-color: #6a5acd;
+        }
 
-                            <div class="card-body p-4">
+        .btn-primary:hover {
+            background-color: greenyellow;
+            border-color: greenyellow;
+        }
 
-                                <div class="text-center w-75 m-auto">
-                                    <div class="auth-logo">
-                                        <a href="index.html" class="logo logo-dark text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22">
-                                            </span>
-                                        </a>
+        /* Media Queries for Responsive Design */
+        @media (min-width: 768px) {
+            .login-image {
+                flex: 0 0 60%;
+                height: auto;
+            }
 
-                                        <a href="index.html" class="logo logo-light text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="22">
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <p class="text-muted mb-4 mt-3">Silahkan Masukkan Password Baru Anda </p>
-                                </div>
+            .login-form {
+                flex: 0 0 40%;
+            }
+        }
 
-                                <form method="POST" action="{{ route('update.password', $cek->user_id) }}" >
-                                    @csrf
-                                    <input type="hidden" name="_method" value="PATCH">
-                                    <input type="hidden" name="token" value="{{ $cek->token }}">
-                                    <input type="hidden" name="id_lupa" value="{{ $cek->id }}">
-									<div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ $cek->user->email }}" id="email" required readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Kata Sandi</label>
-                                        <div class="input-group input-group-merge">
-                                            <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password"  minlength="8" placeholder="Masukkan Kata Sandi Anda">
-                                            <div class="input-group-append" data-password="false">
-                                                <div class="input-group-text">
-                                                    <span class="password-eye"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-									<div class="form-group">
-                                        <label for="confirm_password">Konfirmasi Kata Sandi</label>
-                                        <div class="input-group input-group-merge">
-                                            <input type="password" id="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" name="confirm_password"  minlength="8" placeholder="Masukkan Ulang Kata Sandi Anda">
-                                            <div class="input-group-append" data-password="false">
-                                                <div class="input-group-text">
-                                                    <span class="password-eye"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+        @media (max-width: 767px) {
+            .login-image {
+                display: none;
+            }
+        }
 
-                                    <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-success btn-block" type="submit"> Kirim </button>
-                                    </div>
+        /* Fallback color for image */
+        .login-image::after {
+            content: '';
+            display: block;
+            background: "#e0e0e0";
+            height: 600px;
+        }
+    </style>
+</head>
 
-                                </form>
-
-
-                            </div> <!-- end card-body -->
-                        </div>
-                        <!-- end card -->
-
-
-                        <!-- end row -->
-
-                    </div> <!-- end col -->
+<body>
+    <div class="login-container">
+        <div class="login-image"></div>
+        <div class="login-form">
+            <h3 class="text-center">Atur Ulang Kata Sandi</h3>
+            <p class="text-center text-muted">Silahkan masukkan kata sandi baru kamu</p>
+            <form method="POST" action="{{ route('update.password', $cek->user_id) }}">
+                @csrf
+                <input type="hidden" name="_method" value="PATCH">
+                <input type="hidden" name="token" value="{{ $cek->token }}">
+                <input type="hidden" name="id_lupa" value="{{ $cek->id }}">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ $cek->user->email }}" id="email" required readonly>
                 </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
+                <div class="form-group">
+                    <label for="password">Kata Sandi</label>
+                    <div class="input-group input-group-merge">
+                        <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" placeholder="Masukkan Kata Sandi Anda">
+                        <div class="input-group-append" data-password="false">
+                            <div class="input-group-text">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Konfirmasi Kata Sandi</label>
+                    <div class="input-group input-group-merge">
+                        <input type="password" id="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" name="confirm_password" minlength="8" placeholder="Masukkan Ulang Kata Sandi Anda">
+                        <div class="input-group-append" data-password="false">
+                            <div class="input-group-text">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-0 text-center">
+                    <button class="btn btn-primary btn-block" type="submit"> Kirim </button>
+                </div>
+            </form>
         </div>
-        <!-- end page -->
-        @include('sweetalert::alert')
-        <footer class="footer footer-alt text-white-50">
-            <script>document.write(new Date().getFullYear())</script> by <a href="" class="text-white-50">IT VDNI</a>
-        </footer>
+    </div>
+</body>
 
-        <!-- Vendor js -->
-        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+@include('sweetalert::alert')
+<!-- Vendor js -->
+<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
-        <!-- App js -->
-        <script src="{{ asset('assets/js/app.min.js') }}"></script>
-    </body>
+<!-- App js -->
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+<script>
+    (function() {
+        $('.from-prevent-multiple-submits').on('submit', function() {
+            $('.from-prevent-multiple-submits').attr('disabled', 'true');
+
+            // Change the button text
+            $(this).find('button[type="submit"]').text('Tunggu sebentar...');
+        })
+    })();
+</script>
+
 </html>

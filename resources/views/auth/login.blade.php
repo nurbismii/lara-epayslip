@@ -36,7 +36,7 @@
         .login-image {
             background: url("{{ asset('assets/images/pay_online.svg') }}") no-repeat center center;
             background-size: cover;
-            height: 500px;
+            height: 400px;
         }
 
         .login-form {
@@ -58,8 +58,8 @@
         }
 
         .btn-primary:hover {
-            background-color: #7e57c2;
-            border-color: #7e57c2;
+            background-color: greenyellow;
+            border-color: greenyellow;
         }
 
         /* Media Queries for Responsive Design */
@@ -84,8 +84,8 @@
         .login-image::after {
             content: '';
             display: block;
-            background: url("{{ asset('assets/images/pay_online.svg') }}") no-repeat center center;
-            height: 450px;
+            background: "#e0e0e0";
+            height: 600px;
         }
     </style>
 </head>
@@ -98,13 +98,20 @@
             <p class="text-center text-muted">Gunakan email dan kata sandi yang telah terdaftar</p>
             <form class="from-prevent-multiple-submits" method="POST" action="{{ route('login') }}">
                 @csrf
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" placeholder="Email kamu..." required autocomplete="email" autofocus>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Kata sandi</label>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="*********">
+                <div class="mb-2">
+                    <label for="confirm_password">Kata Sandi</label>
+                    <div class="input-group input-group-merge">
+                        <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" placeholder="*******" required>
+                        <div class="input-group-append" data-password="false">
+                            <div class="input-group-text">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary btn-block from-prevent-multiple-submits">Masuk</button>

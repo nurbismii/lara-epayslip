@@ -58,8 +58,8 @@
         }
 
         .btn-primary:hover {
-            background-color: #7e57c2;
-            border-color: #7e57c2;
+            background-color: greenyellow;
+            border-color: greenyellow;
         }
 
         /* Media Queries for Responsive Design */
@@ -111,7 +111,6 @@
             </form>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 
 @include('sweetalert::alert')
