@@ -1,14 +1,14 @@
 {
-    "name": "Laravel Package Tutorial",
+    "name": "E-Payslip VDNI",
     "short_name": "LPT",
     "start_url": "/index.php",
-    "background_color": "#6777ef",
+    "background_color": "#ffffff",
     "description": "E-Payslip VDNI",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "#ffffff",
     "icons": [
         {
-            "src": "logo.png",
+            "src": "payslip.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
