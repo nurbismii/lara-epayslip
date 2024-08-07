@@ -408,9 +408,11 @@
 
                     @if(Auth::user()->level == "Pengguna")
                     <div class="mt-4 mb-1">
-                        <form class="from-prevent-multiple-submits" action="{{ route('cetak.slip_gaji', $cek->periode) }}" method="GET">
+                        <form action="{{ route('cetak.slip_gaji', $cek->periode) }}" method="GET" id="downloadForm">
                             <div class="text-right d-print-none">
-                                <button class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
+                                <button id="downloadButton" class="btn btn-primary waves-effect waves-light" type="button">
+                                    <i class="mdi mdi-printer mr-1"></i> Download
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -421,7 +423,7 @@
                             <input type="hidden" name="month" value="{{ $cek->periode }}">
                             <input type="hidden" name="karyawan_id" value="{{ $cek->data_karyawan_id }}">
                             <div class="text-right d-print-none">
-                                <button class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
                             </div>
                         </form>
                     </div>
@@ -440,14 +442,18 @@
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
 <script>
-    (function() {
-        $('.from-prevent-multiple-submits').on('submit', function() {
-            $('.from-prevent-multiple-submits').attr('disabled', 'true');
+    $(document).ready(function() {
+        $('#downloadButton').on('click', function() {
+            var button = $(this);
+            button.text('File sedang didownload...').prop('disabled', true);
+            $('#downloadForm').submit();
 
-            // Change the button text
-            $(this).find('button[type="submit"]').text('Silahkan tunggu...');
-        })
-    })();
+            // Re-enable the button after 5 seconds
+            setTimeout(function() {
+                button.text('Download').prop('disabled', false);
+            }, 10000);
+        });
+    });
 </script>
 
 @endsection
