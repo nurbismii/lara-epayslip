@@ -39,10 +39,8 @@ class SlipGajiController extends Controller
         }
     }
 
-    public function cetak_pdf(Request $request)
+    public function cetak_pdf($periode)
     {
-
-        $periode = $request['month'];
         $cek = KomponenGaji::where('data_karyawan_id', Auth::user()->data_karyawan->id)
             ->where('periode', $periode)
             ->first();

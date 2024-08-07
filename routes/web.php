@@ -53,9 +53,12 @@ Route::patch('update-akun/{id}', [App\Http\Controllers\SettingController::class,
 Route::post('proses-pendaftaran',  [App\Http\Controllers\PendaftaranController::class, 'pendaftaran'])->name('pendaftaran');
 Route::get('pendaftaran/verifikasi/{id}', [App\Http\Controllers\PendaftaranController::class, 'verifikasi'])->name('pendaftaran.verifikasi');
 Route::get('profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('is_active');
-Route::get('slip-gaji', [App\Http\Controllers\SlipGajiController::class, 'index'])->name('slip_gaji')->middleware('is_active');
-Route::post('slip-gaji/cari', [App\Http\Controllers\SlipGajiController::class, 'search'])->name('search.slip_gaji')->middleware('is_active');
-Route::post('/slip-gaji/cetak_pdf', [App\Http\Controllers\SlipGajiController::class, 'cetak_pdf'])->name('cetak.slip_gaji')->middleware('is_active');
+
+Route::group(['prefix' => 'slip-gaji'], function () {
+  Route::get('/', [App\Http\Controllers\SlipGajiController::class, 'index'])->name('slip_gaji')->middleware('is_active');
+  Route::post('/cari', [App\Http\Controllers\SlipGajiController::class, 'search'])->name('search.slip_gaji')->middleware('is_active');
+  Route::get('/cetak_pdf/{periode}', [App\Http\Controllers\SlipGajiController::class, 'cetak_pdf'])->name('cetak.slip_gaji')->middleware('is_active');
+});
 
 Route::get('lupa-password', [App\Http\Controllers\LupaPasswordController::class, 'index'])->name('forget');
 Route::post('store-forget', [App\Http\Controllers\LupaPasswordController::class, 'store'])->name('store.forget');

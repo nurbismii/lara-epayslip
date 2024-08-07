@@ -345,14 +345,9 @@
                                     </tr>
                                     @endif
                                     <tr>
-                                        @if($cek->durasi_sp <= "2015-01-01")
-                                        <?php $durasi_sp = ""; ?>
-                                        @else
-                                        <?php $durasi_sp = $cek->durasi_sp; ?>
-                                        @endif
-                                        <td>DURASI SURAT PERINGATAN</td>
-                                        <td>:</td>
-                                        <td>{{ $durasi_sp ?? '-'}}</td>
+                                        @if($cek->durasi_sp <= "2015-01-01" ) <?php $durasi_sp = ""; ?> @else <?php $durasi_sp = $cek->durasi_sp; ?> @endif <td>DURASI SURAT PERINGATAN</td>
+                                            <td>:</td>
+                                            <td>{{ $durasi_sp ?? '-'}}</td>
                                     </tr>
 
                                     <tr>
@@ -413,25 +408,21 @@
 
                     @if(Auth::user()->level == "Pengguna")
                     <div class="mt-4 mb-1">
-                        <form action="{{ route('cetak.slip_gaji') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="month" value="{{ $cek->periode }}">
+                        <form class="from-prevent-multiple-submits" action="{{ route('cetak.slip_gaji', $cek->periode) }}" method="GET">
                             <div class="text-right d-print-none">
-                                <button class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-printer mr-1"></i> Download</button>
+                                <button class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
                             </div>
-
                         </form>
                     </div>
                     @elseif(Auth::user()->level == "Administrator")
                     <div class="mt-4 mb-1">
-                        <form action="{{ route('salary.cetak_pdf') }}" method="POST">
+                        <form class="from-prevent-multiple-submits" action="{{ route('salary.cetak_pdf') }}" method="POST">
                             @csrf
                             <input type="hidden" name="month" value="{{ $cek->periode }}">
                             <input type="hidden" name="karyawan_id" value="{{ $cek->data_karyawan_id }}">
                             <div class="text-right d-print-none">
-                                <button class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-printer mr-1"></i> Download</button>
+                                <button class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
                             </div>
-
                         </form>
                     </div>
                     @endif
@@ -439,8 +430,24 @@
             </div> <!-- end col -->
         </div>
         <!-- end row -->
-
     </div> <!-- container -->
-
 </div> <!-- content -->
+
+<!-- Vendor js -->
+<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+<script>
+    (function() {
+        $('.from-prevent-multiple-submits').on('submit', function() {
+            $('.from-prevent-multiple-submits').attr('disabled', 'true');
+
+            // Change the button text
+            $(this).find('button[type="submit"]').text('Silahkan tunggu...');
+        })
+    })();
+</script>
+
 @endsection
