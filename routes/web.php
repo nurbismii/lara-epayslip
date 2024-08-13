@@ -1,19 +1,33 @@
 <?php
 
-use App\Http\Controllers\KaryawanController;
-use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{
+  HomeController,
+  SalaryController,
+  UserController,
+  PenggunaController,
+  KaryawanController,
+  SettingController,
+  PendaftaranController,
+  ProfileController,
+  SlipGajiController,
+  LupaPasswordController,
+  ResendEmailController,
+  FailUploadKomponenController,
+  InfoPengumumanController,
+  PenilaianKinerjaController,
+  EvaluasiKetenagakerjaanController,
+  HasilEvaluasiController
+};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(['middleware' => 'is_active'], function () {
+Route::middleware('is_active')->group(function () {
+  Route::get('/upload-salary', [SalaryController::class, 'uploadSalary']);
+  Route::get('/salary/detail/{id}', [SalaryController::class, 'show'])->name('detail.salary');
 
-  Route::get('/upload-salary', [App\Http\Controllers\SalaryController::class, 'uploadSalary']);
-  Route::get('/salary/detail/{id}', [App\Http\Controllers\SalaryController::class, 'show'])->name('detail.salary');
-
-  Route::group(['prefix' => 'user'], function () {
+  Route::prefix('user')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::patch('/{id}/update', [UserController::class, 'update'])->name('user.update');
@@ -21,10 +35,7 @@ Route::group(['middleware' => 'is_active'], function () {
     Route::post('/nonaktifkan-pengguna', [UserController::class, 'nonaktifkan_pengguna'])->name('nonaktifkan_pengguna');
   });
 
-  Route::get('api/pengguna', [App\Http\Controllers\PenggunaController::class, 'api'])->name('api.pengguna');
-  Route::resource('pengguna', '\App\Http\Controllers\PenggunaController');
-
-  Route::group(['prefix' => 'karyawan'], function () {
+  Route::prefix('karyawan')->group(function () {
     Route::get('/', [KaryawanController::class, 'index'])->name('karyawan.index');
     Route::get('/{id}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
     Route::patch('/{id}/update', [KaryawanController::class, 'update'])->name('karyawan.update');
@@ -34,48 +45,58 @@ Route::group(['middleware' => 'is_active'], function () {
     Route::post('/upload/update', [KaryawanController::class, 'perubahan'])->name('perubahan');
     Route::post('/upload/destroy', [KaryawanController::class, 'hapus_karyawan'])->name('hapus_karyawan');
   });
+
+  Route::get('akun-saya', [SettingController::class, 'my_account'])->name('pengguna.akun');
+  Route::patch('update-akun/{id}', [SettingController::class, 'update'])->name('update.akun');
+  Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+
+  Route::prefix('slip-gaji')->group(function () {
+    Route::get('/', [SlipGajiController::class, 'index'])->name('slip_gaji');
+    Route::post('/cari', [SlipGajiController::class, 'search'])->name('search.slip_gaji');
+    Route::get('/cetak_pdf/{periode}', [SlipGajiController::class, 'cetak_pdf'])->name('cetak.slip_gaji');
+  });
+
+  Route::get('detail-pencapaian-kinerja',  [PenilaianKinerjaController::class, 'detail_penilaian_kinerja'])->name('detail_penilaian');
+  Route::get('detail-evaluasi-ketenagakerjaan',  [EvaluasiKetenagakerjaanController::class, 'detail_evaluasi'])->name('detail_evaluasi');
+  Route::get('detail-hasil-evaluasi', [HasilEvaluasiController::class, 'detail_hasil_evaluasi'])->name('detail_hasil_evaluasi');
 });
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_active');
-Route::get('/masa-kerja', [App\Http\Controllers\HomeController::class, 'masaKerja'])->name('masaKerja')->middleware('is_admin');
-Route::get('/bpjs-tk', [App\Http\Controllers\HomeController::class, 'BPJSTK'])->name('bpjs-tk')->middleware('is_admin');
-Route::get('api/masa-kerja', [App\Http\Controllers\HomeController::class, 'fetchMasaKerja'])->middleware('is_admin');
-Route::get('api/karyawan', [App\Http\Controllers\KaryawanController::class, 'api'])->name('api.karyawan')->middleware('is_admin');
+Route::middleware('is_admin')->group(function () {
+  Route::get('/masa-kerja', [HomeController::class, 'masaKerja'])->name('masaKerja');
+  Route::get('/bpjs-tk', [HomeController::class, 'BPJSTK'])->name('bpjs-tk');
 
-Route::resource('salary', '\App\Http\Controllers\SalaryController')->middleware('is_admin');
-Route::get('api/salary', [App\Http\Controllers\SalaryController::class, 'api'])->name('api.salary')->middleware('is_admin');
-Route::post('upload/salary', [App\Http\Controllers\SalaryController::class, 'upload'])->name('salary.upload')->middleware('is_admin');
-Route::post('search/salary', [App\Http\Controllers\SalaryController::class, 'search'])->name('salary.search')->middleware('is_admin');
+  Route::get('api/masa-kerja', [HomeController::class, 'fetchMasaKerja']);
+  Route::get('api/karyawan', [KaryawanController::class, 'api'])->name('api.karyawan');
+  Route::get('api/salary', [SalaryController::class, 'api'])->name('api.salary');
+  Route::get('api/pengumuman', [InfoPengumumanController::class, 'api'])->name('api.pengumuman');
+  Route::get('api/pengguna', [PenggunaController::class, 'api'])->name('api.pengguna');
 
-Route::get('akun-saya', [App\Http\Controllers\SettingController::class, 'my_account'])->name('pengguna.akun')->middleware('is_active');
-Route::patch('update-akun/{id}', [App\Http\Controllers\SettingController::class, 'update'])->name('update.akun')->middleware('is_active');
-Route::post('proses-pendaftaran',  [App\Http\Controllers\PendaftaranController::class, 'pendaftaran'])->name('pendaftaran');
-Route::get('pendaftaran/verifikasi/{id}', [App\Http\Controllers\PendaftaranController::class, 'verifikasi'])->name('pendaftaran.verifikasi');
-Route::get('profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('is_active');
+  Route::resource('salary', SalaryController::class);
+  Route::post('upload/salary', [SalaryController::class, 'upload'])->name('salary.upload');
+  Route::post('search/salary', [SalaryController::class, 'search'])->name('salary.search');
+  Route::post('/salary/cetak_pdf', [SalaryController::class, 'hasil_pdf'])->name('salary.cetak_pdf');
+  Route::post('/salary/delete-all', [SalaryController::class, 'delete_all'])->name('salary.delete_all');
 
-Route::group(['prefix' => 'slip-gaji'], function () {
-  Route::get('/', [App\Http\Controllers\SlipGajiController::class, 'index'])->name('slip_gaji')->middleware('is_active');
-  Route::post('/cari', [App\Http\Controllers\SlipGajiController::class, 'search'])->name('search.slip_gaji')->middleware('is_active');
-  Route::get('/cetak_pdf/{periode}', [App\Http\Controllers\SlipGajiController::class, 'cetak_pdf'])->name('cetak.slip_gaji')->middleware('is_active');
+  Route::post('/karyawan/delete-all', [KaryawanController::class, 'delete_all'])->name('karyawan.delete_all');
+  Route::resource('pengguna', PenggunaController::class);
+  Route::resource('info-pengumuman', InfoPengumumanController::class);
+  Route::resource('pencapaian-kinerja', PenilaianKinerjaController::class);
+  Route::resource('evaluasi-ketangakerjaan', EvaluasiKetenagakerjaanController::class);
+  Route::resource('hasil-evaluasi', HasilEvaluasiController::class);
+  Route::get('data-tertolak', [FailUploadKomponenController::class, 'index'])->name('data_tertolak');
+  Route::get('export/karyawan', [KaryawanController::class, 'exportKaryawan'])->name('export.karyawan');
 });
 
-Route::get('lupa-password', [App\Http\Controllers\LupaPasswordController::class, 'index'])->name('forget');
-Route::post('store-forget', [App\Http\Controllers\LupaPasswordController::class, 'store'])->name('store.forget');
-Route::get('konfirmasi/reset/{id}', [App\Http\Controllers\LupaPasswordController::class, 'konfirmasi'])->name('konfirmasi.reset');
-Route::patch('update-password/{id}', [App\Http\Controllers\LupaPasswordController::class, 'update_password'])->name('update.password');
-Route::post('/salary/cetak_pdf', [App\Http\Controllers\SalaryController::class, 'hasil_pdf'])->name('salary.cetak_pdf')->middleware('is_admin');
-Route::post('/salary/delete-all', [App\Http\Controllers\SalaryController::class, 'delete_all'])->name('salary.delete_all')->middleware('is_admin');
-Route::post('/karyawan/delete-all', [App\Http\Controllers\KaryawanController::class, 'delete_all'])->name('karyawan.delete_all')->middleware('is_admin');
-Route::get('resend-email', [App\Http\Controllers\ResendEmailController::class, 'index'])->name('resend_email');
-Route::post('store-resend', [App\Http\Controllers\ResendEmailController::class, 'store'])->name('store.resend_email');
-Route::get('data-tertolak', [App\Http\Controllers\FailUploadKomponenController::class, 'index'])->name('data_tertolak')->middleware('is_admin');
-Route::resource('info-pengumuman', '\App\Http\Controllers\InfoPengumumanController')->middleware('is_admin');
-Route::get('api/pengumuman', [App\Http\Controllers\InfoPengumumanController::class, 'api'])->name('api.pengumuman')->middleware('is_admin');
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('is_active');
 
-Route::resource('pencapaian-kinerja', 'App\Http\Controllers\PenilaianKinerjaController')->middleware('is_admin');
-Route::resource('evaluasi-ketangakerjaan', 'App\Http\Controllers\EvaluasiKetenagakerjaanController')->middleware('is_admin');
-Route::resource('hasil-evaluasi', 'App\Http\Controllers\HasilEvaluasiController')->middleware('is_admin');
-Route::get('detail-pencapaian-kinerja',  [App\Http\Controllers\PenilaianKinerjaController::class, 'detail_penilaian_kinerja'])->name('detail_penilaian')->middleware('is_active');
-Route::get('detail-evaluasi-ketenagakerjaan',  [App\Http\Controllers\EvaluasiKetenagakerjaanController::class, 'detail_evaluasi'])->name('detail_evaluasi')->middleware('is_active');
-Route::get('detail-hasil-evaluasi', [App\Http\Controllers\HasilEvaluasiController::class, 'detail_hasil_evaluasi'])->name('detail_hasil_evaluasi')->middleware('is_active');
+Route::get('lupa-password', [LupaPasswordController::class, 'index'])->name('forget');
+Route::post('store-forget', [LupaPasswordController::class, 'store'])->name('store.forget');
+Route::get('konfirmasi/reset/{id}', [LupaPasswordController::class, 'konfirmasi'])->name('konfirmasi.reset');
+Route::patch('update-password/{id}', [LupaPasswordController::class, 'update_password'])->name('update.password');
+
+Route::get('resend-email', [ResendEmailController::class, 'index'])->name('resend_email');
+Route::post('store-resend', [ResendEmailController::class, 'store'])->name('store.resend_email');
+
+Route::post('proses-pendaftaran',  [PendaftaranController::class, 'pendaftaran'])->name('pendaftaran');
+Route::get('pendaftaran/verifikasi/{id}', [PendaftaranController::class, 'verifikasi'])->name('pendaftaran.verifikasi');

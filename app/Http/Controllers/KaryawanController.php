@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KaryawanExport;
 use Illuminate\Http\Request;
 use App\Models\DataKaryawan;
 use App\Models\KomponenGaji;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use Yajra\DataTables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class KaryawanController extends Controller
@@ -104,7 +106,7 @@ class KaryawanController extends Controller
         //
         $jatuh_tempo = '';
         $jatuh_tempo_covid = '';
-        
+
         if (Auth::user()->level == "Administrator") {
 
             $data = KomponenGaji::with('karyawan')->where('data_karyawan_id', $id)->latest()->first();
@@ -294,5 +296,10 @@ class KaryawanController extends Controller
             return redirect()->back()->withStatus('File Excel Berhasil Di Upload');
         }
         return redirect()->back()->with(['error' => 'Please choose file before']);
+    }
+
+    public function exportKaryawan()
+    {
+        return Excel::download(new KaryawanExport, 'DATA KARYAWAN.xlsx');
     }
 }

@@ -167,7 +167,7 @@
                         @if(Auth::user()->level == "Administrator")
 
                         <h4> Data <span class="table-project-n"> Karyawan</span>
-                            <a onclick="add_karyawan()" class="btn btn-success waves-effect waves-light float-right" style="margin-top: -6px;"><i class="mdi mdi-plus-circle mr-2"></i><b> Karyawan </b></a>
+                            <a href="{{ route('export.karyawan') }}" class="btn float-right btn-success notika-btn-success" style="margin-top: -6px;"><i class="mdi mdi-download mr-2"></i><b> Excel </b></a>
                         </h4>
                         </br>
                         @endif
