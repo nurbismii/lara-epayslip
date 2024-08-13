@@ -32,8 +32,8 @@ class DataKaryawans implements ToModel, WithHeadingRow, SkipsOnError, withValida
             'npwp' => str_replace(array('.', '-'), '', $row['no_npwp']),
             'tgl_lahir' => Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_lahir'])),
             'nm_perusahaan' => $row['nm_perusahaan'],
-            'bpjs_ket' => $row['no_bpjs_kes'],
-            'bpjs_tk' => $row['no_bpjs_tk'],
+            'bpjs_ket' => strval($row['no_bpjs_kes']),
+            'bpjs_tk' => strval($row['no_bpjs_tk']),
             'vaksin_1' => $row['vaksin'],
             'tgl_join' =>  Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_join'])),
         ]);
