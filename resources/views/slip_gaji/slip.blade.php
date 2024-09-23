@@ -418,12 +418,12 @@
                     </div>
                     @elseif(Auth::user()->level == "Administrator")
                     <div class="mt-4 mb-1">
-                        <form class="from-prevent-multiple-submits" action="{{ route('salary.cetak_pdf') }}" method="POST">
+                        <form class="from-prevent-multiple-submits" action="{{ route('salary.cetak_pdf') }}" method="POST" id="downloadForm">
                             @csrf
                             <input type="hidden" name="month" value="{{ $cek->periode }}">
                             <input type="hidden" name="karyawan_id" value="{{ $cek->data_karyawan_id }}">
                             <div class="text-right d-print-none">
-                                <button type="submit" class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
+                                <button type="submit" id="downloadButton" class="btn btn-primary waves-effect waves-light from-prevent-multiple-submits"><i class="mdi mdi-printer mr-1"></i> Download</button>
                             </div>
                         </form>
                     </div>
