@@ -28,20 +28,37 @@ class LupaPasswordController extends Controller
             return redirect()->route('forget');
         }
 
-        $param = [
-            'nama' => $cek->name,
-            'token' => $token
-        ];
+        $exist_req_forget = LupaPassword::where('user_id', $cek->id)->latest()->first();
 
-        LupaPassword::create([
-            'user_id' => $cek->id,
-            'token' => $token,
-            'status' => 'Aktif'
-        ]);
+        $time_now = strtotime(now());
+        $time_request = strtotime($exist_req_forget->created_at);
 
-        Mail::to($email)->send(new LupaPasswordEmail($param));
-        Alert::success('Sukses', 'Reset kata sandi berhasil silahkan cek inbox email kamu, terimakasih');
-        return redirect()->route('login');
+        // Hitung selisih waktu dalam detik
+        $time_difference = $time_now - $time_request;
+
+        // Cek jika selisih waktu kurang dari 1 jam (3600 detik)
+        $REQUEST_LIMIT = 3600;
+
+        if ($time_difference < $REQUEST_LIMIT) {
+            // Jika kurang dari 1 jam, berikan respon
+            Alert::error('Error', 'Oops, tunggu 1 jam kedepan untuk melakukan request ini lagi. Terimakasih');
+            return redirect()->route('forget');
+        } else {
+            $param = [
+                'nama' => $cek->name,
+                'token' => $token
+            ];
+
+            LupaPassword::create([
+                'user_id' => $cek->id,
+                'token' => $token,
+                'status' => 'Aktif'
+            ]);
+
+            Mail::to($email)->send(new LupaPasswordEmail($param));
+            Alert::success('Sukses', 'Reset kata sandi berhasil silahkan cek inbox email kamu, terimakasih');
+            return redirect()->route('login');
+        }
     }
 
     public function konfirmasi($id)
