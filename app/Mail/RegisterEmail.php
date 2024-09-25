@@ -33,7 +33,8 @@ class RegisterEmail extends Mailable
             'nama' => $this->data['nama'],
             'token' => $this->data['token']
         ];
-        return $this->from('no-reply@vdni.net')
+        return $this->from('no-reply@vdni.top')
+                    ->subject('Konfirmasi Email')
                     ->view('email.index')
                     ->with([
                             'inputs' => $input

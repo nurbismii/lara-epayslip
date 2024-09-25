@@ -84,7 +84,7 @@
 
 
         <footer class="footer footer-alt text-white-50">
-            <script>document.write(new Date().getFullYear())</script> &copy;  by <a href="" class="text-white-50">IT VDNI</a>
+            <script>document.write(new Date().getFullYear())</script> &copy;  by <a href="" class="text-white-50">HR VDNI</a>
         </footer>
 
         <!-- Vendor js -->
