@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\LupaPassword;
 use App\Mail\LupaPasswordEmail;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,7 @@ class LupaPasswordController extends Controller
         $exist_req_forget = LupaPassword::where('user_id', $cek->id)->latest()->first();
 
         $time_now = strtotime(now());
-        $time_request = strtotime($exist_req_forget->created_at);
+        $time_request = strtotime($exist_req_forget->created_at ?? $time_now);
 
         // Hitung selisih waktu dalam detik
         $time_difference = $time_now - $time_request;
@@ -44,6 +45,7 @@ class LupaPasswordController extends Controller
             Alert::error('Error', 'Oops, tunggu 1 jam kedepan untuk melakukan request ini lagi. Terimakasih');
             return redirect()->route('forget');
         } else {
+
             $param = [
                 'nama' => $cek->name,
                 'token' => $token
