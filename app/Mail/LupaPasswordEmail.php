@@ -33,10 +33,10 @@ class LupaPasswordEmail extends Mailable
             'nama' => $this->data['nama'],
             'token' => $this->data['token']
         ];
-        return $this->from('no-reply@vdni.net')
-                    ->view('email.lupa_password')
-                    ->with([
-                            'inputs' => $input
-                        ]);
+        return $this->from('vdni.payslip@gmail.com')
+            ->view('email.lupa_password')
+            ->with([
+                'inputs' => $input
+            ]);
     }
 }
