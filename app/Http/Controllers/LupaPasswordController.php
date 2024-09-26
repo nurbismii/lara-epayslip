@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\LupaPassword;
 use App\Mail\LupaPasswordEmail;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -45,21 +46,28 @@ class LupaPasswordController extends Controller
             Alert::error('Error', 'Oops, tunggu 1 jam kedepan untuk melakukan request ini lagi. Terimakasih');
             return redirect()->route('forget');
         } else {
+            DB::beginTransaction();
+            try {
+                $param = [
+                    'nama' => $cek->name,
+                    'token' => $token
+                ];
 
-            $param = [
-                'nama' => $cek->name,
-                'token' => $token
-            ];
+                LupaPassword::create([
+                    'user_id' => $cek->id,
+                    'token' => $token,
+                    'status' => 'Aktif'
+                ]);
+                DB::commit();
 
-            LupaPassword::create([
-                'user_id' => $cek->id,
-                'token' => $token,
-                'status' => 'Aktif'
-            ]);
-
-            Mail::to($email)->send(new LupaPasswordEmail($param));
-            Alert::success('Sukses', 'Reset kata sandi berhasil silahkan cek inbox email kamu, terimakasih');
-            return redirect()->route('login');
+                Mail::to($email)->send(new LupaPasswordEmail($param));
+                Alert::success('Sukses', 'Reset kata sandi berhasil silahkan cek inbox email kamu, terimakasih');
+                return redirect()->route('login');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Alert::success('Error', 'Terjadi kesalahan pada saat melakukan permintaan, coba lagi nanti :)');
+                return redirect()->route('forget');
+            }
         }
     }
 
