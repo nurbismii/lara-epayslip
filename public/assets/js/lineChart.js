@@ -88,9 +88,6 @@ var config = {
 };
 
 window.onload = function() {
-  var ctx_emp = document.getElementById("canvas_emp").getContext("2d");
-  window.myLineEmp = new Chart(ctx_emp, config_emp);
-
   var ctx = document.getElementById("canvas_pay").getContext("2d");
   window.myLine = new Chart(ctx, config);
 };

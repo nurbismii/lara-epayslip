@@ -49,5 +49,39 @@
 
     <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <style>
+        .navbar-custom {
+            background-color: #F8F9FA;
+            box-shadow: 0 2px 6px -2px rgba(0, 0, 0, .16), 0 2px 6px 0 rgba(0, 0, 0, .12);
+            padding: 0 10px 0 0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 70px;
+            z-index: 1001;
+        }
+
+        .navbar-custom .button-menu-mobile {
+            border: none;
+            color: #000;
+            display: inline-block;
+            height: 70px;
+            line-height: 70px;
+            width: 60px;
+            background-color: transparent;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .navbar-custom .topnav-menu .nav-link {
+            padding: 0 15px;
+            color: #000;
+            min-width: 32px;
+            display: block;
+            line-height: 70px;
+            text-align: center;
+            max-height: 70px;
+        }
+    </style>
     @stack('css')
 </head>

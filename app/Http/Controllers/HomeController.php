@@ -54,13 +54,13 @@ class HomeController extends Controller
 
             $total_karyawan_tahun_lalu = getTotalKaryawan($gaji, $tahun_lalu);
 
-            $rerata_upah = rerataUpah($total_payroll, $total_karyawan);
+            // $rerata_upah = rerataUpah($total_payroll, $total_karyawan);
 
-            $rerata_upah_tahun_lalu = rerataUpah($total_payroll_tahun_lalu, $total_karyawan_tahun_lalu);
+            // $rerata_upah_tahun_lalu = rerataUpah($total_payroll_tahun_lalu, $total_karyawan_tahun_lalu);
 
-            $persentase_selisih_karyawan = persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
+            // $persentase_selisih_karyawan = persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
 
-            $selisih_karyawan = selisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
+            // $selisih_karyawan = selisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
 
             $persentase = getPersentase($total_payroll_tahun_lalu, $total_payroll);
 
@@ -68,7 +68,7 @@ class HomeController extends Controller
 
             $pengumuman = InfoPengumuman::orderBy('id', 'DESC')->limit(4)->get();
 
-            return view('home.admin', compact('rerata_upah_tahun_lalu', 'rerata_upah', 'selisih_karyawan', 'persentase_selisih_karyawan', 'total_karyawan', 'total_karyawan_tahun_lalu', 'selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
+            return view('home.admin', compact('selisih', 'total_karyawan', 'total_karyawan_tahun_lalu', 'selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
         }
 
         $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();
