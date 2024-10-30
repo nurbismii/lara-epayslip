@@ -180,11 +180,7 @@
                                     <td>
                                         <h4>
                                             @if($data_cuti)
-                                            {{ $data_cuti->sisa_cuti ?? 'Belum tersedia' }} {{ $data_cuti->sisa_cuti > 0 ? ' hari' : '' }}
-
-                                            @if($data_cuti->sisa_cuti > 0)
-                                            <span class="badge badge-primary">Masa berlaku {{ $jatuh_tempo }}</span>
-                                            @endif
+                                            -
                                             @else
                                             -
                                             @endif
@@ -201,7 +197,7 @@
                                     <td>
                                         <h4>
                                             @if($data_cuti)
-                                            {{ $data_cuti->sisa_cuti_covid == 0 ? 'Tidak tersedia' :  $data_cuti->sisa_cuti_covid}} {{ $data_cuti->sisa_cuti_covid > 0 ? ' hari' : ''}}
+                                            -
                                             @else
                                             -
                                             @endif
