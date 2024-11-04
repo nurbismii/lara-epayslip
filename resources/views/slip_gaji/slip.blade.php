@@ -2,7 +2,6 @@
 @section('content')
 <div class="content">
 
-    <!-- Start Content-->
     <div class="container-fluid">
 
         <!-- start page title -->
@@ -22,7 +21,7 @@
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-xl-12">
                 <div class="card-box">
                     <!-- Logo & title -->
                     <div class="clearfix">
@@ -345,7 +344,12 @@
                                     </tr>
                                     @endif
                                     <tr>
-                                        @if($cek->durasi_sp <= "2015-01-01" ) <?php $durasi_sp = ""; ?> @else <?php $durasi_sp = $cek->durasi_sp; ?> @endif <td>DURASI SURAT PERINGATAN</td>
+                                        @if($cek->durasi_sp <= "2015-01-01" )
+                                            <?php $durasi_sp = ""; ?>
+                                            @else
+                                            <?php $durasi_sp = $cek->durasi_sp; ?>
+                                            @endif
+                                            <td>DURASI SURAT PERINGATAN</td>
                                             <td>:</td>
                                             <td>{{ $durasi_sp ?? '-'}}</td>
                                     </tr>
@@ -431,15 +435,8 @@
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>
-        <!-- end row -->
     </div> <!-- container -->
-</div> <!-- content -->
-
-<!-- Vendor js -->
-<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
-
-<!-- App js -->
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -455,5 +452,4 @@
         });
     });
 </script>
-
 @endsection
