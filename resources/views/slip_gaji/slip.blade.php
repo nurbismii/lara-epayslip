@@ -167,7 +167,7 @@
                             @if($cek->mulai_periode)
                             <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
                             @else
-                            <h5 class="m-0 d-print-none">16 {{ $nm_bln }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</h5>
+                            <h5 class="m-0 d-print-none">16 {{ $nm_bln1 }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</h5>
                             @endif
 
                             @elseif($cek->data_karyawan->nm_perusahaan == "VDNIP")
@@ -175,7 +175,7 @@
                             @if($cek->mulai_periode)
                             <h5 class="m-0 d-print-none">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</h5>
                             @else
-                            <h5 class="m-0 d-print-none">16 {{ $nm_bln }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</h5>
+                            <h5 class="m-0 d-print-none">16 {{ $nm_bln1 }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</h5>
                             @endif
                             @endif
                         </div>

@@ -149,7 +149,7 @@ if ($bulan == "01") {
                         @if($cek->mulai_periode)
                         <span class="fw-normal">{{ getTanggalIndo($cek->mulai_periode) }} - {{ getTanggalIndo($cek->akhir_periode)  }}</span>
                         @else
-                        <span class="fw-normal">16 {{ $nm_bln }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</span>
+                        <span class="fw-normal">16 {{ $nm_bln1 }} {{ $thn }} - 15 {{ $nm_bln }} {{ $thn }}</span>
                         @endif
                     </div>
                 </div>
