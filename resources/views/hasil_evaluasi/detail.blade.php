@@ -165,22 +165,15 @@
 
                                             @if(($hasil >= 1963.28) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1963.27)) Baik @elseif(($hasil>= 1416.8) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @elseif($div->data_karyawan->nm_perusahaan == 'VDNIP')
 
-
-
-
                                                         @if(($hasil >= 1922.8) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1821.6) && ($hasil <= 1922.79)) Baik @elseif(($hasil>= 1416.8) && ($hasil <= 1821.59)) Cukup @else Kurang @endif @elseif($div->data_karyawan->nm_perusahaan == 'VDNI')
 
                                                                     @if(($div->divisi == 'LOADER SMELTER 冶炼装载机') || ($div->divisi == 'TUNGKU 1- 15 熔炉') || ($div->divisi == 'WELDER SMELTER 钳工') || ($div->divisi == 'CONTROL ROOM SMELTER 铁厂中控') || ($div->divisi == 'GUDANG ORE 原料普工') || ($div->divisi == 'LOGISTIK 物流部') || ($div->divisi == 'EXCAVATOR SMELTER 冶炼挖掘机'))
 
-
                                                                     @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1922.8) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1922.79)) Cukup @else Kurang @endif @elseif($div->departemen == 'ADMINISTRATION DEPARTMENT')
-
 
                                                                                 @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @elseif($div->divisi == 'TRANSPORTASI JETTY 码头储运部')
 
-
                                                                                             @if(($hasil >= 1902.56) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1781.12) && ($hasil <= 1902.55)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1781.11)) Cukup @else Kurang @endif @elseif(($div->divisi == 'WAREHOUSE 仓库') || $div->departemen == 'SMELTER 炼铁厂')
-
 
                                                                                                         @if(($hasil >= 1943.04) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1943.03)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @else @if(($hasil>= 1902.56) && ($hasil <= 2024)) Sangat baik @elseif(($hasil>= 1679.92) && ($hasil <= 1902.55)) Baik @elseif(($hasil>= 1214.4) && ($hasil <= 1679.91)) Cukup @else Kurang @endif @endif @else Undifined @endif </td>
                                     </tr>

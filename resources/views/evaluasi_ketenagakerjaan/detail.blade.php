@@ -37,8 +37,8 @@
                                         <td>{{ $data->data_karyawan->nama }}</td>
                                         <td>Departemen</td>
                                         <td>@if($div != null) {{ $div->departemen }} @endif</td>
-                                        <td rowspan="2">Email</td>
-                                        <td rowspan="2">{{ $data->user->email ?? 'Belum terdaftar sebagai pengguna' }}</td>
+                                        <td rowspan="3">Email</td>
+                                        <td rowspan="3">{{ $data->user->email ?? 'Belum terdaftar sebagai pengguna' }}</td>
                                     </tr>
                                     <tr>
                                         <td>NIK</td>
@@ -50,8 +50,8 @@
                                     <tr>
                                         <td>TANGGAL MASUK KERJA</td>
                                         <td>{{ $data->data_karyawan->tgl_join }}</td>
-                                        <td colspan="2">POSISI</td>
-                                        <td colspan="2">@if($div != null) {{ $div->posisi }} @endif</td>
+                                        <td>POSISI</td>
+                                        <td>@if($div != null) {{ $div->posisi }} @endif</td>
 
                                     </tr>
                                 </tbody>
