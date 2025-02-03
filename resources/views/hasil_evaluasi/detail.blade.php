@@ -448,8 +448,8 @@
                                                 @case('OPERASIONAL GA 综合运营事务')
                                                     @php
                                                         $ranges = [
-                                                            'Sangat baik' => [1802.25, 2025],
-                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Sangat baik' => [1923.75, 2025],
+                                                            'Baik' => [1640.25, 1923.74],
                                                             'Cukup' => [1417.5, 1640.24]
                                                         ];
                                                     @endphp
@@ -458,28 +458,19 @@
                                                 @case('KEBERSIHAN 后勤')
                                                     @php
                                                         $ranges = [
-                                                            'Sangat baik' => [1802.25, 2025],
-                                                            'Baik' => [1640.25, 1802.24],
-                                                            'Cukup' => [1417.5, 1640.24]
+                                                            'Sangat baik' => [1964.25, 2025],
+                                                            'Baik' => [1782, 1964.24],
+                                                            'Cukup' => [1417.5, 1781]
                                                         ];
                                                     @endphp
                                                 @break
 
                                                 @case('KITCHEN 厨房')
-                                                    @php
-                                                        $ranges = [
-                                                            'Sangat baik' => [1802.25, 2025],
-                                                            'Baik' => [1640.25, 1802.24],
-                                                            'Cukup' => [1417.5, 1640.24]
-                                                        ];
-                                                    @endphp
-                                                @break
-
                                                 @case('ELEKTRIK PERBAIKAN 电气维修')
                                                     @php
                                                         $ranges = [
-                                                            'Sangat baik' => [1802.25, 2025],
-                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Sangat baik' => [1923.75, 2025],
+                                                            'Baik' => [1782, 1964.24],
                                                             'Cukup' => [1417.5, 1640.24]
                                                         ];
                                                     @endphp
