@@ -53,7 +53,7 @@ class HasilEvaluasiController extends Controller
         $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
 
         $div = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2024-01')
+            ->where('periode', '2025-01')
             ->first();
 
         if (!$div) {
@@ -111,8 +111,10 @@ class HasilEvaluasiController extends Controller
             return back();
         }
         $div = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2024-01')
+            ->where('periode', '2025-01')
             ->first();
+
+        return $div;
 
         return view('hasil_evaluasi.detail', compact('data', 'div'));
     }

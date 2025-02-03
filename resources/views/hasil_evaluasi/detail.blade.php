@@ -151,7 +151,6 @@
                                     <tr>
                                         <td>TOTAL NILAI DIPEROLEH</td>
                                         <td>KATEGORI</td>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -185,7 +184,7 @@
                                                     @break
 
                                                 @case('EXTERNAL AFFAIR 外事部')
-                                                @case('PTL ( PENANGGUNG JAWAB TEKNIK LINGKUNGAN )')
+                                                @case('PTL (PENANGGUNG JAWAB TEKNIK LINGKUNGAN)')
                                                 @case('HUMAS 公共关系-KANAL')
                                                     @php
                                                         $ranges = [
@@ -261,7 +260,7 @@
                                                             'Cukup' => [1417.5, 1822.4]
                                                         ];
                                                     @endphp
-                                                    @break
+                                                @break
 
                                                 @case('FINANCE 财务部')
                                                     @php
@@ -269,16 +268,6 @@
                                                             'Sangat baik' => [1822.5, 2025],
                                                             'Baik' => [1741.5, 1923.74],
                                                             'Cukup' => [1235.25, 1741.4]
-                                                        ];
-                                                    @endphp
-                                                    @break
-
-                                                @case('KONSTRUKSI 基建')
-                                                    @php
-                                                        $ranges = [
-                                                            'Sangat baik' => [1964.25, 2025],
-                                                            'Baik' => [1842.75, 1964.24],
-                                                            'Cukup' => [1417.5, 1842.74]
                                                         ];
                                                     @endphp
                                                 @break
@@ -325,6 +314,17 @@
                                                     @endphp
                                                 @break
 
+                                                @case('TUNGKU 1- 15 熔炉')
+                                                    @php
+                                                        $ranges = [
+                                                            'Sangat baik' => [1903.5, 2025],
+                                                            'Baik' => [1741.5, 1903.4],
+                                                            'Cukup' => [1417.5, 1741.4]
+                                                        ];
+                                                    @endphp
+                                                @break
+
+                                                @case('CONTROL ROOM SMELTER 铁厂中控')
                                                 @case('OFFICE SMELTER 办公室')
                                                 @case('PEMBUANGAN MATERIAL 下料口')
                                                 @case('PENERIMAAN MATERIAL 材料验收')
@@ -332,7 +332,6 @@
                                                 @case('PRODUKSI SMELTER 冶炼厂生产')
                                                 @case('SAFETY SMELTER 铁厂安环员')
                                                 @case('TRAILLER SMELTER 铁厂车队')
-                                                @case('CONTROL ROOM SMELTER 铁厂中控')
                                                     @php
                                                         $ranges = [
                                                             'Sangat baik' => [1903.5, 2025],
@@ -446,6 +445,56 @@
                                                     @endphp
                                                 @break
 
+                                                @case('OPERASIONAL GA 综合运营事务')
+                                                    @php
+                                                        $ranges = [
+                                                            'Sangat baik' => [1802.25, 2025],
+                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Cukup' => [1417.5, 1640.24]
+                                                        ];
+                                                    @endphp
+                                                @break
+
+                                                @case('KEBERSIHAN 后勤')
+                                                    @php
+                                                        $ranges = [
+                                                            'Sangat baik' => [1802.25, 2025],
+                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Cukup' => [1417.5, 1640.24]
+                                                        ];
+                                                    @endphp
+                                                @break
+
+                                                @case('KITCHEN 厨房')
+                                                    @php
+                                                        $ranges = [
+                                                            'Sangat baik' => [1802.25, 2025],
+                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Cukup' => [1417.5, 1640.24]
+                                                        ];
+                                                    @endphp
+                                                @break
+
+                                                @case('ELEKTRIK PERBAIKAN 电气维修')
+                                                    @php
+                                                        $ranges = [
+                                                            'Sangat baik' => [1802.25, 2025],
+                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Cukup' => [1417.5, 1640.24]
+                                                        ];
+                                                    @endphp
+                                                @break
+
+                                                @case('GENERAL AFFAIR 综合部')
+                                                    @php
+                                                        $ranges = [
+                                                            'Sangat baik' => [1802.25, 2025],
+                                                            'Baik' => [1640.25, 1802.24],
+                                                            'Cukup' => [1417.5, 1640.24]
+                                                        ];
+                                                    @endphp
+                                                @break
+                                                
                                                 @default
                                                     @php
                                                         $ranges = [
