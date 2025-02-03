@@ -114,8 +114,6 @@ class HasilEvaluasiController extends Controller
             ->where('periode', '2025-01')
             ->first();
 
-        return $div;
-
         return view('hasil_evaluasi.detail', compact('data', 'div'));
     }
 }
