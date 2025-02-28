@@ -266,6 +266,13 @@
                                         <td>Rp {{ number_format($cek->insentif) }}</td>
                                     </tr>
                                     @endif
+                                    @if($cek->kompensasi)
+                                    <tr>
+                                        <td>KOMPENSASI</td>
+                                        <td>:</td>
+                                        <td>Rp {{ number_format($cek->kompensasi) }}</td>
+                                    </tr>
+                                    @endif
                                     @if($cek->rapel)
                                     <tr>
                                         <td>RAPEL</td>
