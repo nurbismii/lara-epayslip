@@ -81,22 +81,23 @@ class ProsesImportSalary implements ShouldQueue
                         $hour_machine = $cells[16];
                         $rapel = $cells[17];
                         $insentif = $cells[18];
-                        $tunj_lapangan = $cells[19];
-                        $bonus = $cells[20];
-                        $bpjs_tk_jht = $cells[21];
-                        $bpjs_tk_jp = $cells[22];
-                        $bpjs_kes = $cells[23];
-                        $deduction_unpaid_leave = $cells[24];
-                        $deduction = $cells[25];
-                        $tot_diterima = $cells[26];
-                        $bank_number = $cells[27];
-                        $bank_name = $cells[28];
-                        $periode = $cells[29];
-                        $deduction_pph21 = $cells[30];
-                        $thr = $cells[31];
-                        $mulai_periode = $cells[32];
-                        $akhir_periode = $cells[33];
-                        $tanggal_gajian = $cells[34];
+                        $kompensasi = $cells[19];
+                        $tunj_lapangan = $cells[20];
+                        $bonus = $cells[21];
+                        $bpjs_tk_jht = $cells[22];
+                        $bpjs_tk_jp = $cells[23];
+                        $bpjs_kes = $cells[24];
+                        $deduction_unpaid_leave = $cells[25];
+                        $deduction = $cells[26];
+                        $tot_diterima = $cells[27];
+                        $bank_number = $cells[28];
+                        $bank_name = $cells[29];
+                        $periode = $cells[30];
+                        $deduction_pph21 = $cells[31];
+                        $thr = $cells[32];
+                        $mulai_periode = $cells[33];
+                        $akhir_periode = $cells[34];
+                        $tanggal_gajian = $cells[35];
 
 
                         if (!empty($nik) && !empty($no_ktp)) {
@@ -130,6 +131,7 @@ class ProsesImportSalary implements ShouldQueue
                                     'hm' => $hour_machine,
                                     'rapel' => $rapel,
                                     'insentif' => $insentif,
+                                    'kompensasi' => $kompensasi,
                                     'tunj_lap' => $tunj_lapangan,
                                     'bonus' => $bonus,
                                     'jht' => $bpjs_tk_jht,
