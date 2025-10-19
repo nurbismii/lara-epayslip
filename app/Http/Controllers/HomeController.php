@@ -33,58 +33,53 @@ class HomeController extends Controller
     {
         if (Auth::user()->level == 'Administrator') {
             $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();
-
             $user_nonaktif = User::where('level', 'Pengguna')->where('status', 'Tidak Aktif')->count();
-
-            $karyawan = DB::table('data_karyawans')->where('status_karyawan', null)->count();
-
+            $karyawan = DB::table('data_karyawans')->whereNull('status_karyawan')->count();
             $list_queue = DB::table('jobs')->count();
 
-            $gaji = KomponenGaji::select('periode', 'gaji_pokok')->get();
-
-            $tahun_sekarang = $request->tahun != '' ? $request->tahun : date('Y', strtotime(Carbon::now()));
-
+            $tahun_sekarang = $request->tahun ?: date('Y');
             $tahun_lalu = $tahun_sekarang - 1;
 
-            $total_payroll = getDataPayroll($gaji, $tahun_sekarang);
-
-            $total_payroll_tahun_lalu = getDataPayroll($gaji, $tahun_lalu);
-
-            $total_karyawan = getTotalKaryawan($gaji, $tahun_sekarang);
-
-            $total_karyawan_tahun_lalu = getTotalKaryawan($gaji, $tahun_lalu);
-
-            // $rerata_upah = rerataUpah($total_payroll, $total_karyawan);
-
-            // $rerata_upah_tahun_lalu = rerataUpah($total_payroll_tahun_lalu, $total_karyawan_tahun_lalu);
-
-            // $persentase_selisih_karyawan = persenSelisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
-
-            // $selisih_karyawan = selisihKaryawan($total_karyawan, $total_karyawan_tahun_lalu);
+            // Hitung total payroll dan karyawan per tahun
+            $total_payroll = getDataPayroll($tahun_sekarang);
+            $total_payroll_tahun_lalu = getDataPayroll($tahun_lalu);
+            $total_karyawan = getTotalKaryawan($tahun_sekarang);
+            $total_karyawan_tahun_lalu = getTotalKaryawan($tahun_lalu);
 
             $persentase = getPersentase($total_payroll_tahun_lalu, $total_payroll);
-
             $selisih = getSelisih($total_payroll_tahun_lalu, $total_payroll);
 
-            $pengumuman = InfoPengumuman::orderBy('id', 'DESC')->limit(4)->get();
+            $pengumuman = InfoPengumuman::orderByDesc('id')->limit(4)->get();
 
-            return view('home.admin', compact('selisih', 'total_karyawan', 'total_karyawan_tahun_lalu', 'selisih', 'user_aktif', 'persentase', 'tahun_sekarang', 'tahun_lalu', 'list_queue', 'total_payroll', 'total_payroll_tahun_lalu', 'user_nonaktif', 'karyawan', 'pengumuman'));
+            return view('home.admin', compact(
+                'selisih',
+                'total_karyawan',
+                'total_karyawan_tahun_lalu',
+                'user_aktif',
+                'persentase',
+                'tahun_sekarang',
+                'tahun_lalu',
+                'list_queue',
+                'total_payroll',
+                'total_payroll_tahun_lalu',
+                'user_nonaktif',
+                'karyawan',
+                'pengumuman'
+            ));
         }
 
+        // === Non-admin ===
         $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();
-
         $user_nonaktif = User::where('level', 'Pengguna')->where('status', 'Tidak Aktif')->count();
-
         $karyawan = DB::table('data_karyawans')->count();
-
         $list_queue = DB::table('jobs')->count();
 
         $pengumuman = InfoPengumuman::orderBy('id', 'ASC')->limit(4)->get();
-
-        $post_pengumuman = InfoPengumuman::where('description', '!=', null)->orderBy('id', 'DESC')->limit(4)->get();
+        $post_pengumuman = InfoPengumuman::whereNotNull('description')->orderByDesc('id')->limit(4)->get();
 
         return view('home.index', compact('user_aktif', 'post_pengumuman', 'list_queue', 'user_nonaktif', 'karyawan', 'pengumuman'));
     }
+
 
     public function masaKerja(Request $request)
     {
@@ -177,3 +172,4 @@ class HomeController extends Controller
             })->make(true);
     }
 }
+

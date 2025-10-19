@@ -31,33 +31,26 @@ function getTanggalIndo($tanggal)
   return '';
 }
 
-function getDataPayroll($data, $waktu)
+function getDataPayroll($tahun)
 {
-  $payroll_record = [];
-  $validation = [];
-  $months = array_fill(0, 12, []);
+  // Ambil total gaji per bulan langsung dari DB
+  $rows = \App\Models\KomponenGaji::selectRaw("
+            LEFT(periode, 4) as tahun,
+            RIGHT(periode, 2) as bulan,
+            SUM(gaji_pokok) as total_gaji
+        ")
+    ->where('periode', 'like', "$tahun%")
+    ->groupBy('tahun', 'bulan')
+    ->orderBy('bulan')
+    ->get();
 
-  // Ekstraksi dan validasi data
-  foreach ($data as $d) {
-    $validation[] = date('Y', strtotime($d->periode));
-    $payroll_record[] = [
-      'bulan' => date('m', strtotime($d->periode)),
-      'gaji_pokok' => $d->gaji_pokok
-    ];
+  // Siapkan array 12 bulan (0 di bulan yang tidak ada data)
+  $payroll_chart = array_fill(0, 12, 0);
+
+  foreach ($rows as $row) {
+    $index = (int)$row->bulan - 1; // ubah ke index array (0–11)
+    $payroll_chart[$index] = (int)$row->total_gaji;
   }
-
-  // Memasukkan data ke array bulanan
-  foreach ($payroll_record as $i => $record) {
-    if ($validation[$i] == $waktu) {
-      $month_index = (int)$record['bulan'] - 1; // Konversi bulan ke indeks array (0-11)
-      $months[$month_index][] = (int)$record['gaji_pokok'];
-    }
-  }
-
-  // Menghitung total per bulan dan membuat payroll_chart
-  $payroll_chart = array_map(function ($month_data) {
-    return array_sum(array_filter($month_data));
-  }, $months);
 
   return $payroll_chart;
 }
@@ -113,27 +106,26 @@ function konversiNumber($number)
   return $number;
 }
 
-function getTotalKaryawan($data, $waktu)
+function getTotalKaryawan($tahun)
 {
-  $payroll_record = [];
-  $validation = [];
+  $rows = \App\Models\KomponenGaji::selectRaw("
+            LEFT(periode, 4) as tahun,
+            RIGHT(periode, 2) as bulan,
+            COUNT(*) as total_karyawan
+        ")
+    ->where('periode', 'like', "$tahun%")
+    ->groupBy('tahun', 'bulan')
+    ->orderBy('bulan')
+    ->get();
+
+  // Inisialisasi array 12 bulan (nilai awal 0)
   $months = array_fill(0, 12, 0);
 
-  // Ekstraksi dan validasi data
-  foreach ($data as $d) {
-    $validation[] = date('Y', strtotime($d->periode));
-    $payroll_record[] = [
-      'bulan' => date('m', strtotime($d->periode)),
-    ];
+  foreach ($rows as $row) {
+    $index = (int)$row->bulan - 1;
+    $months[$index] = (int)$row->total_karyawan;
   }
 
-  // Memasukkan data ke array bulanan
-  foreach ($payroll_record as $i => $record) {
-    if ($validation[$i] == $waktu) {
-      $month_index = (int)$record['bulan'] - 1; // Konversi bulan ke indeks array (0-11)
-      $months[$month_index] += 1;
-    }
-  }
   return $months;
 }
 
