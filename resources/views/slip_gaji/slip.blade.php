@@ -238,6 +238,13 @@
                                         <td>Rp {{ number_format($cek->tunj_transport) }}</td>
                                     </tr>
                                     @endif
+                                    @if($cek->tunj_fungsional)
+                                    <tr>
+                                        <td>TUNJANGAN FUNGSIONAL</td>
+                                        <td>:</td>
+                                        <td>Rp {{ number_format($cek->tunj_fungsional) }}</td>
+                                    </tr>
+                                    @endif
                                     @if($cek->tunj_lap)
                                     <tr>
                                         <td>TUNJANGAN KINERJA DAN LAPANGAN</td>
@@ -268,7 +275,7 @@
                                     @endif
                                     @if($cek->kompensasi)
                                     <tr>
-                                        <td>KOMPENSASI</td>
+                                        <td>KOMPENSASI/PESANGON/UANG PISAH</td>
                                         <td>:</td>
                                         <td>Rp {{ number_format($cek->kompensasi) }}</td>
                                     </tr>
@@ -335,6 +342,13 @@
                                         <td>DEDUCTION UNPAID LEAVE </td>
                                         <td>:</td>
                                         <td>Rp {{ number_format($cek->unpaid_leave) }}</td>
+                                    </tr>
+                                    @endif
+                                    @if($cek->deduction_alpa)
+                                    <tr>
+                                        <td>DEDUCTION ALPA </td>
+                                        <td>:</td>
+                                        <td>Rp {{ number_format($cek->deduction_alpa) }}</td>
                                     </tr>
                                     @endif
                                     @if($cek->deduction)

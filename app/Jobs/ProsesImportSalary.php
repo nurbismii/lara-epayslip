@@ -67,8 +67,8 @@ class ProsesImportSalary implements ShouldQueue
                         $departemen = $cells[2];
                         $divisi = $cells[3];
                         $posisi = $cells[4];
-                        $durasi_sp = $cells[5];
-                        $status = $cells[6];
+                        $status = $cells[5];
+                        $durasi_sp = $cells[6];
                         $jml_hari_kerja = $cells[7];
                         $jml_hour_machine = $cells[8];
                         $gapok = $cells[9];
@@ -79,25 +79,36 @@ class ProsesImportSalary implements ShouldQueue
                         $tunj_koefisien = $cells[14];
                         $overtime = $cells[15];
                         $hour_machine = $cells[16];
-                        $rapel = $cells[17];
-                        $insentif = $cells[18];
-                        $kompensasi = $cells[19];
-                        $tunj_lapangan = $cells[20];
-                        $bonus = $cells[21];
-                        $bpjs_tk_jht = $cells[22];
-                        $bpjs_tk_jp = $cells[23];
-                        $bpjs_kes = $cells[24];
-                        $deduction_unpaid_leave = $cells[25];
-                        $deduction = $cells[26];
-                        $tot_diterima = $cells[27];
-                        $bank_number = $cells[28];
-                        $bank_name = $cells[29];
-                        $periode = $cells[30];
-                        $deduction_pph21 = $cells[31];
-                        $thr = $cells[32];
-                        $mulai_periode = $cells[33];
-                        $akhir_periode = $cells[34];
-                        $tanggal_gajian = $cells[35];
+
+                        $bpjs_tk_jht = $cells[17];
+                        $bpjs_tk_jp = $cells[18];
+                        $bpjs_kes = $cells[19];
+
+                        // add new fields 
+                        $tunj_fungsional = $cells[20];
+                        //----
+                        $tunj_lapangan = $cells[21];
+
+                        $bonus = $cells[22];
+                        $insentif = $cells[23];
+                        $rapel = $cells[24];
+                        $kompensasi = $cells[25];
+                        
+                        $deduction_unpaid_leave = $cells[26];
+                        // add new fields
+                        $deduction_alpa = $cells[27];
+                        //----
+                        $deduction = $cells[28];
+                        $deduction_pph21 = $cells[29];
+
+                        $tot_diterima = $cells[30];
+                        $bank_number = $cells[31];
+                        $bank_name = $cells[32];
+                        $periode = $cells[33];
+                        $thr = $cells[34];
+                        $mulai_periode = $cells[35];
+                        $akhir_periode = $cells[36];
+                        $tanggal_gajian = $cells[37];
 
 
                         if (!empty($nik) && !empty($no_ktp)) {
@@ -133,6 +144,7 @@ class ProsesImportSalary implements ShouldQueue
                                     'insentif' => $insentif,
                                     'kompensasi' => $kompensasi,
                                     'tunj_lap' => $tunj_lapangan,
+                                    'tunj_fungsional' => $tunj_fungsional,
                                     'bonus' => $bonus,
                                     'jht' => $bpjs_tk_jht,
                                     'jp' => $bpjs_tk_jp,
@@ -144,6 +156,7 @@ class ProsesImportSalary implements ShouldQueue
                                     'bank_number' => $bank_number,
                                     'periode' => $periode,
                                     'deduction_pph21' => $deduction_pph21,
+                                    'deduction_alpa' => $deduction_alpa,
                                     'thr' => $thr,
                                     'mulai_periode' => $mulai_periode,
                                     'akhir_periode' => $akhir_periode,

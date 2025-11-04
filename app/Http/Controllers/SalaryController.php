@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class SalaryController extends Controller
 {
@@ -111,7 +112,8 @@ class SalaryController extends Controller
             return redirect()->back()->with(['error' => 'Please choose file before']);
         } catch (\Throwable $e) {
             DB::rollBack();
-            Alert::error('Gagal', 'Terjadi kesalahan saat proses upload');
+            Alert::error('Gagal', 'Terjadi kesalahan saat proses upload' . $e->getMessage());
+            // Log::info($e->getMessage());
             return redirect()->back();
         }
     }
