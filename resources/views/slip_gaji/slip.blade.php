@@ -275,7 +275,7 @@
                                     @endif
                                     @if($cek->kompensasi)
                                     <tr>
-                                        <td>KOMPENSASI/PESANGON/UANG PISAH</td>
+                                        <td>KOMPENSASI</td>
                                         <td>:</td>
                                         <td>Rp {{ number_format($cek->kompensasi) }}</td>
                                     </tr>
