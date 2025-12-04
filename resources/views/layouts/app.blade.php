@@ -155,8 +155,44 @@
              $(document).ready(function() {
                  $('#example').DataTable({
                      dom: 'Bfrtip',
-                     buttons: [
-                         'excel', 'pdf', 'print'
+                     buttons: [{
+                             extend: 'excel',
+                             text: 'Excel',
+                             customizeData: function(data) {
+                                 const ktpIndex = 2; // kolom C = index 2
+
+                                 for (var i = 0; i < data.body.length; i++) {
+                                     let ktp = data.body[i][ktpIndex];
+
+                                     // Memaksa format Excel menjadi TEXT agar nol tidak hilang
+                                     data.body[i][ktpIndex] = "'" + ktp;
+                                 }
+                             }
+                         },
+                         {
+                             extend: 'pdf',
+                             text: 'PDF',
+                             customize: function(doc) {
+                                 const ktpIndex = 2;
+
+                                 doc.content[1].table.body.forEach(function(row, idx) {
+                                     if (idx > 0) {
+                                         row[ktpIndex].text = "'" + row[ktpIndex].text;
+                                     }
+                                 });
+                             }
+                         },
+                         {
+                             extend: 'print',
+                             text: 'Print',
+                             customize: function(win) {
+                                 $(win.document.body).find('table tbody tr').each(function() {
+                                     // kolom C = index 2
+                                     var td = $(this).find('td:eq(2)');
+                                     td.text("'" + td.text());
+                                 });
+                             }
+                         }
                      ]
                  });
              });
