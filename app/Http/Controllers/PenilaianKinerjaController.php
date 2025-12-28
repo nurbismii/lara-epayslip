@@ -158,23 +158,33 @@ class PenilaianKinerjaController extends Controller
             ->where('periode', '2024-01')
             ->first();
 
-        if ($data->total_nilai_pencapaian) {
-            $pencapaian_kerja = 0;
+        $pencapaianKerja = [];
 
-            $pencapaian_kerja = $data->total_nilai_pencapaian;
+        if (!empty($data->total_nilai_pencapaian)) {
 
-            $hasil_evaluasi_a_plus = ($pencapaian_kerja >= 18 && $pencapaian_kerja <= 20) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_a = ($pencapaian_kerja >= 15 && $pencapaian_kerja <= 17) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_a_min = ($pencapaian_kerja >= 13 && $pencapaian_kerja <= 14) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_b_plus = ($pencapaian_kerja >= 11 && $pencapaian_kerja <= 12) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_b = ($pencapaian_kerja >= 9 && $pencapaian_kerja <= 10) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_b_min = ($pencapaian_kerja >= 7 && $pencapaian_kerja <= 8) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_c_plus = ($pencapaian_kerja >= 5 && $pencapaian_kerja <= 6) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_c = ($pencapaian_kerja >= 4 && $pencapaian_kerja <= 4) ? $pencapaian_kerja : 0;
-            $hasil_evaluasi_c_min = ($pencapaian_kerja >= 2 && $pencapaian_kerja <= 3) ?: 0;
+            $nilai = $data->total_nilai_pencapaian;
 
-            return view('penilaian_kinerja.detail', compact('data', 'div', 'hasil_evaluasi_a_plus', 'hasil_evaluasi_a', 'hasil_evaluasi_a_min', 'hasil_evaluasi_b_plus', 'hasil_evaluasi_b', 'hasil_evaluasi_b_min', 'hasil_evaluasi_c_plus', 'hasil_evaluasi_c', 'hasil_evaluasi_c_min'));
+            $mapping = [
+                'A+' => [18, 20],
+                'A'  => [15, 17],
+                'A-' => [13, 14],
+                'B+' => [11, 12],
+                'B'  => [9, 10],
+                'B-' => [7, 8],
+                'C+' => [5, 6],
+                'C'  => [4, 4],
+                'C-' => [2, 3],
+            ];
+
+            foreach ($mapping as $label => [$min, $max]) {
+                $pencapaianKerja[] = [
+                    'label' => $label,
+                    'value' => ($nilai >= $min && $nilai <= $max) ? $nilai : 0
+                ];
+            }
         }
+
+        return view('penilaian_kinerja.detail', compact('data', 'div', 'pencapaianKerja'));
 
         Alert::error('Terjadi kesalahan', 'Opps, terjadi kesalahan penilaian kamu tidak dapat ditemukan');
         return back();
