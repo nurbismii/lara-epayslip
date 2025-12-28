@@ -86,6 +86,8 @@ class PenilaianKinerjaController extends Controller
             return back();
         }
 
+        $penilaian = config('penilaian_kinerja');
+
         $pencapaianKerja = [];
 
         if (!empty($data->total_nilai_pencapaian)) {
@@ -112,7 +114,7 @@ class PenilaianKinerjaController extends Controller
             }
         }
 
-        return view('penilaian_kinerja.detail', compact('data', 'div', 'pencapaianKerja'));
+        return view('penilaian_kinerja.detail', compact('data', 'div', 'pencapaianKerja', 'penilaian'));
     }
 
     /**
@@ -167,6 +169,8 @@ class PenilaianKinerjaController extends Controller
             ->where('periode', '2024-01')
             ->first();
 
+        $penilaian = config('penilaian_kinerja');
+
         $pencapaianKerja = [];
 
         if (!empty($data->total_nilai_pencapaian)) {
@@ -193,7 +197,7 @@ class PenilaianKinerjaController extends Controller
             }
         }
 
-        return view('penilaian_kinerja.detail', compact('data', 'div', 'pencapaianKerja'));
+        return view('penilaian_kinerja.detail', compact('data', 'div', 'pencapaianKerja', 'penilaian'));
 
         Alert::error('Terjadi kesalahan', 'Opps, terjadi kesalahan penilaian kamu tidak dapat ditemukan');
         return back();
