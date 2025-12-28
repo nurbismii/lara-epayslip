@@ -86,7 +86,7 @@ class PenilaianKinerjaController extends Controller
             return back();
         }
 
-        $penilaian = config('penilaian_kinerja');
+        $penilaian = config('PenilaianKinerja');
 
         $pencapaianKerja = [];
 
