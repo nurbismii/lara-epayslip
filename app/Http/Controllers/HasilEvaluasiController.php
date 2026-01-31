@@ -64,7 +64,7 @@ class HasilEvaluasiController extends Controller
 
         $div = KomponenGaji::with('data_karyawan')
             ->where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2025-12')
+            ->where('periode', '2025-01')
             ->first();
 
         if (!$div) {
