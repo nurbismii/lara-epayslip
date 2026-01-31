@@ -17,7 +17,7 @@ class HasilEvaluasiController extends Controller
      */
     public function index()
     {
-        $data = PenilaianPencapaianKinerja::where('data_karyawan_id', '179889')->get();
+        $data = PenilaianPencapaianKinerja::all();
         return view('hasil_evaluasi.index', compact('data'));
     }
 
