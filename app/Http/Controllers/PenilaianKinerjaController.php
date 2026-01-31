@@ -78,7 +78,7 @@ class PenilaianKinerjaController extends Controller
         $data = PenilaianPencapaianKinerja::with('user')->findOrFail($id);
 
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2024-01')
+            ->where('periode', '2025-01')
             ->first();
 
         if (!$div) {

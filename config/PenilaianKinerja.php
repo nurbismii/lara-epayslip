@@ -77,7 +77,7 @@ return [
     'III. Kemampuan Menyelesaikan Pekerjaan' => [
         [
             'title' => '1. Kualitas Kerja',
-            'field' => 'Kualitas Kerja',
+            'field' => 'kualitas_kerja',
             'rows' => [
                 ['nilai' => 43.5, 'text' => 'Hasil kerja sangat baik sehingga tidak memerlukan perbaikan ulang.'],
                 ['nilai' => 37.5, 'text' => 'Hasil kerja belum konsisten, namun kemampuan kerja tim cukup baik.'],
@@ -88,7 +88,7 @@ return [
         ],
         [
             'title' => '2. Efisiensi Kerja',
-            'field' => 'efisiensi_kerja',
+            'field' => 'efesiensi_kerja',
             'rows' => [
                 ['nilai' => 40, 'text' => 'Target kerja sulit tercapai dan tidak memiliki perencanaan kerja yang jelas.'],
                 ['nilai' => 60, 'text' => 'Target kerja tercapai didukung dengan perencanaan kerja yang jelas.'],
