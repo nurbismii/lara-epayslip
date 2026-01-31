@@ -155,9 +155,9 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <?php
+                                        @php
                                         $hasil = ($data->total_nilai_kinerja / 413.5 * 911.25) + ($data->total_nilai_pencapaian / 20 * 405) + ($evaluasi->total_nilai / 950 * 708.75);
-                                        ?>
+                                        @endphp
                                         <td>{{ number_format($hasil,2,'.','') }}</td>
                                         <td>
                                             {{ getDivisiRating($div->data_karyawan->nm_perusahaan, $div->divisi, $div->departemen ?? null, $hasil) }}

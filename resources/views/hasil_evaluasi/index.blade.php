@@ -34,12 +34,26 @@
                             <tbody>
                                 @foreach ($data as $d)
                                 <tr>
-                                    <td><a href="{{ route('hasil-evaluasi.show', $d->id) }}" target="_blank">{{ $d->data_karyawan->nik }}</a></td>
-                                    <td>{{ $d->total_nilai_kinerja }}</td>
-                                    <td>{{ $d->total_nilai_pencapaian }}</td>
-                                    @foreach ($d->data_karyawan->evaluasi_ketenagakerjaan as $evaluasi)
-                                    <td>{{ $evaluasi->total_nilai }}</td>
-                                    @endforeach
+                                    <td>
+                                        @if($d->data_karyawan)
+                                        <a href="{{ route('hasil-evaluasi.show', $d->id) }}" target="_blank">
+                                            {{ $d->data_karyawan->nik }}
+                                        </a>
+                                        @else
+                                        <span class="text-danger">Data karyawan tidak tersedia</span>
+                                        @endif
+                                    </td>
+
+                                    <td>{{ $d->total_nilai_kinerja ?? '-' }}</td>
+                                    <td>{{ $d->total_nilai_pencapaian ?? '-' }}</td>
+
+                                    <td>
+                                        @php
+                                        $evaluasi = optional($d->data_karyawan)->evaluasi_ketenagakerjaan->first();
+                                        @endphp
+
+                                        {{ $evaluasi->total_nilai ?? '-' }}
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -55,4 +69,3 @@
 @include('salary.form')
 @endif
 @endsection
-
