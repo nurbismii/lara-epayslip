@@ -17,7 +17,7 @@ class HasilEvaluasiController extends Controller
      */
     public function index()
     {
-        $data = PenilaianPencapaianKinerja::all();
+        $data = PenilaianPencapaianKinerja::where('data_karyawan_id', '179889')->get();
         return view('hasil_evaluasi.index', compact('data'));
     }
 
@@ -64,7 +64,7 @@ class HasilEvaluasiController extends Controller
 
         $div = KomponenGaji::with('data_karyawan')
             ->where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2025-01')
+            ->where('periode', '2026-01')
             ->first();
 
         if (!$div) {
@@ -122,7 +122,7 @@ class HasilEvaluasiController extends Controller
             return back();
         }
         $div = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2025-01')
+            ->where('periode', '2026-01')
             ->first();
 
         return view('hasil_evaluasi.detail', compact('data', 'div'));

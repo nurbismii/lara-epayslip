@@ -77,7 +77,7 @@ class EvaluasiKetenagakerjaanController extends Controller
         $data = EvaluasiKetenagakerjaan::with('user')->findOrFail($id);
 
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2024-01')
+            ->where('periode', '2026-01')
             ->first();
 
         if (!$div) {
@@ -134,7 +134,7 @@ class EvaluasiKetenagakerjaanController extends Controller
             return back();
         }
         $div = KomponenGaji::where('data_karyawan_id', $data->data_karyawan_id)
-            ->where('periode', '2024-01')
+            ->where('periode', '2026-01')
             ->first();
         return view('evaluasi_ketenagakerjaan.detail', compact('data', 'div'));
     }

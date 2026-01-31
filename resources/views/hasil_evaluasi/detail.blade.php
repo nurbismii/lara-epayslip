@@ -83,7 +83,7 @@
                                     <tr>
                                         <td>1</td>
                                         <td>EVALUASI PENCAPAIAN KINERJA(A)</td>
-                                        @if($data->total_nilai_kinerja/413.5*911.25 > 0)
+                                        @if($data->total_nilai_kinerja/413.5*911.7 > 0)
                                         <td>{{ $data->total_nilai_kinerja  }}</td>
                                         @else
                                         @php
@@ -92,8 +92,8 @@
                                         <td>0</td>
                                         @endif
                                         <td>45%</td>
-                                        @if($data->total_nilai_kinerja/413.5*911.25 > 0)
-                                        <td>{{ number_format($data->total_nilai_kinerja/413.5*911.25,2,'.','') }}</td>
+                                        @if($data->total_nilai_kinerja/413.5*911.7 > 0)
+                                        <td>{{ number_format($data->total_nilai_kinerja/413.5*911.7,2,'.','') }}</td>
                                         @else
                                         <td>0</td>
                                         @endif
@@ -110,8 +110,8 @@
                                         <td>0</td>
                                         @endif
                                         <td>20%</td>
-                                        @if($data->total_nilai_pencapaian/20*405 > 0)
-                                        <td>{{ number_format($data->total_nilai_pencapaian/20*405,2,'.','') }}</td>
+                                        @if($data->total_nilai_pencapaian/20*405.2 > 0)
+                                        <td>{{ number_format($data->total_nilai_pencapaian/20*405.2,'.','') }}</td>
                                         @else
                                         <td>0</td>
                                         @endif
@@ -120,7 +120,7 @@
                                     <tr>
                                         <td>3</td>
                                         <td>EVALUASI PATUH KETENAGAKERJAAN(C)</td>
-                                        @if($evaluasi->total_nilai/950*708.75 > 0)
+                                        @if($evaluasi->total_nilai/950*709.1 > 0)
                                         <td>{{ $evaluasi->total_nilai }}</td>
                                         @else
                                         @php
@@ -129,15 +129,15 @@
                                         <td>0</td>
                                         @endif
                                         <td>35%</td>
-                                        @if($evaluasi->total_nilai/950*708.75 > 0)
-                                        <td>{{ number_format($evaluasi->total_nilai/950*708.75,2,'.','') }}</td>
+                                        @if($evaluasi->total_nilai/950*709.1 > 0)
+                                        <td>{{ number_format($evaluasi->total_nilai/950*709.1,2,'.','') }}</td>
                                         @else
                                         <td>0</td>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td colspan="4"><b>TOTAL NILAI KESELURUHAN</b></td>
-                                        <td><b>{{ number_format(($data->total_nilai_kinerja/413.5*911.25) + ($data->total_nilai_pencapaian/20*405) + ($evaluasi->total_nilai/950*708.75),2,'.','')  }}</b></td>
+                                        <td><b>{{ number_format(($data->total_nilai_kinerja/413.5*911.7) + ($data->total_nilai_pencapaian/20*405.2) + ($evaluasi->total_nilai/950*709.1),2,'.','')  }}</b></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -156,7 +156,7 @@
                                 <tbody>
                                     <tr>
                                         @php
-                                        $hasil = ($data->total_nilai_kinerja / 413.5 * 911.25) + ($data->total_nilai_pencapaian / 20 * 405) + ($evaluasi->total_nilai / 950 * 708.75);
+                                        $hasil = ($data->total_nilai_kinerja / 413.5 * 911.7) + ($data->total_nilai_pencapaian / 20 * 405.2) + ($evaluasi->total_nilai / 950 * 709.1);
                                         @endphp
                                         <td>{{ number_format($hasil,2,'.','') }}</td>
                                         <td>
