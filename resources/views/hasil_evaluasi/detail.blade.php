@@ -111,7 +111,7 @@
                                         @endif
                                         <td>20%</td>
                                         @if($data->total_nilai_pencapaian/20*405.2 > 0)
-                                        <td>{{ number_format($data->total_nilai_pencapaian/20*405.2,'.','') }}</td>
+                                        <td>{{ number_format($data->total_nilai_pencapaian/20*405.2,2,'.','') }}</td>
                                         @else
                                         <td>0</td>
                                         @endif
