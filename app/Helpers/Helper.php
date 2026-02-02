@@ -277,31 +277,45 @@ function jumlahKaryawanJht($data)
 	return $count;
 }
 
-function getDivisiRating($company, $divisi, $departemen, $nilai)
-{
-	$config = config("DivisiRange.$company");
+if (!function_exists('getDivisiRating')) {
+	function getDivisiRating($company, $divisi = null, $departemen = null, $nilai = 0)
+	{
+		$config = config("DivisiRange.$company");
 
-	if (!$config) return 'Kurang';
-
-	// 1. Match divisi
-	$ranges = $config['divisi'][$divisi] ?? null;
-
-	// 2. Match departemen jika divisi tidak ada
-	if (!$ranges && $departemen) {
-		$ranges = $config['departemen'][$departemen] ?? null;
-	}
-
-	// 3. Default perusahaan
-	if (!$ranges) {
-		$ranges = $config['_default'] ?? [];
-	}
-
-	// Hitung rating
-	foreach ($ranges as $label => $range) {
-		if ($nilai >= $range[0] && $nilai <= $range[1]) {
-			return $label;
+		if (!$config) {
+			return 'N/A';
 		}
-	}
 
-	return 'Kurang';
+		$ranges = null;
+
+		// 1. Prioritas divisi
+		if ($divisi && isset($config['divisi'][$divisi])) {
+			$ranges = $config['divisi'][$divisi];
+		}
+
+		// 2. Fallback ke departemen
+		if (!$ranges && $departemen && isset($config['departemen'][$departemen])) {
+			$ranges = $config['departemen'][$departemen];
+		}
+
+		// 3. Fallback default (ambil divisi pertama sebagai standar)
+		if (!$ranges && isset($config['divisi']) && is_array($config['divisi'])) {
+			$defaultDivisi = $config['divisi'];
+			$ranges = reset($defaultDivisi);
+		}
+
+		// 4. Hitung rating
+		foreach ($ranges ?? [] as $label => $range) {
+			if (
+				is_array($range) &&
+				count($range) === 2 &&
+				$nilai >= (float) $range[0] &&
+				$nilai <= (float) $range[1]
+			) {
+				return $label;
+			}
+		}
+
+		return 'N/A';
+	}
 }
