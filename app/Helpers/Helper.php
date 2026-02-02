@@ -278,44 +278,71 @@ function jumlahKaryawanJht($data)
 }
 
 if (!function_exists('getDivisiRating')) {
-	function getDivisiRating($company, $divisi = null, $departemen = null, $nilai = 0)
-	{
-		$config = config("DivisiRange.$company");
+    function getDivisiRating(
+        string $company,
+        ?string $divisi,
+        ?string $departemen,
+        float $nilai
+    ): string {
 
-		if (!$config) {
-			return 'N/A';
-		}
+        // Ambil config perusahaan
+        $config = config("DivisiRange.$company");
 
-		$ranges = null;
+        if (!$config) {
+            return 'Kurang';
+        }
 
-		// 1. Prioritas divisi
-		if ($divisi && isset($config['divisi'][$divisi])) {
-			$ranges = $config['divisi'][$divisi];
-		}
+        $ranges = null;
 
-		// 2. Fallback ke departemen
-		if (!$ranges && $departemen && isset($config['departemen'][$departemen])) {
-			$ranges = $config['departemen'][$departemen];
-		}
+        /* ===============================
+         * 1. PRIORITAS DIVISI
+         * =============================== */
+        if ($divisi && isset($config['divisi'][$divisi])) {
+            $ranges = $config['divisi'][$divisi];
+        }
 
-		// 3. Fallback default (ambil divisi pertama sebagai standar)
-		if (!$ranges && isset($config['divisi']) && is_array($config['divisi'])) {
-			$defaultDivisi = $config['divisi'];
-			$ranges = reset($defaultDivisi);
-		}
+        /* ===============================
+         * 2. FALLBACK DEPARTEMEN
+         * =============================== */
+        if (!$ranges && $departemen && isset($config['departemen'][$departemen])) {
+            $ranges = $config['departemen'][$departemen];
+        }
 
-		// 4. Hitung rating
-		foreach ($ranges ?? [] as $label => $range) {
-			if (
-				is_array($range) &&
-				count($range) === 2 &&
-				$nilai >= (float) $range[0] &&
-				$nilai <= (float) $range[1]
-			) {
-				return $label;
-			}
-		}
+        /* ===============================
+         * 3. FALLBACK DEFAULT PERUSAHAAN
+         *    (ambil divisi pertama)
+         * =============================== */
+        if (!$ranges && isset($config['divisi']) && is_array($config['divisi'])) {
+            $defaultDivisi = $config['divisi'];
+            $ranges = reset($defaultDivisi);
+        }
 
-		return 'N/A';
-	}
+        if (!is_array($ranges)) {
+            return 'Kurang';
+        }
+
+        /* ===============================
+         * 4. URUTKAN RANGE (KECIL → BESAR)
+         * =============================== */
+        uasort($ranges, function ($a, $b) {
+            return (float) $a[0] <=> (float) $b[0];
+        });
+
+        /* ===============================
+         * 5. HITUNG RATING
+         * =============================== */
+        foreach ($ranges as $label => $range) {
+
+            if (
+                is_array($range) &&
+                count($range) === 2 &&
+                $nilai >= (float) $range[0] &&
+                $nilai <= (float) $range[1]
+            ) {
+                return $label;
+            }
+        }
+
+        return 'Kurang';
+    }
 }
