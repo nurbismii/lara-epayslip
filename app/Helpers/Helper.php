@@ -277,17 +277,20 @@ function jumlahKaryawanJht($data)
 	return $count;
 }
 
-if (!function_exists('getDivisiRating')) {
-
-	function normalizeKey(?string $value): ?string
+if (!function_exists('normalize_key')) {
+	function normalize_key(?string $value): ?string
 	{
-		if (!$value) return null;
+		if (!$value) {
+			return null;
+		}
 
 		return trim(
 			preg_replace('/\s+/u', ' ', $value)
 		);
 	}
+}
 
+if (!function_exists('getDivisiRating')) {
 	function getDivisiRating(
 		string $company,
 		?string $divisi,
@@ -301,38 +304,44 @@ if (!function_exists('getDivisiRating')) {
 			return 'N/A';
 		}
 
-		$divisi = normalizeKey($divisi);
-		$departemen = normalizeKey($departemen);
+		$divisi     = normalize_key($divisi);
+		$departemen = normalize_key($departemen);
 
 		$ranges = null;
 
-		/* ===============================
-         * 1. MATCH DIVISI (NORMALIZED)
-         * =============================== */
+		/**
+		 * =====================================
+		 * 1. PRIORITAS: DIVISI
+		 * =====================================
+		 */
 		if ($divisi && isset($config['divisi'])) {
 			foreach ($config['divisi'] as $key => $value) {
-				if (normalizeKey($key) === $divisi) {
+				if (normalize_key($key) === $divisi) {
 					$ranges = $value;
 					break;
 				}
 			}
 		}
 
-		/* ===============================
-         * 2. MATCH DEPARTEMEN
-         * =============================== */
+		/**
+		 * =====================================
+		 * 2. JIKA DIVISI TIDAK ADA → DEPARTEMEN
+		 * =====================================
+		 */
 		if (!$ranges && $departemen && isset($config['departemen'])) {
 			foreach ($config['departemen'] as $key => $value) {
-				if (normalizeKey($key) === $departemen) {
+				if (normalize_key($key) === $departemen) {
 					$ranges = $value;
 					break;
 				}
 			}
 		}
 
-		/* ===============================
-         * 3. DEFAULT RANGE
-         * =============================== */
+		/**
+		 * =====================================
+		 * 3. DEFAULT RANGE (AMAN)
+		 * =====================================
+		 */
 		if (!$ranges) {
 			$ranges = [
 				'Sangat baik' => [1823.4, 2026],
@@ -341,14 +350,20 @@ if (!function_exists('getDivisiRating')) {
 			];
 		}
 
-		/* ===============================
-         * 4. SORT RANGE (KECIL → BESAR)
-         * =============================== */
-		uasort($ranges, fn($a, $b) => (float)$a[0] <=> (float)$b[0]);
+		/**
+		 * =====================================
+		 * 4. SORT RANGE DARI NILAI TERKECIL
+		 * =====================================
+		 */
+		uasort($ranges, function ($a, $b) {
+			return (float)$a[0] <=> (float)$b[0];
+		});
 
-		/* ===============================
-         * 5. HITUNG KATEGORI
-         * =============================== */
+		/**
+		 * =====================================
+		 * 5. TENTUKAN KATEGORI
+		 * =====================================
+		 */
 		foreach ($ranges as $label => $range) {
 			if (
 				$nilai >= (float)$range[0] &&
