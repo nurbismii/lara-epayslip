@@ -278,71 +278,86 @@ function jumlahKaryawanJht($data)
 }
 
 if (!function_exists('getDivisiRating')) {
-    function getDivisiRating(
-        string $company,
-        ?string $divisi,
-        ?string $departemen,
-        float $nilai
-    ): string {
 
-        // Ambil config perusahaan
-        $config = config("DivisiRange.$company");
+	function normalizeKey(?string $value): ?string
+	{
+		if (!$value) return null;
 
-        if (!$config) {
-            return 'Kurang';
-        }
+		return trim(
+			preg_replace('/\s+/u', ' ', $value)
+		);
+	}
 
-        $ranges = null;
+	function getDivisiRating(
+		string $company,
+		?string $divisi,
+		?string $departemen,
+		float $nilai
+	): string {
 
-        /* ===============================
-         * 1. PRIORITAS DIVISI
+		$config = config("DivisiRange.$company");
+
+		if (!$config || !is_array($config)) {
+			return 'N/A';
+		}
+
+		$divisi = normalizeKey($divisi);
+		$departemen = normalizeKey($departemen);
+
+		$ranges = null;
+
+		/* ===============================
+         * 1. MATCH DIVISI (NORMALIZED)
          * =============================== */
-        if ($divisi && isset($config['divisi'][$divisi])) {
-            $ranges = $config['divisi'][$divisi];
-        }
+		if ($divisi && isset($config['divisi'])) {
+			foreach ($config['divisi'] as $key => $value) {
+				if (normalizeKey($key) === $divisi) {
+					$ranges = $value;
+					break;
+				}
+			}
+		}
 
-        /* ===============================
-         * 2. FALLBACK DEPARTEMEN
+		/* ===============================
+         * 2. MATCH DEPARTEMEN
          * =============================== */
-        if (!$ranges && $departemen && isset($config['departemen'][$departemen])) {
-            $ranges = $config['departemen'][$departemen];
-        }
+		if (!$ranges && $departemen && isset($config['departemen'])) {
+			foreach ($config['departemen'] as $key => $value) {
+				if (normalizeKey($key) === $departemen) {
+					$ranges = $value;
+					break;
+				}
+			}
+		}
 
-        /* ===============================
-         * 3. FALLBACK DEFAULT PERUSAHAAN
-         *    (ambil divisi pertama)
+		/* ===============================
+         * 3. DEFAULT RANGE
          * =============================== */
-        if (!$ranges && isset($config['divisi']) && is_array($config['divisi'])) {
-            $defaultDivisi = $config['divisi'];
-            $ranges = reset($defaultDivisi);
-        }
+		if (!$ranges) {
+			$ranges = [
+				'Sangat baik' => [1823.4, 2026],
+				'Baik'        => [1620.8, 1823.3],
+				'Cukup'       => [1418.2, 1620.7],
+			];
+		}
 
-        if (!is_array($ranges)) {
-            return 'Kurang';
-        }
-
-        /* ===============================
-         * 4. URUTKAN RANGE (KECIL → BESAR)
+		/* ===============================
+         * 4. SORT RANGE (KECIL → BESAR)
          * =============================== */
-        uasort($ranges, function ($a, $b) {
-            return (float) $a[0] <=> (float) $b[0];
-        });
+		uasort($ranges, fn($a, $b) => (float)$a[0] <=> (float)$b[0]);
 
-        /* ===============================
-         * 5. HITUNG RATING
+		/* ===============================
+         * 5. HITUNG KATEGORI
          * =============================== */
-        foreach ($ranges as $label => $range) {
+		foreach ($ranges as $label => $range) {
+			if (
+				$nilai >= (float)$range[0] &&
+				$nilai <= (float)$range[1]
+			) {
+				return $label;
+			}
+		}
 
-            if (
-                is_array($range) &&
-                count($range) === 2 &&
-                $nilai >= (float) $range[0] &&
-                $nilai <= (float) $range[1]
-            ) {
-                return $label;
-            }
-        }
-
-        return 'Kurang';
-    }
+		return 'Kurang';
+	}
 }
