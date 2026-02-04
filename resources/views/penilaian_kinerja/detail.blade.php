@@ -85,23 +85,23 @@
                                 <tbody>
                                     @foreach($penilaian as $kategori => $items)
                                     @php
-                                        $rowKategori = collect($items)->sum(fn($i) => count($i['rows']));
-                                        $firstKategori = true;
+                                    $rowKategori = collect($items)->sum(fn($i) => count($i['rows']));
+                                    $firstKategori = true;
                                     @endphp
 
                                     @foreach($items as $item)
                                     @php
-                                        $field = $item['field'];
-                                        $nilai = $data->$field;
-                                        $rowItem = count($item['rows']);
-                                        $firstItem = true;
+                                    $field = $item['field'];
+                                    $nilai = $data->$field;
+                                    $rowItem = count($item['rows']);
+                                    $firstItem = true;
                                     @endphp
 
                                     @foreach($item['rows'] as $row)
                                     <tr>
                                         @if($firstKategori)
-                                            <td rowspan="{{ $rowKategori }}"><b>{{ $kategori }}</b></td>
-                                            @php $firstKategori = false; @endphp
+                                        <td rowspan="{{ $rowKategori }}"><b>{{ $kategori }}</b></td>
+                                        @php $firstKategori = false; @endphp
                                         @endif
 
                                         @if($firstItem)
@@ -109,13 +109,13 @@
                                         @endif
 
                                         <td>{{ $row['text'] }}</td>
-                                            <td class="text-center">
-                                                @if($nilai == $row['nilai']) ✔ @endif
-                                            </td>
+                                        <td class="text-center">
+                                            @if($nilai == $row['nilai']) ✔ @endif
+                                        </td>
 
                                         @if($firstItem)
-                                            <td rowspan="{{ $rowItem }}">{{ $nilai }}</td>
-                                            @php $firstItem = false; @endphp
+                                        <td rowspan="{{ $rowItem }}">{{ $nilai }}</td>
+                                        @php $firstItem = false; @endphp
                                         @endif
                                     </tr>
                                     @endforeach

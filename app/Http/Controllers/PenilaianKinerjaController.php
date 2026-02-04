@@ -169,7 +169,7 @@ class PenilaianKinerjaController extends Controller
             ->where('periode', '2026-01')
             ->first();
 
-        $penilaian = config('penilaian_kinerja');
+        $penilaian = config('PenilaianKinerja');
 
         $pencapaianKerja = [];
 
