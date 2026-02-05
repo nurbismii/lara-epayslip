@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Pemberitahuan Perpindahan Alamat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Auto Redirect 5 Detik -->
+    <meta http-equiv="refresh" content="5;url=https://epayslip.vdnisite.com">
     <style>
         body {
             margin: 0;
