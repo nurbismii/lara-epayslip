@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <title>Sedang Dalam Perbaikan</title>
+    <title>Pemberitahuan Perpindahan Alamat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -19,18 +19,29 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 520px;
             padding: 40px;
         }
 
         h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 34px;
+            margin-bottom: 12px;
         }
 
         p {
             font-size: 16px;
-            opacity: 0.9;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #ffe082;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         .icon {
@@ -42,9 +53,39 @@
 
 <body>
     <div class="container">
-        <div class="icon">🚧</div>
-        <h1>Sedang Dalam Perbaikan</h1>
-        <p>Kami sedang melakukan perbaikan terjadwal.<br>
-            Silakan kembali lagi nanti.</p>
+        <div class="icon">👋</div>
+        <h1>Kami Pindah Alamat!</h1>
+        <p>
+            Halo! 👋<br><br>
+            Layanan <strong>ePayslip</strong> sekarang bisa diakses melalui
+            alamat baru berikut :<br><br>
+
+            <a href="https://epayslip.vdnisite.com">
+                https://epayslip.vdnisite.com
+            </a><br><br>
+
+            Jangan khawatir, kami akan mengarahkan Anda secara otomatis.
+        </p>
+
+        <div class="countdown">
+            Mengalihkan halaman dalam
+            <span id="time">5</span> detik...
+        </div>
     </div>
+
+    <script>
+        let timeLeft = 5;
+        const timeEl = document.getElementById('time');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timeEl.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+            }
+        }, 1000);
+    </script>
 </body>
+
+</html>
