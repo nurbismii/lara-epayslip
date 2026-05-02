@@ -3,6 +3,30 @@
 use App\Models\KomponenGaji;
 use Illuminate\Support\Facades\DB;
 
+if (!function_exists('versioned_asset')) {
+	function versioned_asset(string $path): string
+	{
+		static $versions = [];
+
+		$normalizedPath = ltrim($path, '/');
+		$filePath = explode('?', $normalizedPath, 2)[0];
+		$publicPath = public_path($filePath);
+		$url = asset($path);
+
+		if (!array_key_exists($filePath, $versions)) {
+			$versions[$filePath] = is_file($publicPath) ? filemtime($publicPath) : null;
+		}
+
+		if (!$versions[$filePath]) {
+			return $url;
+		}
+
+		$separator = strpos($url, '?') === false ? '?' : '&';
+
+		return $url . $separator . 'v=' . $versions[$filePath];
+	}
+}
+
 function getTanggalIndo($tanggal)
 {
 	if (isset($tanggal)) {

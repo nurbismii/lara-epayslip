@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('css')
-<link href="{{ asset('assets/css/dashboard-modern.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ versioned_asset('assets/css/dashboard-modern.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')

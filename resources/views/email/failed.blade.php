@@ -12,14 +12,14 @@
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
 		<!-- App css -->
-		<link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-		<link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+		<link href="{{ versioned_asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="{{ versioned_asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-		<link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-		<link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+		<link href="{{ versioned_asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="{{ versioned_asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
 		<!-- icons -->
-		<link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ versioned_asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -108,10 +108,10 @@
         </footer>
 
         <!-- Vendor js -->
-        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+        <script src="{{ versioned_asset('assets/js/vendor.min.js') }}"></script>
 
         <!-- App js -->
-        <script src="{{  asset('assets/js/app.min.js') }}"></script>
+        <script src="{{  versioned_asset('assets/js/app.min.js') }}"></script>
 
     </body>
 

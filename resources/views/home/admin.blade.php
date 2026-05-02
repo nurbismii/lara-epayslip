@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('css')
-<link href="{{ asset('assets/css/dashboard-modern.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ versioned_asset('assets/css/dashboard-modern.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
@@ -205,6 +205,6 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script src="{{ asset('assets/js/lineChart.js') }}"></script>
+<script src="{{ versioned_asset('assets/js/lineChart.js') }}"></script>
 @endpush
 @endsection

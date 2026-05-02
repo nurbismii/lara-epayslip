@@ -81,7 +81,7 @@
          <!-- Right bar overlay-->
          <div class="rightbar-overlay"></div>
 
-         <script src="{{ asset('/sw.js') }}"></script>
+         <script src="{{ versioned_asset('/sw.js') }}"></script>
          <script>
              if ("serviceWorker" in navigator) {
                  // Register a service worker hosted at the root of the
@@ -100,56 +100,56 @@
          </script>
 
          <!-- Vendor js -->
-         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/vendor.min.js') }}"></script>
 
          <!-- third party js -->
-         <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
          <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
          <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
          <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
-         <script src="{{ asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
          <!-- third party js ends -->
 
          <!-- Datatables init -->
-         <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/pages/datatables.init.js') }}"></script>
 
          <!-- Plugins js-->
-         <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
-         <script src="{{ asset('assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 
          <!-- Dashboar 1 init js-->
-         <script src="{{ asset('assets/js/pages/dashboard-1.init.js') }}"></script>
-         <script src="{{ asset('assets/validator/validator.min.js') }}"> </script>
+         <script src="{{ versioned_asset('assets/js/pages/dashboard-1.init.js') }}"></script>
+         <script src="{{ versioned_asset('assets/validator/validator.min.js') }}"> </script>
 
          <!-- App js-->
-         <script src="{{ asset('assets/js/app.min.js') }}"></script>
-         <script src="{{ asset('assets/js/support_app.js') }}"></script>
-         <script src="{{ asset('assets/js/fetchData.js') }}"></script>
-         <script src="{{ asset('assets/js/fetchDataUser.js') }}"></script>
-         <script src="{{ asset('assets/js/fetchDataKaryawan.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/app.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/support_app.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/fetchData.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/fetchDataUser.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/fetchDataKaryawan.js') }}"></script>
 
          <!-- plugin js -->
-         <script src="{{ asset('assets/libs/moment/min/moment.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/@fullcalendar/bootstrap/main.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/@fullcalendar/list/main.min.js') }}"></script>
-         <script src="{{ asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/moment/min/moment.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/@fullcalendar/bootstrap/main.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/@fullcalendar/list/main.min.js') }}"></script>
+         <script src="{{ versioned_asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>
 
          <!-- Calendar init -->
-         <script src="{{ asset('assets/js/pages/calendar.init.js') }}"></script>
+         <script src="{{ versioned_asset('assets/js/pages/calendar.init.js') }}"></script>
          <!-- Wizard Form -->
          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
          <script>

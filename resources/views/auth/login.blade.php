@@ -12,12 +12,12 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/icon.png') }}">
     <!-- App css -->
-    <link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-    <link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
-    <link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-    <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+    <link href="{{ versioned_asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{ versioned_asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+    <link href="{{ versioned_asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+    <link href="{{ versioned_asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
     <!-- icons -->
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ versioned_asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .login-container {
             display: flex;
@@ -132,10 +132,10 @@
 
 @include('sweetalert::alert')
 <!-- Vendor js -->
-<script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+<script src="{{ versioned_asset('assets/js/vendor.min.js') }}"></script>
 
 <!-- App js -->
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
+<script src="{{ versioned_asset('assets/js/app.min.js') }}"></script>
 
 <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
 <link rel="manifest" href="{{ asset('/manifest.json') }}">
@@ -151,7 +151,7 @@
     })();
 </script>
 
-<script src="{{ asset('/sw.js') }}"></script>
+<script src="{{ versioned_asset('/sw.js') }}"></script>
 <script>
     if ("serviceWorker" in navigator) {
         // Register a service worker hosted at the root of the
