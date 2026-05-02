@@ -88,16 +88,28 @@ var config = {
 };
 
 window.onload = function() {
-  var ctx = document.getElementById("canvas_pay").getContext("2d");
+  var chartCanvas = document.getElementById("canvas_pay");
+
+  if (!chartCanvas || typeof Chart === "undefined") {
+      return;
+  }
+
+  var ctx = chartCanvas.getContext("2d");
   window.myLine = new Chart(ctx, config);
 };
 
-document.getElementById("randomizeData").addEventListener("click", function() {
-  config.data.datasets.forEach(function(dataset) {
-      dataset.data = dataset.data.map(function() {
-          return randomScalingFactor();
-      });
-  });
+var randomizeButton = document.getElementById("randomizeData");
 
-  window.myLine.update();
-});
+if (randomizeButton) {
+  randomizeButton.addEventListener("click", function() {
+      config.data.datasets.forEach(function(dataset) {
+          dataset.data = dataset.data.map(function() {
+              return randomScalingFactor();
+          });
+      });
+
+      if (window.myLine) {
+          window.myLine.update();
+      }
+  });
+}

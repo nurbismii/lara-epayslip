@@ -40,6 +40,7 @@
 
     <!-- icons -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/mobile-bottom-nav.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Wizard -->
     <link href="{{ asset('assets/js/steps/css/jquery.steps.css') }}" rel="stylesheet" type="text/css" />

@@ -69,15 +69,11 @@ class HomeController extends Controller
         }
 
         // === Non-admin ===
-        $user_aktif = User::where('level', 'Pengguna')->where('status', 'Aktif')->count();
-        $user_nonaktif = User::where('level', 'Pengguna')->where('status', 'Tidak Aktif')->count();
-        $karyawan = DB::table('data_karyawans')->count();
-        $list_queue = DB::table('jobs')->count();
+        Auth::user()->loadMissing(['karyawan', 'komponenGaji']);
 
-        $pengumuman = InfoPengumuman::orderBy('id', 'ASC')->limit(4)->get();
-        $post_pengumuman = InfoPengumuman::whereNotNull('description')->orderByDesc('id')->limit(4)->get();
+        $pengumuman = InfoPengumuman::orderByDesc('id')->limit(4)->get();
 
-        return view('home.index', compact('user_aktif', 'post_pengumuman', 'list_queue', 'user_nonaktif', 'karyawan', 'pengumuman'));
+        return view('home.index', compact('pengumuman'));
     }
 
 

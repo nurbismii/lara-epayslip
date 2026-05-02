@@ -1,0 +1,86 @@
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 767.98px) {
+    body {
+        padding-bottom: calc(82px + env(safe-area-inset-bottom));
+    }
+
+    .content-page {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    }
+
+    .footer {
+        margin-bottom: calc(76px + env(safe-area-inset-bottom));
+    }
+
+    .mobile-bottom-nav {
+        align-items: center;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(226, 232, 240, 0.94);
+        border-radius: 24px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        box-shadow: 0 18px 38px rgba(15, 23, 42, 0.16);
+        display: grid;
+        gap: 4px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        left: 10px;
+        padding: 8px;
+        position: fixed;
+        right: 10px;
+        z-index: 1040;
+    }
+
+    .mobile-bottom-nav__item {
+        align-items: center;
+        border-radius: 18px;
+        color: #64748b;
+        display: flex;
+        flex-direction: column;
+        font-size: 11px;
+        font-weight: 800;
+        gap: 3px;
+        justify-content: center;
+        line-height: 1.1;
+        min-height: 52px;
+        padding: 7px 4px;
+        text-align: center;
+        transition: background-color .18s ease, color .18s ease, transform .18s ease;
+        white-space: nowrap;
+    }
+
+    .mobile-bottom-nav__item:hover,
+    .mobile-bottom-nav__item:focus {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    .mobile-bottom-nav__item i {
+        font-size: 22px;
+        line-height: 1;
+    }
+
+    .mobile-bottom-nav__item.is-active {
+        background: #2563eb;
+        color: #ffffff;
+        box-shadow: 0 10px 18px rgba(37, 99, 235, 0.28);
+        transform: translateY(-2px);
+    }
+}
+
+@media (max-width: 360px) {
+    .mobile-bottom-nav {
+        left: 6px;
+        right: 6px;
+    }
+
+    .mobile-bottom-nav__item {
+        font-size: 10px;
+        min-height: 50px;
+    }
+
+    .mobile-bottom-nav__item i {
+        font-size: 20px;
+    }
+}

@@ -65,6 +65,7 @@
 
          <!-- Footer Start -->
          @include('layouts.footer')
+         @include('layouts.mobile_bottom_nav')
 
          <!-- ============================================================== -->
          <!-- End Page content -->
