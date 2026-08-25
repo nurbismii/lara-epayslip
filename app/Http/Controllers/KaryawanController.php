@@ -14,7 +14,7 @@ use Yajra\DataTables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 
 class KaryawanController extends Controller
 {

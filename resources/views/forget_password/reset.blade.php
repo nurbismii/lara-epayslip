@@ -135,7 +135,7 @@
     </div>
 </body>
 
-@include('sweetalert::alert')
+@include('vendor.sweetalert.alert')
 <!-- Vendor js -->
 <script src="{{ versioned_asset('assets/js/vendor.min.js') }}"></script>
 

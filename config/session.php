@@ -4,6 +4,9 @@ use Illuminate\Support\Str;
 
 return [
 
+    // Keep PHP serialization during the upgrade so existing sessions remain valid.
+    'serialization' => env('SESSION_SERIALIZATION', 'php'),
+
     /*
     |--------------------------------------------------------------------------
     | Default Session Driver

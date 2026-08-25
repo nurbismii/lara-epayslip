@@ -31,7 +31,7 @@ class HapusKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, withV
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function collection(Collection $collection)
+    public function collection(Collection $collection): void
     {
         foreach ($collection as $collect) {
 

@@ -6,7 +6,7 @@ use App\Models\PenilaianPencapaianKinerja;
 use App\Models\KomponenGaji;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 
 class HasilEvaluasiController extends Controller
 {

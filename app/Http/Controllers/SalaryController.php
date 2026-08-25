@@ -11,7 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 use Illuminate\Support\Facades\Log;
 
 class SalaryController extends Controller

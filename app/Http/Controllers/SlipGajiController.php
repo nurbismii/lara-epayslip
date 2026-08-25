@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\KomponenGaji;
 use PDF;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 
 class SlipGajiController extends Controller
 {

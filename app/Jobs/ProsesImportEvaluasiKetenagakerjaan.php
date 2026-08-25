@@ -6,7 +6,7 @@ use App\Models\DataKaryawan;
 use App\Models\EvaluasiKetenagakerjaan;
 use App\Models\FailUploadKomponen;
 use App\Models\KomponenGaji;
-use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use OpenSpout\Reader\XLSX\Reader;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -42,7 +42,7 @@ class ProsesImportEvaluasiKetenagakerjaan implements ShouldQueue
         //
         $filePath = storage_path('app/' . $this->file);
 
-        $reader = ReaderEntityFactory::createXLSXReader();
+        $reader = new Reader();
         // panggil class XLSXReader
         $reader->open($filePath);
         // buka filenya

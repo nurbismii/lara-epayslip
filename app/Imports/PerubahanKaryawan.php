@@ -28,7 +28,7 @@ class PerubahanKaryawan implements ToCollection, WithHeadingRow, SkipsOnError, W
         $this->existing = DataKaryawan::get()->keyBy('nik');
     }
 
-    public function collection(Collection $rows)
+    public function collection(Collection $rows): void
     {
         $upserts = [];
         $newEmployees = [];

@@ -8,7 +8,7 @@ use App\Models\ResendEmail;
 use App\Mail\RegisterEmail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 use Illuminate\Support\Str;
 
 class ResendEmailController extends Controller

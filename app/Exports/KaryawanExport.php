@@ -12,7 +12,7 @@ class KaryawanExport implements FromCollection, WithHeadings, WithMapping
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         return DataKaryawan::where('status_karyawan', NULL)->select('*')->get();
     }

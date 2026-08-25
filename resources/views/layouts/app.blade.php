@@ -76,7 +76,7 @@
 
          <!-- Right Sidebar -->
          @include('layouts.right_sidebar')
-         @include('sweetalert::alert')
+         @include('vendor.sweetalert.alert')
 
          <!-- Right bar overlay-->
          <div class="rightbar-overlay"></div>

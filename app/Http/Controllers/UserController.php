@@ -9,7 +9,7 @@ use App\Imports\NonaktifPengguna;
 use Yajra\DataTables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 
 class UserController extends Controller
 {

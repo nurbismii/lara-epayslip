@@ -32,7 +32,7 @@ class EvaluasiKetenagakerjaanImport  implements ToModel, WithHeadingRow, SkipsOn
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
         $karyawan = $this->niks->where('nik', $row['nik'])->where('no_ktp', $row['no_ktp'])->first();
         if ($karyawan === null) {

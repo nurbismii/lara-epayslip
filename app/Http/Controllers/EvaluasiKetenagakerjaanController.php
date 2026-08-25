@@ -9,7 +9,7 @@ use App\Jobs\ProsesImportEvaluasiKetenagakerjaan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 
 class EvaluasiKetenagakerjaanController extends Controller
 {

@@ -6,7 +6,7 @@ use App\Models\KomponenGaji;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Support\Alert;
 
 class ProfileController extends Controller
 {

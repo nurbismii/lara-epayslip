@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use OpenSpout\Reader\XLSX\Reader;
 use Carbon;
 
 class ProsesImportSalary implements ShouldQueue
@@ -41,7 +41,7 @@ class ProsesImportSalary implements ShouldQueue
         //
         $filePath = storage_path('app/' . $this->file);
 
-        $reader = ReaderEntityFactory::createXLSXReader();
+        $reader = new Reader();
         // panggil class XLSXReader
         $reader->open($filePath);
         // buka filenya
