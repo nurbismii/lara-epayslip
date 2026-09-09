@@ -127,16 +127,21 @@ class SalaryController extends Controller
 
     public function hasil_pdf(Request $request)
     {
-        $periode = $request['month'];
-        $cek = KomponenGaji::where('data_karyawan_id', $request['karyawan_id'])
-            ->where('periode', $periode)
-            ->first();
-
-        $pdf = PDF::loadview('slip_gaji.slip-pdf', ['cek' => $cek]);
-        return response()->make($pdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="Slip-Gaji-' . date("F-Y", strtotime($periode)) . '.pdf"'
+        $request->validate([
+            'month' => 'required|date_format:Y-m',
+            'karyawan_id' => 'required|integer|min:1',
         ]);
+        $periode = $request['month'];
+        $cek = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', $request['karyawan_id'])
+            ->where('periode', $periode)
+            ->firstOrFail();
+
+        abort_unless($cek->data_karyawan, 404, 'Data karyawan tidak ditemukan.');
+        return PDF::loadview('slip_gaji.slip-pdf', ['cek' => $cek])
+            ->setOption('isFontSubsettingEnabled', true)
+            ->setPaper('a4', 'portrait')
+            ->download('Slip-Gaji-' . $periode . '.pdf')
+            ->header('Cache-Control', 'private, no-store');
     }
 
     public function delete_all(Request $request)

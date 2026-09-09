@@ -41,7 +41,9 @@ class SlipGajiController extends Controller
 
     public function cetak_pdf($periode)
     {
-        $cek = KomponenGaji::where('data_karyawan_id', Auth::user()->data_karyawan->id)
+        validator(['periode' => $periode], ['periode' => 'required|date_format:Y-m'])->validate();
+        abort_unless(Auth::user()->data_karyawan, 404, 'Data karyawan tidak ditemukan.');
+        $cek = KomponenGaji::with('data_karyawan')->where('data_karyawan_id', Auth::user()->data_karyawan->id)
             ->where('periode', $periode)
             ->first();
 
@@ -49,10 +51,10 @@ class SlipGajiController extends Controller
             return redirect()->back()->with('error', 'Data tidak ditemukan untuk periode tersebut.');
         }
 
-        $pdf = PDF::loadview('slip_gaji.slip-pdf', ['cek' => $cek]);
-        return response()->make($pdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="Slip-Gaji-' . date("F-Y", strtotime($periode)) . '.pdf"'
-        ]);
+        return PDF::loadview('slip_gaji.slip-pdf', ['cek' => $cek])
+            ->setOption('isFontSubsettingEnabled', true)
+            ->setPaper('a4', 'portrait')
+            ->download('Slip-Gaji-' . $periode . '.pdf')
+            ->header('Cache-Control', 'private, no-store');
     }
 }
