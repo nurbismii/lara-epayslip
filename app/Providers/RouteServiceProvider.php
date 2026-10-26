@@ -59,5 +59,15 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+
+        RateLimiter::for('lupa-akun', function (Request $request) {
+            $nik = $request->input('nik');
+            $email = $request->input('email');
+            return [
+                Limit::perMinute(5)->by('ip:' . $request->ip()),
+                Limit::perHour(5)->by('nik:' . hash('sha256', is_string($nik) ? mb_strtolower(trim($nik)) : '')),
+                Limit::perHour(5)->by('email:' . hash('sha256', is_string($email) ? mb_strtolower(trim($email)) : '')),
+            ];
+        });
     }
 }

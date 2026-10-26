@@ -11,6 +11,7 @@ use App\Http\Controllers\{
   ProfileController,
   SlipGajiController,
   LupaPasswordController,
+  LupaAkunController,
   ResendEmailController,
   FailUploadKomponenController,
   InfoPengumumanController,
@@ -91,9 +92,14 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('is_active');
 
 Route::get('lupa-password', [LupaPasswordController::class, 'index'])->name('forget');
-Route::post('store-forget', [LupaPasswordController::class, 'store'])->name('store.forget');
+Route::post('store-forget', [LupaPasswordController::class, 'store'])->middleware('throttle:5,1,lupa-password-request')->name('store.forget');
 Route::get('konfirmasi/reset/{id}', [LupaPasswordController::class, 'konfirmasi'])->name('konfirmasi.reset');
-Route::patch('update-password/{id}', [LupaPasswordController::class, 'update_password'])->name('update.password');
+Route::patch('update-password/{id}', [LupaPasswordController::class, 'update_password'])->middleware('throttle:5,1,lupa-password-reset')->name('update.password');
+
+Route::get('lupa-akun', [LupaAkunController::class, 'index'])->name('lupa_akun.index');
+Route::post('lupa-akun', [LupaAkunController::class, 'store'])->middleware('throttle:lupa-akun')->name('lupa_akun.store');
+Route::get('lupa-akun/reset/{token}', [LupaAkunController::class, 'reset'])->middleware('throttle:10,1,lupa-akun-reset')->name('lupa_akun.reset');
+Route::post('lupa-akun/reset/{token}', [LupaAkunController::class, 'update'])->middleware('throttle:10,1,lupa-akun-reset')->name('lupa_akun.update');
 
 Route::get('resend-email', [ResendEmailController::class, 'index'])->name('resend_email');
 Route::post('store-resend', [ResendEmailController::class, 'store'])->name('store.resend_email');

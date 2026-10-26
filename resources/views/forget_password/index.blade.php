@@ -106,6 +106,7 @@
                     <button type="submit" class="btn btn-primary btn-block from-prevent-multiple-submits">Kirim</button>
                 </div>
                 <div class="text-center mt-3">
+                    <p>Tidak dapat mengakses email? <a href="{{ route('lupa_akun.index') }}">Pulihkan akun</a></p>
                     <p>Kembali <a href="{{ route('login') }}" class="text-muted text-primary">Masuk</a></p>
                 </div>
             </form>

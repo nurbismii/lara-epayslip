@@ -81,6 +81,9 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->status = $request['status'];
+            if ($user->status === 'Tidak Aktif') {
+                $user->token = '';
+            }
             $user->update();
             Alert::success('Berhasil', 'Perbarui data pengguna berhasil dilakukan');
             return redirect('user');

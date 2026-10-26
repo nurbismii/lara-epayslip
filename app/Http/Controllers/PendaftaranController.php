@@ -81,6 +81,7 @@ class PendaftaranController extends Controller
 
         if ($cek->level == "Pengguna") {
             $cek->status = "Aktif";
+            $cek->email_verified_at = now();
             $cek->token = "";
             $cek->update();
             return view('email.verifikasi');

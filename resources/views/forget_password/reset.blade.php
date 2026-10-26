@@ -96,6 +96,13 @@
         <div class="login-form">
             <h3 class="text-center">Atur Ulang Kata Sandi</h3>
             <p class="text-center text-muted">Silahkan masukkan kata sandi baru kamu</p>
+            @if($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    @foreach($errors->all() as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <form method="POST" action="{{ route('update.password', $cek->user_id) }}">
                 @csrf
                 <input type="hidden" name="_method" value="PATCH">
@@ -108,7 +115,7 @@
                 <div class="form-group">
                     <label for="password">Kata Sandi</label>
                     <div class="input-group input-group-merge">
-                        <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" placeholder="Masukkan Kata Sandi Anda">
+                        <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" minlength="8" maxlength="72" required autocomplete="new-password" placeholder="Masukkan Kata Sandi Anda">
                         <div class="input-group-append" data-password="false">
                             <div class="input-group-text">
                                 <span class="password-eye"></span>
@@ -119,7 +126,7 @@
                 <div class="form-group">
                     <label for="confirm_password">Konfirmasi Kata Sandi</label>
                     <div class="input-group input-group-merge">
-                        <input type="password" id="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" name="confirm_password" minlength="8" placeholder="Masukkan Ulang Kata Sandi Anda">
+                        <input type="password" id="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" name="confirm_password" minlength="8" maxlength="72" required autocomplete="new-password" placeholder="Masukkan Ulang Kata Sandi Anda">
                         <div class="input-group-append" data-password="false">
                             <div class="input-group-text">
                                 <span class="password-eye"></span>

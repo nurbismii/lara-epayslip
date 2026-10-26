@@ -96,6 +96,9 @@
         <div class="login-form">
             <h3 class="text-center">Masuk E-PaySlip VDNI</h3>
             <p class="text-center text-muted">Gunakan email dan kata sandi yang telah terdaftar</p>
+            @if(session('status'))
+                <div class="alert alert-success" role="status">{{ session('status') }}</div>
+            @endif
             <form class="from-prevent-multiple-submits" method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="mb-2">
@@ -118,6 +121,9 @@
                 </div>
                 <div class="text-center mt-2">
                     <a href="{{ route('forget') }}" class="text-muted text-primary">Lupa kata sandi?</a>
+                </div>
+                <div class="text-center mt-1">
+                    <a href="{{ route('lupa_akun.index') }}" class="text-muted text-primary">Lupa akun / tidak dapat mengakses email?</a>
                 </div>
                 <div class="text-center mt-1">
                     <a href="{{ route('register') }}" class="text-muted text-primary">Buat akun</a>

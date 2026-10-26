@@ -37,4 +37,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    {
+        $request->session()->put('account_recovery_version', (int) $user->account_recovery_version);
+    }
 }

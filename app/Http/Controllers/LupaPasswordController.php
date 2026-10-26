@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\LupaPassword;
+use App\Models\LupaAkun;
 use App\Mail\LupaPasswordEmail;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use App\Support\Alert;
 
 class LupaPasswordController extends Controller
@@ -22,49 +23,41 @@ class LupaPasswordController extends Controller
 
     public function store(Request $request)
     {
-        $email = $request['email'];
+        $request->validate(['email' => ['required', 'email', 'max:255']]);
+        $email = $request->email;
         $token = Str::random(32);
-        $cek = User::where('email', $email)->where('status', 'Aktif')->where('level', 'Pengguna')->first();
+        $cek = User::whereRaw('LOWER(email) = ?', [Str::lower($email)])
+            ->where('status', 'Aktif')->where('level', 'Pengguna')->first();
         if ($cek == null) {
             Alert::error('Error', 'Email tidak terdaftar pada sistem kami, terimakasih :)');
             return redirect()->route('forget');
         }
+        $email = $cek->email;
 
         $exist_req_forget = LupaPassword::where('user_id', $cek->id)->latest()->first();
 
-        $time_now = strtotime(now());
-        $time_request = strtotime($exist_req_forget->created_at ?? $time_now);
-
-        // Hitung selisih waktu dalam detik
-        $time_difference = $time_now - $time_request;
-
-        // Cek jika selisih waktu kurang dari 1 jam (3600 detik)
-        $REQUEST_LIMIT = 3600;
-
-        if ($time_difference < $REQUEST_LIMIT) {
+        if ($exist_req_forget && $exist_req_forget->created_at->gt(now()->subHour())) {
             // Jika kurang dari 1 jam, berikan respon
             Alert::error('Error', 'Oops, tunggu 1 jam kedepan untuk melakukan request ini lagi. Terimakasih');
             return redirect()->route('forget');
         } else {
-            DB::beginTransaction();
             try {
-                $param = [
-                    'nama' => $cek->name,
-                    'token' => $token
-                ];
-
-                LupaPassword::create([
-                    'user_id' => $cek->id,
-                    'token' => $token,
-                    'status' => 'Aktif'
-                ]);
-                DB::commit();
-
-                Mail::to($email)->send(new LupaPasswordEmail($param));
+                DB::transaction(function () use ($cek, $email, $token) {
+                    $user = User::whereKey($cek->id)->lockForUpdate()->firstOrFail();
+                    abort_unless($user->email === $email && $user->status === 'Aktif'
+                        && $user->level === 'Pengguna', 404);
+                    LupaPassword::where('user_id', $user->id)->update(['status' => 'Tidak Aktif']);
+                    LupaPassword::create([
+                        'user_id' => $user->id,
+                        'token' => $token,
+                        'status' => 'Aktif',
+                    ]);
+                    Mail::to($email)->send(new LupaPasswordEmail(['nama' => $user->name, 'token' => $token]));
+                });
                 Alert::success('Sukses', 'Reset kata sandi berhasil silahkan cek inbox email kamu, terimakasih');
                 return redirect()->route('login');
-            } catch (\Exception $e) {
-                DB::rollBack();
+            } catch (\Throwable $e) {
+                report($e);
                 Alert::error('Error', 'Terjadi kesalahan pada saat melakukan permintaan, coba lagi nanti :)');
                 return redirect()->route('forget');
             }
@@ -73,7 +66,8 @@ class LupaPasswordController extends Controller
 
     public function konfirmasi($id)
     {
-        $cek = LupaPassword::where('token', $id)->where('status', 'Aktif')->first();
+        $cek = LupaPassword::where('token', $id)->where('status', 'Aktif')
+            ->where('created_at', '>', now()->subHour())->first();
 
         if ($cek == null) {
             return view('email.failed');
@@ -84,19 +78,32 @@ class LupaPasswordController extends Controller
 
     public function update_password(Request $request, $id)
     {
-        $cek = User::findOrFail($id);
+        $input = $request->validate([
+            'token' => ['required', 'string', 'size:32'],
+            'id_lupa' => ['required', 'integer'],
+            'password' => ['required', 'string', 'min:8', 'max:72', 'regex:/\A[^\x00]{1,72}\z/'],
+            'confirm_password' => ['required', 'same:password'],
+        ], ['password.regex' => 'Kata sandi terlalu panjang atau mengandung karakter yang tidak didukung.']);
 
-        if ($request['password'] == $request['confirm_password']) {
-            $cek->password = Hash::make($request['password']);
-            $upd = LupaPassword::findOrFail($request['id_lupa']);
-            $upd->status = "Tidak Aktif";
-            $upd->update();
-            $cek->update();
-            Alert::success('Sukses', 'Password Telah Berhasil Di Reset');
-            return redirect()->route('login');
-        }
+        DB::transaction(function () use ($input, $id) {
+            $user = User::whereKey($id)->where('level', 'Pengguna')
+                ->where('status', 'Aktif')->lockForUpdate()->firstOrFail();
+            LupaPassword::whereKey($input['id_lupa'])->where('user_id', $user->id)
+                ->where('token', $input['token'])->where('status', 'Aktif')
+                ->where('created_at', '>', now()->subHour())->lockForUpdate()->firstOrFail();
 
-        Alert::error('Error', 'Password dan Konfirmasi Password Harus Sama');
-        return redirect()->route('konfirmasi.reset', $request['token']);
+            Password::broker()->deleteToken($user);
+            LupaPassword::where('user_id', $user->id)->update(['status' => 'Tidak Aktif']);
+            LupaAkun::where('user_id', $user->id)->delete();
+            $user->tokens()->delete();
+            $user->forceFill([
+                'password' => Hash::make($input['password']),
+                'remember_token' => Str::random(60),
+                'account_recovery_version' => $user->account_recovery_version + 1,
+            ])->save();
+        });
+
+        Alert::success('Sukses', 'Password Telah Berhasil Di Reset');
+        return redirect()->route('login');
     }
 }

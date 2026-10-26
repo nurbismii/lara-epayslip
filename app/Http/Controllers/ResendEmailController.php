@@ -9,7 +9,6 @@ use App\Mail\RegisterEmail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 use App\Support\Alert;
-use Illuminate\Support\Str;
 
 class ResendEmailController extends Controller
 {
@@ -21,7 +20,6 @@ class ResendEmailController extends Controller
     public function store(Request $request)
     {
         $data = User::where('email', $request['email'])->first();
-        $token = '';
 
         if ($data == NULL) {
             Alert::error('Error', 'Opps, email yang kamu masukkan tidak terdaftar pada sistem kami!!!');
@@ -29,10 +27,8 @@ class ResendEmailController extends Controller
         }
 
         if ($data->token == '') {
-            $token = Str::random(32);
-            $data->update([
-                'token' => $token
-            ]);
+            Alert::info('Informasi', 'Akun sudah diverifikasi atau dinonaktifkan admin. Silakan masuk atau hubungi HRD.');
+            return redirect()->route('login');
         }
 
         $data_upd = User::where('email', $request['email'])->first();
