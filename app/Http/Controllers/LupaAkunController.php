@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -40,13 +41,22 @@ class LupaAkunController extends Controller
                             ->where('no_ktp', $input['no_ktp']);
                     })->lockForUpdate()->first();
 
-                if (!$user || !$this->canRecover($user)
-                    || User::whereRaw('LOWER(email) = ?', [$email])->exists()) {
+                if (!$user) {
+                    Log::info('lupa_akun.skipped', ['reason' => 'identity_not_found']);
+                    return;
+                }
+                if (!$this->canRecover($user)) {
+                    Log::info('lupa_akun.skipped', ['reason' => 'account_not_recoverable']);
+                    return;
+                }
+                if (User::whereRaw('LOWER(email) = ?', [$email])->exists()) {
+                    Log::info('lupa_akun.skipped', ['reason' => 'new_email_already_registered']);
                     return;
                 }
 
                 $existing = LupaAkun::where('user_id', $user->id)->first();
                 if ($existing && $existing->expires_at->isFuture()) {
+                    Log::info('lupa_akun.skipped', ['reason' => 'recovery_pending']);
                     return;
                 }
 
@@ -59,6 +69,7 @@ class LupaAkunController extends Controller
                 ]);
 
                 Mail::to($email)->send(new LupaAkunEmail(route('lupa_akun.reset', $token)));
+                Log::info('lupa_akun.mail_processed');
             });
         } catch (\Throwable $exception) {
             report($exception);

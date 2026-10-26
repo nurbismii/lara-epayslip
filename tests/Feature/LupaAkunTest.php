@@ -10,9 +10,11 @@ use App\Models\LupaAkun;
 use App\Models\LupaPassword;
 use App\Models\User;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Mail\MailManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -83,6 +85,17 @@ class LupaAkunTest extends TestCase
         $this->get(route('lupa_akun.index'))->assertOk()->assertSee('No. KTP')->assertSee('Tanggal Lahir');
     }
 
+    public function test_account_recovery_email_has_a_sender_when_global_from_address_is_missing(): void
+    {
+        config(['mail.from.address' => null]);
+        $mailer = (new MailManager($this->app))->mailer('array');
+        $sent = $mailer->to('baru@example.test')->send(new LupaAkunEmail('https://example.test/pemulihan'));
+
+        $this->assertSame('no-reply@vdnisite.com', $sent->getOriginalMessage()->getFrom()[0]->getAddress());
+        $this->assertSame('Verifikasi Pemulihan Akun E-PaySlip', $sent->getOriginalMessage()->getSubject());
+        $this->assertStringContainsString('Pulihkan Akun', $sent->getOriginalMessage()->getHtmlBody());
+    }
+
     public static function recoverableAccounts(): array
     {
         return [
@@ -95,6 +108,7 @@ class LupaAkunTest extends TestCase
     #[DataProvider('recoverableAccounts')]
     public function test_recovery_verifies_new_email_without_creating_another_account(array $attributes): void
     {
+        Log::spy();
         $user = $this->employee($attributes);
         $oldPassword = $user->password;
         $oldRememberToken = $user->remember_token;
@@ -103,6 +117,7 @@ class LupaAkunTest extends TestCase
         DB::table('password_resets')->insert(['email' => $user->email, 'token' => 'old-token', 'created_at' => now()]);
 
         $url = $this->requestRecovery(['email' => 'BARU@example.test']);
+        Log::shouldHaveReceived('info')->with('lupa_akun.mail_processed')->once();
         $recovery = LupaAkun::firstOrFail();
         $token = basename(parse_url($url, PHP_URL_PATH));
         $this->assertSame(hash('sha256', $token), $recovery->token);
@@ -146,20 +161,22 @@ class LupaAkunTest extends TestCase
             'unknown nik' => [['nik' => 'UNKNOWN']],
             'wrong birthday' => [['tgl_lahir' => '1990-02-04']],
             'wrong ktp' => [['no_ktp' => '9999999999999999']],
-            'existing email' => [['email' => 'LAMA@example.test']],
-            'administrator' => [[], ['level' => 'Administrator']],
-            'disabled verified' => [[], ['status' => 'Tidak Aktif', 'token' => '']],
-            'disabled legacy verified' => [[], ['status' => 'Tidak Aktif', 'token' => '', 'email_verified_at' => null]],
+            'existing email' => [['email' => 'LAMA@example.test'], [], 'new_email_already_registered'],
+            'administrator' => [[], ['level' => 'Administrator'], 'identity_not_found'],
+            'disabled verified' => [[], ['status' => 'Tidak Aktif', 'token' => ''], 'account_not_recoverable'],
+            'disabled legacy verified' => [[], ['status' => 'Tidak Aktif', 'token' => '', 'email_verified_at' => null], 'account_not_recoverable'],
         ];
     }
 
     #[DataProvider('invalidIdentities')]
-    public function test_invalid_identity_and_ineligible_accounts_receive_the_same_response(array $input, array $attributes = []): void
+    public function test_invalid_identity_and_ineligible_accounts_receive_the_same_response(array $input, array $attributes = [], string $reason = 'identity_not_found'): void
     {
+        Log::spy();
         $user = $this->employee($attributes);
         $this->post(route('lupa_akun.store'), $this->input($input))
             ->assertRedirect(route('lupa_akun.index'))->assertSessionHas('status', fn ($value) => str_starts_with($value, 'Jika data sesuai'));
         Mail::assertNothingSent();
+        Log::shouldHaveReceived('info')->with('lupa_akun.skipped', ['reason' => $reason])->once();
         $this->assertDatabaseCount('lupa_akuns', 0);
         $this->assertSame('lama@example.test', $user->fresh()->email);
         $this->assertTrue(Hash::check('PasswordLama123', $user->fresh()->password));
@@ -169,7 +186,9 @@ class LupaAkunTest extends TestCase
     {
         $this->employee();
         $url = $this->requestRecovery();
+        Log::spy();
         $this->post(route('lupa_akun.store'), $this->input(['email' => 'lain@example.test']))->assertSessionHasNoErrors();
+        Log::shouldHaveReceived('info')->with('lupa_akun.skipped', ['reason' => 'recovery_pending'])->once();
         Mail::assertSentCount(1);
         $this->get($url)->assertOk();
         $this->travel(61)->minutes();

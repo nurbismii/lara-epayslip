@@ -16,7 +16,8 @@ class LupaAkunEmail extends Mailable
 
     public function build()
     {
-        return $this->subject('Verifikasi Pemulihan Akun E-PaySlip')
+        return $this->from('no-reply@vdnisite.com')
+            ->subject('Verifikasi Pemulihan Akun E-PaySlip')
             ->view('email.lupa_akun');
     }
 }
